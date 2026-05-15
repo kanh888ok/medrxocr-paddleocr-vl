@@ -10,6 +10,12 @@ outputs/*
 !outputs/remote_paddleocrvl_v15_smoke/*.json
 !outputs/remote_paddleocrvl_v15_smoke/*.jsonl
 !outputs/remote_paddleocrvl_v15_smoke/*.md
+!outputs/paddleocrvl_v1_rxhandbd_word_eval/
+!outputs/paddleocrvl_v1_rxhandbd_word_eval/*.json
+!outputs/paddleocrvl_v1_rxhandbd_word_eval/*.jsonl
+!outputs/paddleocrvl_v15_rxhandbd_word_eval/
+!outputs/paddleocrvl_v15_rxhandbd_word_eval/*.json
+!outputs/paddleocrvl_v15_rxhandbd_word_eval/*.jsonl
 checkpoints/
 data/raw/*
 data/interim/*

@@ -14,6 +14,15 @@ This file tracks what remains before a truthful final competition submission.
 - Quality reports generated in `outputs/`.
 - Dataset card and technical report updated with the real 997-record Mendeley
   bilingual integrity note.
+- GitHub repository created and pushed:
+  `https://github.com/kanh888ok/medrxocr-paddleocr-vl`.
+- PaddleOCR-VL and PaddleOCR-VL-1.5 zero-shot results completed on the full
+  RxHandBD word-level eval subset:
+  - `outputs/paddleocrvl_v1_rxhandbd_word_eval/metrics.json`
+  - `outputs/paddleocrvl_v1_rxhandbd_word_eval/predictions.jsonl`
+  - `outputs/paddleocrvl_v15_rxhandbd_word_eval/metrics.json`
+  - `outputs/paddleocrvl_v15_rxhandbd_word_eval/predictions.jsonl`
+  - `outputs/paddleocrvl_rxhandbd_word_eval_summary.json`
 
 ## Remaining Work Before Final Submission
 
@@ -21,16 +30,25 @@ This file tracks what remains before a truthful final competition submission.
 
 Goal: run the official PaddleOCR-VL pipeline on `data/processed/medrxocr_eval.jsonl`.
 
-Required output:
+Completed output:
 
-- `outputs/pred_paddleocr_vl_zero_shot.jsonl`
-- `outputs/eval_paddleocr_vl_zero_shot.json`
-- A short result table added to `docs/technical_report.md`
+- `outputs/paddleocrvl_v1_rxhandbd_word_eval/predictions.jsonl`
+- `outputs/paddleocrvl_v1_rxhandbd_word_eval/metrics.json`
+- A result table added to `docs/technical_report.md`
+
+Current full-eval result on `rxhandbd_5578` word-level eval:
+
+- Images: 1115 / 1115
+- Errors: 0
+- Exact match: 0.2386
+- Micro CER: 0.4255
+- Mean latency: 0.6920 sec/image
 
 Notes:
 
-- Use the full PaddleOCR-VL pipeline where possible, not only the VLM component.
-- Record exact runtime environment, model name, and command used.
+- This is a full evaluation for the RxHandBD cropped-word subset only.
+- Do not report it as a full-page structured prescription result.
+- Full-page Mendeley/Bangladesh structured evaluation remains open.
 
 ### 2. PaddleOCR-VL-1.5 Zero-Shot
 
@@ -38,17 +56,26 @@ Goal: run PaddleOCR-VL-1.5 on the same fixed eval split.
 
 Current status:
 
-- Single-image smoke test completed on `rx_mendeley_bilingual_1000_0003`.
-- This is not a full benchmark.
-- The observed smoke-test CER was `10.8082`, with severe repetition/garbled text.
-- A 5-image pilot attempt was stopped after more than 30 minutes without a first
-  prediction being written.
+- Single-image full-page smoke test completed on `rx_mendeley_bilingual_1000_0003`.
+- The observed full-page smoke-test CER was `10.8082`, with severe
+  repetition/garbled text.
+- A 5-image full-page pilot attempt was stopped after more than 30 minutes
+  without a first prediction being written.
+- Full RxHandBD cropped-word eval completed successfully.
 
-Required output:
+Completed word-level output:
 
-- `outputs/pred_paddleocr_vl_1_5_zero_shot.jsonl`
-- `outputs/eval_paddleocr_vl_1_5_zero_shot.json`
+- `outputs/paddleocrvl_v15_rxhandbd_word_eval/predictions.jsonl`
+- `outputs/paddleocrvl_v15_rxhandbd_word_eval/metrics.json`
 - A comparable result table in `docs/technical_report.md`
+
+Current full-eval result on `rxhandbd_5578` word-level eval:
+
+- Images: 1115 / 1115
+- Errors: 0
+- Exact match: 0.2197
+- Micro CER: 0.4736
+- Mean latency: 0.6428 sec/image
 
 ### 3. LoRA SFT
 
@@ -71,15 +98,14 @@ Important truthfulness note:
 
 ### 4. Public Repository
 
-Required from user:
+Completed:
 
-- GitHub username or organization.
-- Repository name.
-- Whether the repository should be public immediately.
+- GitHub repository:
+  `https://github.com/kanh888ok/medrxocr-paddleocr-vl`
 
-Do not commit raw large datasets to GitHub unless license and size policies are
-checked. Prefer publishing source registry, scripts, docs, small examples, and
-download/processing instructions.
+Raw large datasets are not committed to GitHub. The repository publishes source
+registry, scripts, docs, small examples, and reproducible processing
+instructions.
 
 ### 5. Public Dataset URL
 

@@ -7,10 +7,21 @@
 
 ## Adaptation
 
-- LoRA SFT
-- Multi-task instruction tuning
-- JSON-structured prescription extraction
-- Lexicon-constrained normalization
+Current repository status:
+
+- Zero-shot baselines are complete for the full RxHandBD word-level eval subset.
+- LoRA SFT is planned but not completed.
+- Multi-task instruction tuning is planned but not completed.
+- JSON-structured prescription extraction is represented in the schema and data
+  protocol, but a fine-tuned extractor checkpoint has not been published.
+- Lexicon-constrained normalization is planned as an ablation.
+
+Current zero-shot metrics:
+
+| Model | Subset | Images | Errors | Exact Match | Micro CER |
+|---|---|---:|---:|---:|---:|
+| PaddleOCR-VL | RxHandBD word-level eval | 1115 | 0 | 0.2386 | 0.4255 |
+| PaddleOCR-VL-1.5 | RxHandBD word-level eval | 1115 | 0 | 0.2197 | 0.4736 |
 
 ## Intended Use
 
@@ -26,7 +37,9 @@
 
 ## Outputs
 
-The model outputs structured JSON following `schemas/medrxocr_schema.json`.
+The target fine-tuned model is expected to output structured JSON following
+`schemas/medrxocr_schema.json`. The current zero-shot word-level baselines output
+plain OCR text for cropped prescription-word images.
 
 ## Limitations
 

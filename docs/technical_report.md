@@ -17,14 +17,16 @@ Completed:
 - Generated PaddleOCR-VL-style SFT manifests.
 - Generated quality audit and dataset statistics reports.
 - Added explicit source-data integrity notes to avoid overstating dataset size.
+- Published the code repository:
+  `https://github.com/kanh888ok/medrxocr-paddleocr-vl`.
+- Completed PaddleOCR-VL and PaddleOCR-VL-1.5 zero-shot evaluation on the full
+  RxHandBD word-level eval subset.
 
 Not yet completed:
 
-- PaddleOCR-VL zero-shot benchmark.
-- PaddleOCR-VL-1.5 zero-shot benchmark.
+- Full-page structured prescription zero-shot benchmark across all eval sources.
 - LoRA SFT training run.
 - Fine-tuned model weight publication.
-- Public GitHub repository URL.
 - Public AI Studio dataset or Baidu Netdisk dataset URL.
 
 ## Data Sources
@@ -104,11 +106,48 @@ Required experiments before final competition submission:
 
 | Experiment | Status | Output Needed |
 |---|---|---|
-| PaddleOCR-VL zero-shot | Not run | Metrics JSON and sample predictions |
-| PaddleOCR-VL-1.5 zero-shot | Not run | Metrics JSON and sample predictions |
+| PaddleOCR-VL zero-shot | Completed on RxHandBD word-level full eval | Full-page structured eval still needed |
+| PaddleOCR-VL-1.5 zero-shot | Completed on RxHandBD word-level full eval | Full-page structured eval still needed |
 | LoRA SFT | Not run | Training logs, checkpoint, metrics JSON |
 | Lexicon normalization ablation | Not run | Before/after metric table |
 | Hard-case breakdown | Not run | Metrics by source, difficulty, and task type |
+
+## Zero-Shot Results: RxHandBD Word-Level Full Eval
+
+These results are real zero-shot runs on all 1115 records from the fixed eval
+split where `source_id=rxhandbd_5578` and `task_type=word_ocr`. The input images
+are cropped prescription-word images, not full-page prescriptions. Layout
+detection was disabled because each image is already a single word crop.
+
+Command template:
+
+```bash
+python scripts/run_paddleocrvl_word_eval.py \
+  --root . \
+  --input data/processed/medrxocr_eval.jsonl \
+  --output-dir outputs/paddleocrvl_v1_rxhandbd_word_eval \
+  --source-id rxhandbd_5578 \
+  --task-type word_ocr \
+  --pipeline-version v1 \
+  --disable-layout
+```
+
+| Model | Pipeline | Subset | Images | Errors | Exact Match | Mean CER | Micro CER | Mean sec/image |
+|---|---|---|---:|---:|---:|---:|---:|---:|
+| PaddleOCR-VL | `v1` | RxHandBD word-level eval | 1115 | 0 | 0.2386 | 0.4327 | 0.4255 | 0.6920 |
+| PaddleOCR-VL-1.5 | `v1.5` | RxHandBD word-level eval | 1115 | 0 | 0.2197 | 0.4851 | 0.4736 | 0.6428 |
+
+Result artifacts:
+
+- `outputs/paddleocrvl_v1_rxhandbd_word_eval/metrics.json`
+- `outputs/paddleocrvl_v1_rxhandbd_word_eval/predictions.jsonl`
+- `outputs/paddleocrvl_v15_rxhandbd_word_eval/metrics.json`
+- `outputs/paddleocrvl_v15_rxhandbd_word_eval/predictions.jsonl`
+- `outputs/paddleocrvl_rxhandbd_word_eval_summary.json`
+
+Truthfulness note: these numbers should be reported as "RxHandBD word-level
+zero-shot full eval" only. They should not be described as LoRA/SFT results, nor
+as full-page MedRxOCR structured prescription results.
 
 ## Remote Smoke Test: PaddleOCR-VL-1.5
 
@@ -137,5 +176,7 @@ further investigation before running a larger benchmark.
 
 This repository is currently ready for data and protocol review, but it is not
 yet ready to be claimed as a completed fine-tuned PaddleOCR-VL derivative model.
-The final submission should wait until the baseline and LoRA results are run and
-the model checkpoint is published.
+It now contains reproducible zero-shot word-level baselines for PaddleOCR-VL and
+PaddleOCR-VL-1.5. The final submission should wait until the full-page
+structured baseline, LoRA/SFT run, public dataset URL, and model checkpoint URL
+are available.

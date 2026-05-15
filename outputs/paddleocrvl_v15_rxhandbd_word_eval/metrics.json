@@ -1,0 +1,17 @@
+{
+  "model": "PaddleOCR-VL-1.5",
+  "pipeline_version": "v1.5",
+  "source_id": "rxhandbd_5578",
+  "task_type": "word_ocr",
+  "subset": "full filtered eval subset",
+  "disable_layout": true,
+  "n_expected": 1115,
+  "n_completed": 1115,
+  "errors": 0,
+  "exact_match_rate": 0.21973094170403587,
+  "mean_cer": 0.4851143649574143,
+  "micro_cer": 0.4735836177474403,
+  "mean_elapsed_sec": 0.6428342263260229,
+  "total_elapsed_sec": 716.7601623535156,
+  "note": "Zero-shot OCR on the filtered eval subset; not a LoRA/SFT result."
+}

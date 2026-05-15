@@ -1,0 +1,38 @@
+{
+  "task": "RxHandBD cropped prescription word OCR",
+  "split": "MedRxOCR fixed eval subset",
+  "source_id": "rxhandbd_5578",
+  "task_type": "word_ocr",
+  "n_eval_records": 1115,
+  "truthfulness_note": "These are zero-shot OCR results on the full RxHandBD word-level eval subset only. They are not LoRA/SFT results and are not full-page structured prescription results.",
+  "runs": [
+    {
+      "model": "PaddleOCR-VL",
+      "pipeline_version": "v1",
+      "disable_layout": true,
+      "n_completed": 1115,
+      "errors": 0,
+      "exact_match_rate": 0.23856502242152466,
+      "mean_cer": 0.4326877133827806,
+      "micro_cer": 0.4255290102389078,
+      "mean_elapsed_sec": 0.692035822376542,
+      "total_elapsed_sec": 771.6199419498444,
+      "metrics_file": "outputs/paddleocrvl_v1_rxhandbd_word_eval/metrics.json",
+      "predictions_file": "outputs/paddleocrvl_v1_rxhandbd_word_eval/predictions.jsonl"
+    },
+    {
+      "model": "PaddleOCR-VL-1.5",
+      "pipeline_version": "v1.5",
+      "disable_layout": true,
+      "n_completed": 1115,
+      "errors": 0,
+      "exact_match_rate": 0.21973094170403587,
+      "mean_cer": 0.4851143649574143,
+      "micro_cer": 0.4735836177474403,
+      "mean_elapsed_sec": 0.6428342263260229,
+      "total_elapsed_sec": 716.7601623535156,
+      "metrics_file": "outputs/paddleocrvl_v15_rxhandbd_word_eval/metrics.json",
+      "predictions_file": "outputs/paddleocrvl_v15_rxhandbd_word_eval/predictions.jsonl"
+    }
+  ]
+}
