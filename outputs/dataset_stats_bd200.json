@@ -1,0 +1,28 @@
+{
+  "split": {
+    "unassigned": 200
+  },
+  "source_id": {
+    "mendeley_bd_200_yolo": 200
+  },
+  "difficulty": {
+    "medium": 200
+  },
+  "language": {
+    "bn": 200,
+    "en": 200
+  },
+  "visual_tags": {
+    "handwritten": 200,
+    "printed": 200,
+    "mixed_language": 200
+  },
+  "task_type": {
+    "medicine_region_detection": 200
+  },
+  "n_records": 200,
+  "n_medication_lines": 0,
+  "n_regions": 1086,
+  "avg_full_ocr_text_len": 0.0,
+  "max_full_ocr_text_len": 0
+}

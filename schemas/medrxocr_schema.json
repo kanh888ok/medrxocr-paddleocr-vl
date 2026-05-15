@@ -1,0 +1,171 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MedRxOCR Annotation Schema",
+  "type": "object",
+  "required": [
+    "document_type",
+    "patient",
+    "visit",
+    "medications",
+    "doctor",
+    "full_ocr_text"
+  ],
+  "properties": {
+    "document_type": {
+      "type": "string"
+    },
+    "patient": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "age": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sex": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "patient_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "visit": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "department": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "diagnosis": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "medications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "drug_name_raw": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "drug_name_normalized": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "strength": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "dose": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "frequency": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "route": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "duration": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "instruction": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "doctor": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "signature_present": {
+          "type": "boolean"
+        },
+        "stamp_present": {
+          "type": "boolean"
+        }
+      }
+    },
+    "regions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "bbox": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 4,
+            "maxItems": 4
+          },
+          "text": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "full_ocr_text": {
+      "type": "string"
+    }
+  }
+}

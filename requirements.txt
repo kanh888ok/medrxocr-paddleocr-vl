@@ -1,0 +1,13 @@
+paddlepaddle
+paddleocr
+paddleformers
+opencv-python
+pillow
+numpy
+pandas
+tqdm
+jsonschema
+rapidfuzz
+python-Levenshtein
+scikit-learn
+streamlit

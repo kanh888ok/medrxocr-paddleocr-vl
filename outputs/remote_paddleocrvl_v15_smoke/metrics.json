@@ -1,0 +1,10 @@
+{
+  "model": "PaddleOCR-VL-1.5",
+  "subset": "single smoke-test image from fixed eval split",
+  "n_images": 1,
+  "image_id": "rx_mendeley_bilingual_1000_0003",
+  "cer": 10.808201058201059,
+  "edit_distance": 8171,
+  "gold_chars": 756,
+  "prediction_chars": 8333
+}

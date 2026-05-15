@@ -1,0 +1,27 @@
+{
+  "split": {
+    "train": 4463
+  },
+  "source_id": {
+    "rxhandbd_5578": 4463
+  },
+  "difficulty": {
+    "medium": 4463
+  },
+  "language": {
+    "en": 4463,
+    "bn": 4463
+  },
+  "visual_tags": {
+    "handwritten": 4463,
+    "cropped_word": 4463
+  },
+  "task_type": {
+    "word_ocr": 4463
+  },
+  "n_records": 4463,
+  "n_medication_lines": 0,
+  "n_regions": 0,
+  "avg_full_ocr_text_len": 6.872059153036075,
+  "max_full_ocr_text_len": 18
+}

@@ -1,0 +1,29 @@
+{
+  "split": {
+    "unassigned": 997
+  },
+  "source_id": {
+    "mendeley_bilingual_1000": 997
+  },
+  "difficulty": {
+    "hard": 933,
+    "medium": 57,
+    "easy": 7
+  },
+  "language": {
+    "en": 997,
+    "bn": 997
+  },
+  "visual_tags": {
+    "handwritten": 997,
+    "mixed_language": 997
+  },
+  "task_type": {
+    "full_page": 997
+  },
+  "n_records": 997,
+  "n_medication_lines": 0,
+  "n_regions": 0,
+  "avg_full_ocr_text_len": 775.5075225677031,
+  "max_full_ocr_text_len": 2746
+}

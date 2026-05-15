@@ -1,0 +1,21 @@
+{
+  "n_records": 1115,
+  "n_duplicate_ids": 0,
+  "duplicate_ids_examples": [],
+  "n_missing_files": 0,
+  "missing_files_examples": [],
+  "n_pii_not_redacted": 0,
+  "pii_not_redacted_examples": [],
+  "n_missing_required": 0,
+  "missing_required_examples": [],
+  "visual_tags": {
+    "handwritten": 1115,
+    "cropped_word": 1115
+  },
+  "difficulty": {
+    "medium": 1115
+  },
+  "sources": {
+    "rxhandbd_5578": 1115
+  }
+}

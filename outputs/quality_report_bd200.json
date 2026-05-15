@@ -1,0 +1,22 @@
+{
+  "n_records": 200,
+  "n_duplicate_ids": 0,
+  "duplicate_ids_examples": [],
+  "n_missing_files": 0,
+  "missing_files_examples": [],
+  "n_pii_not_redacted": 0,
+  "pii_not_redacted_examples": [],
+  "n_missing_required": 0,
+  "missing_required_examples": [],
+  "visual_tags": {
+    "handwritten": 200,
+    "printed": 200,
+    "mixed_language": 200
+  },
+  "difficulty": {
+    "medium": 200
+  },
+  "sources": {
+    "mendeley_bd_200_yolo": 200
+  }
+}
