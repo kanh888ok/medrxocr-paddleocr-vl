@@ -12,6 +12,8 @@ fine-tuned derivative model.
 
 - GitHub repository:
   `https://github.com/kanh888ok/medrxocr-paddleocr-vl`
+- AI Studio dataset:
+  `https://aistudio.baidu.com/dataset/detail/384002/intro`
 - Data acquisition and integrity documentation.
 - Unified MedRxOCR JSONL schema.
 - Fixed train/validation/evaluation split.
@@ -67,12 +69,11 @@ Needed:
 
 ### 3. Public Dataset URL
 
-Status: external upload needed.
+Status: dataset page created; uploaded file contents still need final checking.
 
-Needed:
+Dataset URL:
 
-- AI Studio Dataset URL, or
-- Baidu Netdisk URL.
+- `https://aistudio.baidu.com/dataset/detail/384002/intro`
 
 Recommended upload contents:
 
@@ -113,7 +114,6 @@ only.
 
 These cannot be completed locally without user-provided access or links:
 
-- AI Studio Dataset or Baidu Netdisk upload destination.
 - Model checkpoint hosting destination after training.
 - A training environment with ERNIEKit install access, or a domestic mirror /
   uploaded ERNIEKit package.

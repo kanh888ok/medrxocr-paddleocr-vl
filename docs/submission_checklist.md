@@ -36,7 +36,7 @@
 ## Submission Email
 
 - [x] GitHub repository URL
-- [ ] AI Studio dataset URL / Baidu Netdisk URL
+- [x] AI Studio dataset URL / Baidu Netdisk URL
 - [ ] Hugging Face model URL or placeholder
 - [x] Technical report
 - [ ] Demo URL or local demo instructions

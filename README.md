@@ -54,6 +54,12 @@ MedRxOCR_competition_execution_pack/
     sample_prediction.json
 ```
 
+Current public materials:
+
+- GitHub: https://github.com/kanh888ok/medrxocr-paddleocr-vl
+- AI Studio Dataset: https://aistudio.baidu.com/dataset/detail/384002/intro
+- Current email draft: `docs/submission_email_draft_current.md`
+
 ## 推荐执行顺序
 
 ### Step 1. 下载数据

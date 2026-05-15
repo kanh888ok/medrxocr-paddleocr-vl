@@ -27,7 +27,13 @@ Not yet completed:
 - Full-page structured prescription zero-shot benchmark across all eval sources.
 - LoRA SFT training run.
 - Fine-tuned model weight publication.
-- Public AI Studio dataset or Baidu Netdisk dataset URL.
+
+Public materials:
+
+- GitHub repository:
+  `https://github.com/kanh888ok/medrxocr-paddleocr-vl`
+- AI Studio dataset:
+  `https://aistudio.baidu.com/dataset/detail/384002/intro`
 
 ## Data Sources
 
@@ -178,5 +184,4 @@ This repository is currently ready for data and protocol review, but it is not
 yet ready to be claimed as a completed fine-tuned PaddleOCR-VL derivative model.
 It now contains reproducible zero-shot word-level baselines for PaddleOCR-VL and
 PaddleOCR-VL-1.5. The final submission should wait until the full-page
-structured baseline, LoRA/SFT run, public dataset URL, and model checkpoint URL
-are available.
+structured baseline, LoRA/SFT run, and model checkpoint URL are available.

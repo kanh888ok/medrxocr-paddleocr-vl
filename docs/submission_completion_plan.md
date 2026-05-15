@@ -16,6 +16,8 @@ This file tracks what remains before a truthful final competition submission.
   bilingual integrity note.
 - GitHub repository created and pushed:
   `https://github.com/kanh888ok/medrxocr-paddleocr-vl`.
+- AI Studio dataset page created:
+  `https://aistudio.baidu.com/dataset/detail/384002/intro`.
 - PaddleOCR-VL and PaddleOCR-VL-1.5 zero-shot results completed on the full
   RxHandBD word-level eval subset:
   - `outputs/paddleocrvl_v1_rxhandbd_word_eval/metrics.json`
@@ -126,10 +128,15 @@ instructions.
 
 ### 5. Public Dataset URL
 
-Required from user:
+Completed page:
 
-- AI Studio dataset upload permission, or
-- Baidu Netdisk upload destination.
+- `https://aistudio.baidu.com/dataset/detail/384002/intro`
+
+Still verify after upload:
+
+- The dataset page is public.
+- The uploaded files include the processed JSONL splits, quality reports,
+  dataset statistics, and zero-shot result artifacts.
 
 Recommended dataset package:
 
