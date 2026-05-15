@@ -1,0 +1,55 @@
+### MedRxOCR ERNIEKit PaddleOCR-VL LoRA SFT config draft
+###
+### Use together with:
+###   scripts/build_erniekit_vl_sft_manifest.py
+###
+### This file is intentionally conservative. It targets a 1-GPU smoke/SFT run
+### first, then can be scaled after the first checkpoint is verified.
+
+### data
+train_dataset_type: default
+eval_dataset_type: default
+train_dataset_path: ./data/processed/train_rx_erniekit_sft.jsonl
+eval_dataset_path: ./data/processed/val_rx_erniekit_sft.jsonl
+max_seq_len: 8192
+dataloader_num_workers: 4
+
+### model
+model_name_or_path: PaddlePaddle/PaddleOCR-VL
+template: paddleocr_vl
+stage: VL-SFT
+fine_tuning: lora
+lora: true
+lora_rank: 8
+
+### train/eval
+do_train: true
+do_eval: true
+seed: 23
+num_train_epochs: 1
+per_device_train_batch_size: 1
+per_device_eval_batch_size: 1
+gradient_accumulation_steps: 8
+eval_steps: 100
+save_steps: 100
+logging_steps: 1
+evaluation_strategy: steps
+save_strategy: steps
+max_estimate_samples: 500
+
+### optimizer
+learning_rate: 2.0e-4
+min_lr: 2.0e-5
+lr_scheduler_type: cosine
+warmup_ratio: 0.03
+weight_decay: 0.05
+adam_beta1: 0.9
+adam_beta2: 0.95
+adam_epsilon: 1.0e-8
+
+### precision/output
+bf16: true
+fp16_opt_level: O2
+output_dir: ./outputs/medrxocr_lora
+logging_dir: ./outputs/medrxocr_lora/visualdl_logs
+disable_tqdm: false

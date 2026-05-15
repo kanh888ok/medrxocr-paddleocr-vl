@@ -23,6 +23,13 @@ This file tracks what remains before a truthful final competition submission.
   - `outputs/paddleocrvl_v15_rxhandbd_word_eval/metrics.json`
   - `outputs/paddleocrvl_v15_rxhandbd_word_eval/predictions.jsonl`
   - `outputs/paddleocrvl_rxhandbd_word_eval_summary.json`
+- ERNIEKit PaddleOCR-VL SFT manifest builder added:
+  `scripts/build_erniekit_vl_sft_manifest.py`.
+- ERNIEKit LoRA config draft added:
+  `configs/erniekit_paddleocr_vl_lora_medrxocr.yaml`.
+- Remote generation of ERNIEKit train/val SFT manifests verified:
+  - 4801 train records
+  - 607 validation records
 
 ## Remaining Work Before Final Submission
 
@@ -81,6 +88,14 @@ Current full-eval result on `rxhandbd_5578` word-level eval:
 
 Goal: fine-tune the VLM component using the generated SFT manifests.
 
+Current status:
+
+- ERNIEKit-compatible SFT JSONL generation is implemented and verified.
+- Remote inference environment has PaddleOCR-VL working.
+- Remote training environment is missing ERNIEKit/PaddleNLP/VisualDL.
+- Attempting to clone the official ERNIE repository from GitHub on the remote
+  GPU timed out on port 443.
+
 Required output:
 
 - Training logs in `outputs/medrxocr_lora/`
@@ -95,6 +110,8 @@ Important truthfulness note:
 - Official PaddleOCR-VL documentation recommends ERNIEKit SFT for the VLM
   component. Do not claim layout analysis or ranking models were fine-tuned
   unless that is actually done and supported by the selected toolchain.
+- Do not claim LoRA SFT is completed until a checkpoint and evaluation metrics
+  exist.
 
 ### 4. Public Repository
 
