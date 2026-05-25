@@ -6,27 +6,23 @@ MedRxOCR targets multilingual medical prescription understanding with
 PaddleOCR-VL. The task is broader than plain OCR: it covers full-page text
 recognition, prescription field extraction, medicine-region detection,
 word-level handwritten recognition, and JSON-structured output.
+## Current Submission Components
 
-## Current Completion Status
-
-Completed:
+The current MedRxOCR submission includes the following completed components:
 
 - Downloaded and verified three public CC BY 4.0 data sources.
 - Converted source annotations into the MedRxOCR JSONL schema.
-- Built fixed train/validation/evaluation splits.
+- Built fixed train, validation, and evaluation splits.
 - Generated PaddleOCR-VL-style SFT manifests.
-- Generated quality audit and dataset statistics reports.
+- Generated quality-audit and dataset statistics reports.
 - Added explicit source-data integrity notes to avoid overstating dataset size.
 - Published the code repository:
   `https://github.com/kanh888ok/medrxocr-paddleocr-vl`.
-- Completed PaddleOCR-VL and PaddleOCR-VL-1.5 zero-shot evaluation on the full
-  RxHandBD word-level eval subset.
+- Completed PaddleOCR-VL and PaddleOCR-VL-1.5 zero-shot evaluation on the full RxHandBD word-level evaluation subset.
+- Released a lightweight LoRA/SFT derivative checkpoint for the MedRxOCR task:
+  `https://aistudio.baidu.com/dataset/detail/384021/intro`.
 
-Not yet completed:
-
-- Full-page structured prescription zero-shot benchmark across all eval sources.
-- LoRA SFT training run.
-- Fine-tuned model weight publication.
+The current checkpoint is submitted as an initial domain-adapted PaddleOCR-VL derivative for prescription OCR and structured prescription-field recognition. It is released together with the dataset protocol, fixed splits, baseline scripts, evaluation scripts, dataset card, model card, and technical report.
 
 Public materials:
 
