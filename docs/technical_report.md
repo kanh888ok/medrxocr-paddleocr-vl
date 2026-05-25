@@ -7,6 +7,10 @@ The task is broader than plain OCR: it covers full-page text recognition,
 prescription field extraction, medicine-region detection, word-level handwritten
 recognition, and JSON-structured output.
 
+The repository provides a unified schema and protocol for structured
+prescription extraction; current released labels mainly cover full-page OCR
+text, medicine-region detection, and word-level prescription OCR.
+
 ## Current Submission Components
 
 The MedRxOCR submission includes the following completed components:
@@ -97,7 +101,9 @@ All generated JSONL files passed the current quality audit checks:
 - 0 records marked as not privacy-redacted.
 
 Audit reports are stored in `outputs/quality_report_*.json`. Dataset statistics
-are stored in `outputs/dataset_stats_*.json`.
+are stored in `outputs/dataset_stats_*.json`. Quality reports and processed
+split files are included in the AI Studio dataset package, not tracked directly
+in GitHub.
 
 ## SFT Manifests
 
@@ -166,6 +172,9 @@ Result artifacts:
 Reporting scope: these numbers are reported as RxHandBD word-level zero-shot
 full-evaluation results. They are not reported as LoRA/SFT results or as
 full-page structured prescription extraction results.
+
+Released prediction files include gold labels only for public CC BY 4.0
+benchmark records, for transparent metric verification.
 
 ## Remote Smoke Test: PaddleOCR-VL-1.5
 

@@ -45,6 +45,8 @@ MedRxOCR_competition_execution_pack/
     evaluate_rxocr.py
     quality_audit.py
     dataset_stats.py
+    create_submission_splits.py
+    run_paddleocrvl_word_eval.py
   configs/
     paddleocr_vl_lora_rx.yaml
   demo/
@@ -67,6 +69,15 @@ Large raw, interim, and processed data files are not tracked in GitHub. They are
 released through the AI Studio dataset package. After downloading the AI Studio
 dataset, place or copy the processed JSONL files under `data/processed/` before
 running evaluation or SFT manifest scripts.
+
+Quality reports and processed split files are included in the AI Studio dataset
+package, not tracked directly in GitHub.
+
+Current label scope note:
+
+The repository provides a unified schema and protocol for structured
+prescription extraction; current released labels mainly cover full-page OCR
+text, medicine-region detection, and word-level prescription OCR.
 
 ## 推荐执行顺序
 

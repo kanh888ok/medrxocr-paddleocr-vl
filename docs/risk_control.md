@@ -14,9 +14,10 @@ Mitigation:
 ### 2. Synthetic-data disqualification
 
 Mitigation:
-- Synthetic data only in training augmentation.
-- Explicitly label synthetic samples.
-- Exclude synthetic data from core evaluation set.
+- No synthetic clinical prescriptions are included in the current released
+  dataset package.
+- If synthetic augmentation is added in future work, it must be explicitly
+  labeled and excluded from the core evaluation set.
 
 ### 3. Medical privacy risk
 
@@ -28,8 +29,9 @@ Mitigation:
 ### 4. Weak originality
 
 Mitigation:
-- Emphasize structured prescription extraction.
-- Add lexicon-constrained decoding.
+- Emphasize the unified schema and protocol for structured prescription
+  extraction.
+- Keep lexicon-constrained decoding as a planned extension.
 - Add medicine-region detection and word-level recognition subtasks.
 - Provide reproducible scripts and schema.
 
@@ -37,5 +39,5 @@ Mitigation:
 
 Mitigation:
 - Use zero-shot baseline first.
-- LoRA SFT with small subset.
+- Release a lightweight initial LoRA/SFT derivative checkpoint.
 - Focus scoring narrative on full benchmark contribution and reproducibility.

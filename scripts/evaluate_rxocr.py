@@ -88,6 +88,7 @@ def main():
         "n_images": len(ids),
         "json_valid_rate": json_valid / len(ids),
         "field_exact_accuracy": correct / total if total else 0,
+        "metric_scope": "Lightweight slot-level baseline metric; medication slots are pooled as a multiset and are not strictly aligned by image row or clinical field instance.",
         "medication_slot_f1": med_f1,
         "medication_slot_tp": tp,
         "medication_slot_fp": fp,

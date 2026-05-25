@@ -1,12 +1,18 @@
 # MedRxOCR Annotation Guideline
 
-## 1. 标注目标
+## 1. Annotation Goal
 
-把处方图像转为结构化 JSON。不要凭空推断；看不清就标 `[UNK]`；缺失字段标 `null`。
+Convert prescription images into a structured JSON annotation format. Do not
+infer invisible content. Use `[UNK]` for unreadable text and `null` for missing
+fields.
 
-## 2. 输出 schema
+The current released labels mainly cover full-page OCR text, medicine-region
+detection, and word-level prescription OCR. The schema also provides a protocol
+for future structured prescription-field extraction.
 
-核心字段：
+## 2. Output Schema
+
+Annotation JSON core fields:
 
 - document_type
 - patient
@@ -15,12 +21,19 @@
 - doctor
 - full_ocr_text
 - regions
+
+Sample-level metadata fields:
+
 - visual_tags
 - difficulty
+- language
+- source_id
+- license
+- pii_redacted
 
-## 3. 药品行字段
+## 3. Medication Line Fields
 
-每个药品行：
+Each medication line may contain:
 
 ```json
 {
@@ -35,56 +48,62 @@
 }
 ```
 
-## 4. 规则
+## 4. Annotation Rules
 
-### 原始字段
+### Raw Fields
 
-- `*_raw`：保持图像原文。
-- 不扩写，不纠错。
+- Keep `*_raw` fields faithful to the image text.
+- Do not expand abbreviations or silently correct spelling in raw fields.
 
-### 规范字段
+### Normalized Fields
 
-- `*_normalized`：小写、标准拼写、统一单位。
-- 药品名可用 RxNorm/NMPA 词典辅助。
+- Use normalized fields for standardized spelling, units, frequency, route, and
+  drug-name normalization when reliable evidence is available.
+- RxNorm, NMPA, or other drug lexicons may support future normalization work, but
+  lexicon-constrained decoding is not reported as a completed benchmark in the
+  current submission.
 
-### 隐私字段
+### Privacy Fields
 
-以下一律脱敏：
+The following content must be redacted or marked unavailable when it can identify
+a person:
 
-- 患者姓名
-- 电话
-- 身份证/病人 ID
-- 地址
-- 二维码/条形码
-- 医生注册号
-- 医生签名如构成可识别身份
+- patient name
+- phone number
+- identity number or patient ID
+- address
+- QR code or barcode
+- doctor registration number
+- doctor signature if it is personally identifying
 
-## 5. 难度标签
+## 5. Difficulty Tags
 
 ### easy
 
-- 清晰扫描/拍照
-- 主要为印刷体
-- 无明显遮挡
+- clear scan or photo
+- mostly printed text
+- no obvious occlusion
 
 ### medium
 
-- 有少量手写、印章、轻微倾斜、轻微模糊
+- some handwriting
+- stamp or mild skew
+- light blur
 
 ### hard
 
-满足任一：
+At least one of the following:
 
-- 大量医生手写
-- 印章/签名遮挡
-- 明显透视畸变
-- 强阴影或低光
-- 折痕/遮挡/涂改
-- 药品名罕见或缩写严重
+- heavy handwriting
+- stamp or signature overlap
+- strong perspective distortion
+- low light or strong shadow
+- fold, occlusion, correction, or crossed-out text
+- rare or heavily abbreviated medicine names
 
 ## 6. visual_tags
 
-可多选：
+Multiple tags may be used:
 
 - handwritten
 - printed

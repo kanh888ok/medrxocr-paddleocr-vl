@@ -6,7 +6,10 @@ MedRxOCR-Eval / MedRxOCR-Train
 
 ## Purpose
 
-This dataset supports OCR and structured understanding of medical prescription images.
+This dataset supports OCR and structured understanding of medical prescription
+images. The repository provides a unified schema and protocol for structured
+prescription extraction; current released labels mainly cover full-page OCR
+text, medicine-region detection, and word-level prescription OCR.
 
 ## Data Sources
 
@@ -102,3 +105,6 @@ Each sample should include:
 - visual tag distribution
 - difficulty distribution
 - train/eval leakage check
+
+Released prediction files include gold labels only for public CC BY 4.0
+benchmark records, for transparent metric verification.
