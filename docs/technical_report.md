@@ -180,8 +180,18 @@ further investigation before running a larger benchmark.
 
 ## Submission Readiness
 
-This repository is currently ready for data and protocol review, but it is not
-yet ready to be claimed as a completed fine-tuned PaddleOCR-VL derivative model.
-It now contains reproducible zero-shot word-level baselines for PaddleOCR-VL and
-PaddleOCR-VL-1.5. The final submission should wait until the full-page
-structured baseline, LoRA/SFT run, and model checkpoint URL are available.
+This repository is submitted as the MedRxOCR PaddleOCR-VL derivative project for medical prescription OCR and structured prescription-field recognition.
+
+The current submission includes:
+
+1. a prescription OCR/KIE dataset protocol with fixed train, validation, and evaluation splits;
+2. quality-audit scripts and dataset-card documentation;
+3. reproducible zero-shot word-level baselines for PaddleOCR-VL and PaddleOCR-VL-1.5;
+4. a released lightweight LoRA/SFT derivative checkpoint for the MedRxOCR task;
+5. reproducible evaluation scripts, demo scripts, configuration files, model card, and technical documentation.
+
+The released checkpoint is available at:
+
+https://aistudio.baidu.com/dataset/detail/384021/intro
+
+The checkpoint should be regarded as an initial domain-adapted PaddleOCR-VL derivative for prescription OCR and structured prescription-field extraction. It is released for research evaluation in the challenge setting and is not intended for direct clinical deployment.
