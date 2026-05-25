@@ -28,7 +28,7 @@ MedRxOCR challenge package.
   RxHandBD word-level evaluation subset.
 - Lightweight initial LoRA/SFT derivative checkpoint released on AI Studio.
 - Dataset card, model card, technical report, configuration files, scripts,
-  and local demo included in the repository.
+  and local Streamlit demo shell included in the repository.
 
 ## Reported Baselines
 

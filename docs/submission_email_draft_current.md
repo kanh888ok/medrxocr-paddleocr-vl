@@ -80,8 +80,8 @@ https://github.com/kanh888ok/medrxocr-paddleocr-vl/blob/main/docs/technical_repo
 
 5. Demo:
 
-Local Streamlit demo instructions are included in the repository under
-`demo/app.py`.
+Local Streamlit demo shell with placeholder output; the inference integration
+point is provided in `demo/app.py`.
 
 Best regards,
 

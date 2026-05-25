@@ -95,10 +95,10 @@ Each sample should include:
 
 ## Quality Control
 
-- schema validation
+- top-level required-field check
 - image existence check
 - duplicate image_id check
-- privacy redaction check
+- privacy redaction flag check
 - visual tag distribution
 - difficulty distribution
 - train/eval leakage check

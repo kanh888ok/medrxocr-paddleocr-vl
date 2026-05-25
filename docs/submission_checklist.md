@@ -11,7 +11,7 @@
 - [x] Evaluation script included
 - [x] Quality audit script included
 - [x] Baseline result table included
-- [x] Demo included
+- [x] Local Streamlit demo shell included
 - [x] License included
 
 ## Data
@@ -40,4 +40,4 @@
 - [x] AI Studio dataset URL / Baidu Netdisk URL
 - [x] AI Studio model URL
 - [x] Technical report
-- [x] Demo URL or local demo instructions
+- [x] Local demo shell instructions

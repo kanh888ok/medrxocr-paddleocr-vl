@@ -9,9 +9,9 @@
 核心目标：
 
 1. 构建可复现的医疗处方识别评估协议。
-2. 基于 PaddleOCR-VL / PaddleOCR-VL-1.5 做处方场景微调。
+2. 提供 PaddleOCR-VL / PaddleOCR-VL-1.5 zero-shot baseline，并发布 lightweight initial LoRA/SFT derivative checkpoint。
 3. 输出结构化 JSON，而不是只输出纯文本。
-4. 提供数据来源登记、标注规范、质控脚本、评估脚本和可运行 Demo。
+4. 提供数据来源登记、标注规范、质控脚本、评估脚本和本地 Streamlit demo shell。
 5. 合规使用公开许可数据，不伪造真实临床处方。
 
 ## 最重要的策略
@@ -61,6 +61,13 @@ Current public materials:
 - AI Studio Model Weights: https://aistudio.baidu.com/dataset/detail/384021/intro
 - Technical Report: https://github.com/kanh888ok/medrxocr-paddleocr-vl/blob/main/docs/technical_report.md
 
+Data availability note:
+
+Large raw, interim, and processed data files are not tracked in GitHub. They are
+released through the AI Studio dataset package. After downloading the AI Studio
+dataset, place or copy the processed JSONL files under `data/processed/` before
+running evaluation or SFT manifest scripts.
+
 ## 推荐执行顺序
 
 ### Step 1. 下载数据
@@ -100,9 +107,10 @@ python scripts/build_sft_manifest.py --input data/processed/medrxocr_val.jsonl -
 python scripts/build_sft_manifest.py --input data/processed/medrxocr_eval.jsonl --output data/processed/eval_rx_sft.jsonl
 ```
 
-### Step 5. 跑 baseline / 微调
+### Step 5. 跑 baseline / 使用发布的 lightweight checkpoint
 
-先跑 PaddleOCR-VL zero-shot，再 LoRA SFT。配置文件在：
+先跑 PaddleOCR-VL zero-shot baseline，再使用发布的 lightweight initial LoRA/SFT
+derivative checkpoint 或配置文件进行后续实验。配置文件在：
 
 ```text
 configs/paddleocr_vl_lora_rx.yaml

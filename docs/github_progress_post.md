@@ -13,8 +13,8 @@
 1. 使用公开许可、已脱敏的真实处方数据构建评估集。
 2. 统一转换为 MedRxOCR JSON schema。
 3. 支持 full-page OCR、药品区域检测、手写药品词识别、药品行结构化解析等子任务。
-4. 基于 PaddleOCR-VL / PaddleOCR-VL-1.5 进行 LoRA SFT。
-5. 引入药品词典约束，用于 drug_name normalization、剂量单位标准化、频次/给药途径规范化。
-6. 开源数据转换、质控、评估脚本和本地 Demo。
+4. 提供 PaddleOCR-VL / PaddleOCR-VL-1.5 zero-shot baseline，并发布 lightweight initial LoRA/SFT derivative checkpoint。
+5. 预留药品词典约束设计，用于后续 drug_name normalization、剂量单位标准化、频次/给药途径规范化。
+6. 开源数据转换、质控、评估脚本和本地 Streamlit demo shell。
 
 项目重点关注真实医疗处方中的手写、印章遮挡、拍照倾斜、低清晰度、多语言混排和药品缩写等长尾难点。
