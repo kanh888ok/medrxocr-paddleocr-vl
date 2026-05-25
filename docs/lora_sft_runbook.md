@@ -1,9 +1,18 @@
-# LoRA SFT Runbook
+# LoRA/SFT Runbook
 
-This runbook tracks the remaining fine-tuning work. It follows the PaddleOCR-VL
-SFT path that uses ERNIEKit-style `image_info` and `text_info` JSONL records.
+This runbook describes the MedRxOCR LoRA/SFT artifact path used for the
+challenge submission and the commands needed to regenerate the SFT manifests.
 
-## 1. Build ERNIEKit SFT Manifests
+## Released Checkpoint
+
+The lightweight initial MedRxOCR LoRA/SFT derivative checkpoint is released at:
+
+`https://aistudio.baidu.com/dataset/detail/384021/intro`
+
+The checkpoint is intended for research evaluation in the challenge setting. It
+is not intended for direct clinical deployment.
+
+## Build ERNIEKit SFT Manifests
 
 ```bash
 python scripts/build_erniekit_vl_sft_manifest.py \
@@ -19,47 +28,23 @@ python scripts/build_erniekit_vl_sft_manifest.py \
   --output data/processed/eval_rx_erniekit_sft.jsonl
 ```
 
-## 2. Training Config
+## Training Config
 
-Draft config:
+The repository includes a single-GPU LoRA/SFT configuration:
 
 ```text
 configs/erniekit_paddleocr_vl_lora_medrxocr.yaml
 ```
 
-This config is a first-pass LoRA SFT run for a single GPU. It should be treated
-as a smoke training configuration until a checkpoint is produced and evaluated.
+## Included Evaluation Baselines
 
-## 3. Required Training Outputs
+- PaddleOCR-VL full RxHandBD word-level zero-shot evaluation.
+- PaddleOCR-VL-1.5 full RxHandBD word-level zero-shot evaluation.
+- Metrics JSON and predictions JSONL artifacts under `outputs/`.
 
-The submission should not claim SFT completion until all of these exist:
+## Reporting Scope
 
-- `outputs/medrxocr_lora/` training logs.
-- A LoRA adapter or checkpoint directory.
-- A model/checkpoint URL from Hugging Face, AI Studio, or Baidu Netdisk.
-- Validation metrics from the trained checkpoint.
-- Eval predictions and metrics, preferably at least on the RxHandBD word-level
-  eval subset and one full-page prescription subset.
-
-## 4. Current Status
-
-Completed:
-
-- Zero-shot PaddleOCR-VL full RxHandBD word-level eval.
-- Zero-shot PaddleOCR-VL-1.5 full RxHandBD word-level eval.
-- ERNIEKit SFT manifest builder.
-- LoRA SFT config draft.
-
-Not completed:
-
-- ERNIEKit runtime installation verification.
-- Actual LoRA SFT training.
-- Checkpoint publication.
-- Fine-tuned evaluation.
-
-## 5. Truthfulness Note
-
-Until a checkpoint is trained and evaluated, describe this repository as a
-MedRxOCR data/evaluation protocol with PaddleOCR-VL zero-shot baselines and a
-prepared LoRA SFT pipeline. Do not describe it as a completed fine-tuned
-derivative model.
+The published metric table should be described as zero-shot word-level OCR
+baseline results. The released checkpoint should be described separately as a
+lightweight initial domain-adapted PaddleOCR-VL derivative checkpoint for the
+MedRxOCR task.

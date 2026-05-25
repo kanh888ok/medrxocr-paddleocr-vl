@@ -57,8 +57,9 @@ MedRxOCR_competition_execution_pack/
 Current public materials:
 
 - GitHub: https://github.com/kanh888ok/medrxocr-paddleocr-vl
-- AI Studio Dataset: https://aistudio.baidu.com/dataset/detail/384002/intro
-- Current email draft: `docs/submission_email_draft_current.md`
+- AI Studio Dataset: https://aistudio.baidu.com/dataset/detail/384020/intro
+- AI Studio Model Weights: https://aistudio.baidu.com/dataset/detail/384021/intro
+- Technical Report: https://github.com/kanh888ok/medrxocr-paddleocr-vl/blob/main/docs/technical_report.md
 
 ## 推荐执行顺序
 

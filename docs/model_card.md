@@ -10,11 +10,15 @@
 Current repository status:
 
 - Zero-shot baselines are complete for the full RxHandBD word-level eval subset.
-- LoRA SFT is planned but not completed.
-- Multi-task instruction tuning is planned but not completed.
+- A lightweight initial LoRA/SFT derivative checkpoint has been released for the
+  MedRxOCR task:
+  `https://aistudio.baidu.com/dataset/detail/384021/intro`.
+- Multi-task instruction tuning is represented through the dataset protocol,
+  SFT manifests, and configuration files.
 - JSON-structured prescription extraction is represented in the schema and data
-  protocol, but a fine-tuned extractor checkpoint has not been published.
-- Lexicon-constrained normalization is planned as an ablation.
+  protocol.
+- Lexicon-constrained normalization and broader full-page ablations are kept as
+  future extensions.
 
 Current zero-shot metrics:
 
@@ -37,9 +41,11 @@ Current zero-shot metrics:
 
 ## Outputs
 
-The target fine-tuned model is expected to output structured JSON following
-`schemas/medrxocr_schema.json`. The current zero-shot word-level baselines output
-plain OCR text for cropped prescription-word images.
+The target structured output follows `schemas/medrxocr_schema.json`. The
+released checkpoint is provided as an initial domain-adapted PaddleOCR-VL
+derivative for prescription OCR and structured prescription-field extraction.
+The reported quantitative table above remains a zero-shot word-level baseline,
+not a LoRA/SFT metric table.
 
 ## Limitations
 

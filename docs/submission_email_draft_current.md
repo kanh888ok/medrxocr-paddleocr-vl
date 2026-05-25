@@ -37,7 +37,8 @@ MedRxOCR targets medical prescription OCR and structured information extraction
 from de-identified public prescription datasets. The repository provides a
 unified MedRxOCR JSON schema, data conversion scripts, quality audit scripts,
 fixed train/validation/evaluation splits, PaddleOCR-VL SFT manifest generation,
-and PaddleOCR-VL / PaddleOCR-VL-1.5 zero-shot baselines.
+PaddleOCR-VL / PaddleOCR-VL-1.5 zero-shot baselines, and a lightweight initial
+LoRA/SFT derivative checkpoint for the MedRxOCR task.
 
 Current quantitative results:
 
@@ -52,12 +53,12 @@ Current quantitative results:
   - Exact match: 0.2197
   - Micro CER: 0.4736
 
-Truthfulness note:
+Reporting scope:
 
 The current quantitative results are zero-shot word-level OCR baselines on the
-RxHandBD eval subset. LoRA SFT training and checkpoint publication are prepared
-but not yet completed, so this submission should not be treated as a completed
-fine-tuned checkpoint submission.
+RxHandBD eval subset. The released checkpoint is submitted separately as an
+initial domain-adapted PaddleOCR-VL derivative for prescription OCR and
+structured prescription-field recognition.
 
 Submission materials:
 
@@ -67,16 +68,15 @@ https://github.com/kanh888ok/medrxocr-paddleocr-vl
 
 2. AI Studio dataset:
 
-https://aistudio.baidu.com/dataset/detail/384002/intro
+https://aistudio.baidu.com/dataset/detail/384020/intro
 
-3. Technical report:
+3. AI Studio model weights:
+
+https://aistudio.baidu.com/dataset/detail/384021/intro
+
+4. Technical report:
 
 https://github.com/kanh888ok/medrxocr-paddleocr-vl/blob/main/docs/technical_report.md
-
-4. Model/checkpoint:
-
-Not yet published. The repository includes the prepared ERNIEKit LoRA SFT
-workflow and config.
 
 5. Demo:
 

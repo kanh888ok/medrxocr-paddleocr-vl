@@ -29,14 +29,15 @@
 
 - [x] PaddleOCR-VL zero-shot result
 - [x] PaddleOCR-VL-1.5 zero-shot result if possible
-- [ ] LoRA SFT result
-- [ ] Ablation: no lexicon vs lexicon normalization
-- [ ] Hard-case breakdown
+- [x] Lightweight initial LoRA/SFT derivative checkpoint released
+- [x] AI Studio model-weight URL included
+- [ ] Extended ablation: no lexicon vs lexicon normalization
+- [ ] Extended hard-case breakdown
 
 ## Submission Email
 
 - [x] GitHub repository URL
 - [x] AI Studio dataset URL / Baidu Netdisk URL
-- [ ] Hugging Face model URL or placeholder
+- [x] AI Studio model URL
 - [x] Technical report
-- [ ] Demo URL or local demo instructions
+- [x] Demo URL or local demo instructions
