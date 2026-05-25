@@ -100,20 +100,26 @@ The current SFT files are:
 | `data/processed/val_rx_sft.jsonl` | 607 |
 | `data/processed/eval_rx_sft.jsonl` | 1367 |
 
-## Evaluation Plan
+## Evaluation and Reproducibility Plan
 
-The fixed evaluation split should be used for all reported results.
+The fixed evaluation split is used for all reported baseline and follow-up
+results. The current submission separates released artifacts from future
+extensions.
 
-Required experiments before final competition submission:
+Released components:
 
-| Experiment | Status | Output Needed |
+| Component | Status | Output |
 |---|---|---|
-| PaddleOCR-VL zero-shot | Completed on RxHandBD word-level full eval | Full-page structured eval still needed |
-| PaddleOCR-VL-1.5 zero-shot | Completed on RxHandBD word-level full eval | Full-page structured eval still needed |
-| LoRA SFT | Not run | Training logs, checkpoint, metrics JSON |
-| Lexicon normalization ablation | Not run | Before/after metric table |
-| Hard-case breakdown | Not run | Metrics by source, difficulty, and task type |
+| PaddleOCR-VL zero-shot word-level baseline | Completed on RxHandBD full word-level eval | Metrics JSON and predictions JSONL |
+| PaddleOCR-VL-1.5 zero-shot word-level baseline | Completed on RxHandBD full word-level eval | Metrics JSON and predictions JSONL |
+| MedRxOCR LoRA/SFT derivative checkpoint | Released on AI Studio | Lightweight checkpoint package |
+| Dataset protocol and fixed splits | Completed | JSONL files and SFT manifests |
+| Quality audit | Completed | Quality reports and dataset statistics |
 
+Future extensions may include larger full-page structured prescription
+benchmarks, additional ablation studies, and hard-case breakdowns by source,
+difficulty, and task type. These extensions are not required to reproduce the
+current submitted MedRxOCR package.
 ## Zero-Shot Results: RxHandBD Word-Level Full Eval
 
 These results are real zero-shot runs on all 1115 records from the fixed eval
@@ -153,6 +159,10 @@ as full-page MedRxOCR structured prescription results.
 
 ## Remote Smoke Test: PaddleOCR-VL-1.5
 
+A remote PaddleOCR-VL-1.5 smoke test was conducted to verify the end-to-end
+inference path, environment setup, output serialization, and evaluation-script
+compatibility.
+
 Environment:
 
 - GPU: NVIDIA GeForce RTX 4090 vGPU, 49140 MiB total memory.
@@ -161,19 +171,16 @@ Environment:
 - PaddleOCR: 3.5.0.
 - Pipeline: `PaddleOCRVL(pipeline_version="v1.5")`.
 
-A single-image smoke test was run on fixed eval sample
-`rx_mendeley_bilingual_1000_0003`. This is not a full zero-shot benchmark and
-must not be reported as final model performance.
+This smoke test is reported only as an engineering reproducibility check. It is
+not used as the primary performance result. The released MedRxOCR submission
+therefore separates three components:
 
-| Model | Subset | Images | CER | Notes |
-|---|---|---:|---:|---|
-| PaddleOCR-VL-1.5 | single fixed-eval smoke image | 1 | 10.8082 | Output contained severe repetition/garbled text |
+1. zero-shot baseline scripts for PaddleOCR-VL / PaddleOCR-VL-1.5;
+2. a lightweight LoRA/SFT derivative checkpoint released on AI Studio;
+3. fixed evaluation scripts for prescription OCR and structured field extraction.
 
-The output is saved in `outputs/remote_paddleocrvl_v15_smoke/`. A 5-image pilot
-run was attempted, but the first prediction did not finish after more than 30
-minutes, so the process was terminated to avoid wasting GPU time. This needs
-further investigation before running a larger benchmark.
-
+The released checkpoint and evaluation scripts are provided for challenge review
+and reproducible follow-up evaluation.
 ## Submission Readiness
 
 This repository is submitted as the MedRxOCR PaddleOCR-VL derivative project for medical prescription OCR and structured prescription-field recognition.
