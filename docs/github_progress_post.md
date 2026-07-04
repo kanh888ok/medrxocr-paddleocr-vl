@@ -1,20 +1,26 @@
-# GitHub Progress Post Template
+# GitHub 进度帖草稿
 
 【报名】：1
+
 【选题方向】：医疗处方识别
+
 【团队人数】：1
 
 项目进展：
 
-我正在构建 MedRxOCR，一个基于 PaddleOCR-VL 的多语种医疗处方结构化识别衍生模型。项目目标不是普通 OCR，而是将真实处方图像解析为结构化 JSON，包括药品名、剂量、用法、频次、疗程、科室、日期、医生签名/印章等字段。
+我在整理一个处方 OCR 评测项目 MedRxOCR，基于 PaddleOCR-VL 做公开数据评测和后续微调实验。
 
-当前设计包括：
+当前完成：
 
-1. 使用公开许可、已脱敏的真实处方数据构建评估集。
-2. 统一转换为 MedRxOCR JSON schema。
-3. 支持 full-page OCR、药品区域检测、手写药品词识别、药品行结构化解析等子任务。
-4. 提供 PaddleOCR-VL / PaddleOCR-VL-1.5 zero-shot baseline，并发布 lightweight initial LoRA/SFT derivative checkpoint。
-5. 预留药品词典约束设计，用于后续 drug_name normalization、剂量单位标准化、频次/给药途径规范化。
-6. 开源数据转换、质控、评估脚本和本地 Streamlit demo shell。
+1. 整理 3 个公开处方数据源，记录许可证和用途。
+2. 将标注转成统一 JSONL 格式。
+3. 固定训练集、验证集、评估集划分。
+4. 完成 PaddleOCR-VL / PaddleOCR-VL-1.5 在 RxHandBD 词图评估集上的 zero-shot 基线。
+5. 提供 SFT 清单生成脚本和 LoRA/SFT 配置。
+6. 发布一个初始检查点，方便后续继续训练。
 
-项目重点关注真实医疗处方中的手写、印章遮挡、拍照倾斜、低清晰度、多语言混排和药品缩写等长尾难点。
+当前不足：
+
+1. 数据主要来自公开数据，还需要补充自行收集并人工质检的数据。
+2. 目前指标是 zero-shot 基线，还需要补充微调后指标。
+3. 药品行结构化字段标注还不够完整。

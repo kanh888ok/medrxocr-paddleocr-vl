@@ -1,88 +1,49 @@
-# Current Submission Email Draft
+# 提交邮件草稿
 
-Subject:
+主题：
 
-PaddleOCR Derivative Model Challenge - MedRxOCR Medical Prescription Recognition - kanh888ok
+PaddleOCR 衍生模型挑战赛 - MedRxOCR 处方 OCR - kanh888ok
 
-Recipients:
+收件人：
 
 ext_paddle_oss@baidu.com
 paddleocr@baidu.com
 cuicheng01@baidu.com
 liujiaxuan01@baidu.com
 
-Body:
+正文：
 
-Dear PaddleOCR Challenge Organizers,
+各位老师好：
 
-I am submitting the MedRxOCR project for the PaddleOCR Global Derivative Model
-Challenge.
+我提交的项目是 MedRxOCR，方向是医疗处方 OCR。
 
-Project name:
+项目基于公开且已脱敏的处方数据，整理了统一 JSONL 格式、固定训练/验证/评估划分、质量检查脚本、数据统计脚本、PaddleOCR-VL 评测脚本和 SFT 训练清单。
 
-MedRxOCR: Multilingual Medical Prescription Structured Recognition with
-PaddleOCR-VL
+当前已完成的基线结果如下：
 
-Track:
+| 模型 | 数据集 | 图像数 | 错误数 | Exact Match | Micro CER |
+|---|---|---:|---:|---:|---:|
+| PaddleOCR-VL | RxHandBD 词图评估集 | 1115 | 0 | 0.2386 | 0.4255 |
+| PaddleOCR-VL-1.5 | RxHandBD 词图评估集 | 1115 | 0 | 0.2197 | 0.4736 |
 
-Medical prescription recognition
+这些结果是 zero-shot 词图识别基线，不是微调后指标。
 
-Team size:
+项目也发布了一个初始检查点，供后续训练和复现实验使用。正式微调结果还需要在固定评估集上继续补充。
 
-1
+材料链接：
 
-Project summary:
-
-MedRxOCR targets medical prescription OCR and structured information extraction
-from de-identified public prescription datasets. The repository provides a
-unified MedRxOCR JSON schema, data conversion scripts, quality audit scripts,
-fixed train/validation/evaluation splits, PaddleOCR-VL SFT manifest generation,
-PaddleOCR-VL / PaddleOCR-VL-1.5 zero-shot baselines, and a lightweight initial
-LoRA/SFT derivative checkpoint for the MedRxOCR task.
-
-Current quantitative results:
-
-- PaddleOCR-VL zero-shot on RxHandBD word-level eval:
-  - 1115 / 1115 images completed
-  - 0 errors
-  - Exact match: 0.2386
-  - Micro CER: 0.4255
-- PaddleOCR-VL-1.5 zero-shot on RxHandBD word-level eval:
-  - 1115 / 1115 images completed
-  - 0 errors
-  - Exact match: 0.2197
-  - Micro CER: 0.4736
-
-Reporting scope:
-
-The current quantitative results are zero-shot word-level OCR baselines on the
-RxHandBD eval subset. The released checkpoint is submitted separately as an
-initial domain-adapted PaddleOCR-VL derivative for prescription OCR and
-structured prescription-field recognition.
-
-Submission materials:
-
-1. GitHub repository:
-
+1. GitHub 仓库
 https://github.com/kanh888ok/medrxocr-paddleocr-vl
 
-2. AI Studio dataset:
-
+2. AI Studio 数据包
 https://aistudio.baidu.com/dataset/detail/384020/intro
 
-3. AI Studio model weights:
-
+3. AI Studio 初始检查点
 https://aistudio.baidu.com/dataset/detail/384021/intro
 
-4. Technical report:
-
+4. 技术报告
 https://github.com/kanh888ok/medrxocr-paddleocr-vl/blob/main/docs/technical_report.md
 
-5. Demo:
-
-Local Streamlit demo shell with placeholder output; the inference integration
-point is provided in `demo/app.py`.
-
-Best regards,
+谢谢。
 
 kanh888ok

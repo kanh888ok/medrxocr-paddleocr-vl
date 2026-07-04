@@ -1,49 +1,44 @@
-# Submission Email Template
+# 提交邮件模板
 
-邮件标题：
+主题：
 
-PaddleOCR衍生模型挑战赛-MedRxOCR医疗处方识别-<你的GitHubID>
-
-收件人：
-
-ext_paddle_oss@baidu.com
-paddleocr@baidu.com
-cuicheng01@baidu.com
-liujiaxuan01@baidu.com
+PaddleOCR 衍生模型挑战赛 - MedRxOCR 处方 OCR - <GitHub ID>
 
 正文：
 
-各位老师好，
+各位老师好：
 
-我提交 PaddleOCR 全球衍生模型挑战赛项目：
+我提交的项目是 MedRxOCR，方向是医疗处方 OCR。
 
-项目名称：
-MedRxOCR: Multilingual Medical Prescription Structured Recognition with PaddleOCR-VL
+项目基于公开且已脱敏的处方数据，整理了统一 JSONL 格式、固定训练/验证/评估划分、质量检查脚本、数据统计脚本、PaddleOCR-VL 评测脚本和 SFT 训练清单。
 
-选题方向：
-医疗处方识别
+当前已完成：
 
-团队人数：
-1
+- 公开数据来源登记。
+- 数据转换和固定划分。
+- PaddleOCR-VL / PaddleOCR-VL-1.5 zero-shot 基线。
+- 初始检查点。
+- 技术报告和复现脚本。
 
-项目简介：
-本项目面向真实医疗处方图像中的长尾 OCR 与结构化信息抽取问题，基于 PaddleOCR-VL / PaddleOCR-VL-1.5 构建医疗处方识别衍生模型。任务覆盖 full-page OCR、药品区域检测、手写药品词识别、药品行解析、剂量/频次/给药途径标准化和结构化 JSON 输出。
+当前仍需补充：
 
-提交材料：
+- 自采数据。
+- 人工质检结果。
+- 正式 LoRA/SFT 训练。
+- 微调后指标。
 
-1. GitHub 仓库：
+材料链接：
+
+1. GitHub 仓库
 <GitHub URL>
 
-2. 评估集 / 数据说明：
-<AI Studio Open Dataset URL 或 Baidu Netdisk URL>
+2. AI Studio 数据包
+<AI Studio Dataset URL>
 
-3. 模型 / 权重：
-<Hugging Face / AI Studio / Baidu Netdisk URL>
+3. 初始检查点
+<AI Studio Checkpoint URL>
 
-4. 技术报告：
+4. 技术报告
 <Report URL>
-
-5. Demo：
-<Demo URL 或本地运行说明>
 
 谢谢。

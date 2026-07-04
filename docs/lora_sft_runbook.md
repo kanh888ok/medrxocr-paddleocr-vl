@@ -1,50 +1,43 @@
-# LoRA/SFT Runbook
+# LoRA/SFT 说明
 
-This runbook describes the MedRxOCR LoRA/SFT artifact path used for the
-challenge submission and the commands needed to regenerate the SFT manifests.
+## 初始检查点
 
-## Released Checkpoint
-
-The lightweight initial MedRxOCR LoRA/SFT derivative checkpoint is released at:
+已发布一个初始检查点：
 
 `https://aistudio.baidu.com/dataset/detail/384021/intro`
 
-The checkpoint is intended for research evaluation in the challenge setting. It
-is not intended for direct clinical deployment.
+它用于继续训练和复现实验，不作为正式微调结果报告。正式指标需要在固定评估集上重新评测后再写入文档。
 
-## Build ERNIEKit SFT Manifests
+## 生成训练清单
+
+普通 SFT 清单：
+
+```bash
+python scripts/build_sft_manifest.py \
+  --input data/processed/medrxocr_train.jsonl \
+  --output data/processed/train_rx_sft.jsonl
+```
+
+ERNIEKit 格式：
 
 ```bash
 python scripts/build_erniekit_vl_sft_manifest.py \
   --input data/processed/medrxocr_train.jsonl \
   --output data/processed/train_rx_erniekit_sft.jsonl
-
-python scripts/build_erniekit_vl_sft_manifest.py \
-  --input data/processed/medrxocr_val.jsonl \
-  --output data/processed/val_rx_erniekit_sft.jsonl
-
-python scripts/build_erniekit_vl_sft_manifest.py \
-  --input data/processed/medrxocr_eval.jsonl \
-  --output data/processed/eval_rx_erniekit_sft.jsonl
 ```
 
-## Training Config
+验证集同理，将输入换成 `data/processed/medrxocr_val.jsonl`。
 
-The repository includes a single-GPU LoRA/SFT configuration:
+## 训练配置
+
+配置文件：
 
 ```text
 configs/erniekit_paddleocr_vl_lora_medrxocr.yaml
 ```
 
-## Included Evaluation Baselines
+## 结果口径
 
-- PaddleOCR-VL full RxHandBD word-level zero-shot evaluation.
-- PaddleOCR-VL-1.5 full RxHandBD word-level zero-shot evaluation.
-- Metrics JSON and predictions JSONL artifacts under `outputs/`.
+当前表格中的指标是 PaddleOCR-VL / PaddleOCR-VL-1.5 的 zero-shot 词图识别基线。
 
-## Reporting Scope
-
-The published metric table should be described as zero-shot word-level OCR
-baseline results. The released checkpoint should be described separately as a
-lightweight initial domain-adapted PaddleOCR-VL derivative checkpoint for the
-MedRxOCR task.
+初始检查点需要单独说明，不能写成“微调后指标已完成”。

@@ -1,61 +1,42 @@
-# Submission Readiness Audit
+# 提交状态检查
 
-Last updated: 2026-05-25
+更新时间：2026-05-25
 
-## Current Verdict
+## 当前状态
 
-The repository is ready for challenge review as the MedRxOCR PaddleOCR-VL
-derivative project for medical prescription OCR and structured
-prescription-field recognition.
+仓库可以展示数据整理、基线评测和复现实验流程，但仍需要补充自采数据、人工质检结果和微调后指标。
 
-## Public Materials
+## 公开材料
 
-- GitHub repository:
-  `https://github.com/kanh888ok/medrxocr-paddleocr-vl`
-- AI Studio dataset:
-  `https://aistudio.baidu.com/dataset/detail/384020/intro`
-- AI Studio model weights:
-  `https://aistudio.baidu.com/dataset/detail/384021/intro`
-- Technical report:
-  `https://github.com/kanh888ok/medrxocr-paddleocr-vl/blob/main/docs/technical_report.md`
+- GitHub: `https://github.com/kanh888ok/medrxocr-paddleocr-vl`
+- AI Studio 数据包: `https://aistudio.baidu.com/dataset/detail/384020/intro`
+- 初始检查点: `https://aistudio.baidu.com/dataset/detail/384021/intro`
 
-## Completed Components
+## 已完成
 
-- Data acquisition and integrity documentation.
-- Unified MedRxOCR JSONL schema.
-- Fixed train, validation, and evaluation splits.
-- Quality audit and dataset statistics reports.
-- PaddleOCR-VL-style SFT manifests.
-- ERNIEKit PaddleOCR-VL SFT manifest builder:
-  `scripts/build_erniekit_vl_sft_manifest.py`
-- LoRA/SFT configuration:
-  `configs/erniekit_paddleocr_vl_lora_medrxocr.yaml`
-- PaddleOCR-VL zero-shot full RxHandBD word-level eval:
-  - 1115 / 1115 images
-  - 0 errors
-  - Exact match: 0.2386
-  - Micro CER: 0.4255
-- PaddleOCR-VL-1.5 zero-shot full RxHandBD word-level eval:
-  - 1115 / 1115 images
-  - 0 errors
-  - Exact match: 0.2197
-  - Micro CER: 0.4736
-- Lightweight initial LoRA/SFT derivative checkpoint released on AI Studio.
+- 公开数据来源登记。
+- 统一 JSONL 格式。
+- 固定训练集、验证集、评估集划分。
+- 数据统计和质量检查脚本。
+- PaddleOCR-VL 风格 SFT 清单。
+- ERNIEKit PaddleOCR-VL SFT 清单生成脚本。
+- LoRA/SFT 配置文件。
+- RxHandBD 词图评估集 zero-shot 基线。
+- 初始检查点发布。
 
-## Reporting Scope
+## 基线结果
 
-The quantitative results in this repository are reported as RxHandBD
-word-level zero-shot OCR baselines. They are not reported as LoRA/SFT metrics or
-as full-page structured prescription extraction metrics.
+| 模型 | 图像数 | 错误数 | Exact Match | Micro CER |
+|---|---:|---:|---:|---:|
+| PaddleOCR-VL | 1115 | 0 | 0.2386 | 0.4255 |
+| PaddleOCR-VL-1.5 | 1115 | 0 | 0.2197 | 0.4736 |
 
-The released checkpoint is submitted as an initial domain-adapted
-PaddleOCR-VL derivative for prescription OCR and structured prescription-field
-recognition. It is intended for research evaluation in the challenge setting,
-not direct clinical deployment.
+这些是 zero-shot 词图识别结果，不是 LoRA/SFT 微调结果。
 
-## Optional Future Extensions
+## 还缺什么
 
-- Larger full-page structured prescription benchmarks.
-- Additional ablation studies.
-- Hard-case breakdowns by source, difficulty, and task type.
-- Lexicon-constrained normalization experiments.
+- 自行收集的数据。
+- 人工标注和质检记录。
+- 正式 LoRA/SFT 训练日志。
+- 微调后指标。
+- 按难度和来源划分的错误分析。

@@ -1,55 +1,51 @@
-# Model Card: MedRxOCR-PaddleOCR-VL
+# 模型说明
 
-## Base Model
+## 基础模型
 
 - PaddleOCR-VL
 - PaddleOCR-VL-1.5
 
-## Adaptation
+## 当前状态
 
-Current repository status:
+- 已完成 RxHandBD 词图评估集的 zero-shot 基线。
+- 已发布一个初始检查点：`https://aistudio.baidu.com/dataset/detail/384021/intro`。
+- 已提供 SFT 清单生成脚本和 LoRA/SFT 配置。
+- 还没有完成正式微调后的完整指标报告。
 
-- Zero-shot baselines are complete for the full RxHandBD word-level eval subset.
-- A lightweight initial LoRA/SFT derivative checkpoint has been released for the
-  MedRxOCR task:
-  `https://aistudio.baidu.com/dataset/detail/384021/intro`.
-- Multi-task instruction tuning is represented through the dataset protocol,
-  SFT manifests, and configuration files.
-- JSON-structured prescription extraction is represented in the schema and data
-  protocol.
-- Lexicon-constrained normalization and broader full-page ablations are kept as
-  future extensions.
+## 基线结果
 
-Current zero-shot metrics:
-
-| Model | Subset | Images | Errors | Exact Match | Micro CER |
+| 模型 | 数据集 | 图像数 | 错误数 | Exact Match | Micro CER |
 |---|---|---:|---:|---:|---:|
-| PaddleOCR-VL | RxHandBD word-level eval | 1115 | 0 | 0.2386 | 0.4255 |
-| PaddleOCR-VL-1.5 | RxHandBD word-level eval | 1115 | 0 | 0.2197 | 0.4736 |
+| PaddleOCR-VL | RxHandBD 词图评估集 | 1115 | 0 | 0.2386 | 0.4255 |
+| PaddleOCR-VL-1.5 | RxHandBD 词图评估集 | 1115 | 0 | 0.2197 | 0.4736 |
 
-## Intended Use
+这些结果是 zero-shot 词图识别结果，不是 LoRA/SFT 微调结果，也不是整页处方结构化抽取结果。
 
-- Research benchmark for prescription OCR.
-- Human-in-the-loop medical document digitization.
-- Pharmacy workflow prototyping.
+## 适用场景
 
-## Not Intended For
+- 处方 OCR 评测。
+- 医疗文档数字化原型验证。
+- 人工审核辅助流程。
 
-- Autonomous medical decision-making.
-- Direct clinical deployment without review.
-- Prescription verification without pharmacist/clinician oversight.
+## 不适用场景
 
-## Outputs
+- 自动医疗决策。
+- 无人工审核的临床使用。
+- 直接用于处方真实性判断。
 
-The target structured output follows `schemas/medrxocr_schema.json`. The
-released checkpoint is provided as an initial domain-adapted PaddleOCR-VL
-derivative for prescription OCR and structured prescription-field extraction.
-The reported quantitative table above remains a zero-shot word-level baseline,
-not a LoRA/SFT metric table.
+## 输出格式
 
-## Limitations
+结构化输出格式见：
 
-- Handwriting ambiguity remains difficult.
-- Rare drug names require external lexicon support.
-- Redacted fields cannot be recovered.
-- Public datasets may not cover all domestic Chinese prescription layouts.
+```text
+schemas/medrxocr_schema.json
+```
+
+当前公开标注主要覆盖 OCR 文本、药品区域框和手写词识别。更细的药品名、剂量、频次、疗程等字段还需要人工补充。
+
+## 限制
+
+- 手写模糊和拍照质量差时错误较多。
+- 罕见药品名需要词典辅助。
+- 已脱敏字段不能恢复。
+- 公开数据不能代表所有中文处方版式。

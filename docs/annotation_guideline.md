@@ -1,39 +1,42 @@
-# MedRxOCR Annotation Guideline
+# 标注说明
 
-## 1. Annotation Goal
+## 目标
 
-Convert prescription images into a structured JSON annotation format. Do not
-infer invisible content. Use `[UNK]` for unreadable text and `null` for missing
-fields.
+把处方图片转成统一 JSON 标注。看不清的内容写 `[UNK]`，不存在或无法判断的字段写 `null`。不要凭经验补内容。
 
-The current released labels mainly cover full-page OCR text, medicine-region
-detection, and word-level prescription OCR. The schema also provides a protocol
-for future structured prescription-field extraction.
+当前公开标注主要覆盖：
 
-## 2. Output Schema
+- 整页 OCR 文本。
+- 药品区域框。
+- 手写药品词。
 
-Annotation JSON core fields:
+药品名、剂量、频次、疗程等结构化字段需要后续人工补充。
 
-- document_type
-- patient
-- visit
-- medications
-- doctor
-- full_ocr_text
-- regions
+## 核心字段
 
-Sample-level metadata fields:
+```text
+document_type
+patient
+visit
+medications
+doctor
+full_ocr_text
+regions
+```
 
-- visual_tags
-- difficulty
-- language
-- source_id
-- license
-- pii_redacted
+样本元数据：
 
-## 3. Medication Line Fields
+```text
+source_id
+license
+split
+pii_redacted
+language
+visual_tags
+difficulty
+```
 
-Each medication line may contain:
+## 药品行字段
 
 ```json
 {
@@ -48,78 +51,68 @@ Each medication line may contain:
 }
 ```
 
-## 4. Annotation Rules
+## 标注规则
 
-### Raw Fields
+- `*_raw` 字段按图片原文填写，不自动纠错。
+- 规范化字段只在证据明确时填写。
+- 看不清的字不要猜。
+- 缩写不要随意展开。
+- 同一张图多人复核时，以图片证据为准。
 
-- Keep `*_raw` fields faithful to the image text.
-- Do not expand abbreviations or silently correct spelling in raw fields.
+## 隐私处理
 
-### Normalized Fields
+以下信息需要脱敏或标记为不可用：
 
-- Use normalized fields for standardized spelling, units, frequency, route, and
-  drug-name normalization when reliable evidence is available.
-- RxNorm, NMPA, or other drug lexicons may support future normalization work, but
-  lexicon-constrained decoding is not reported as a completed benchmark in the
-  current submission.
+- 患者姓名。
+- 电话。
+- 身份证号或就诊号。
+- 地址。
+- 二维码或条形码。
+- 可识别个人的医生签名或编号。
 
-### Privacy Fields
+## 难度标签
 
-The following content must be redacted or marked unavailable when it can identify
-a person:
+`easy`：
 
-- patient name
-- phone number
-- identity number or patient ID
-- address
-- QR code or barcode
-- doctor registration number
-- doctor signature if it is personally identifying
+- 图片清楚。
+- 多数是印刷体。
+- 没有明显遮挡。
 
-## 5. Difficulty Tags
+`medium`：
 
-### easy
+- 有部分手写。
+- 有轻微倾斜、印章、模糊。
 
-- clear scan or photo
-- mostly printed text
-- no obvious occlusion
+`hard`：
 
-### medium
+- 手写很重。
+- 印章或签名遮挡正文。
+- 透视变形明显。
+- 光线差或阴影重。
+- 有折痕、遮挡、涂改。
+- 药名罕见或缩写多。
 
-- some handwriting
-- stamp or mild skew
-- light blur
+## 视觉标签
 
-### hard
+可多选：
 
-At least one of the following:
-
-- heavy handwriting
-- stamp or signature overlap
-- strong perspective distortion
-- low light or strong shadow
-- fold, occlusion, correction, or crossed-out text
-- rare or heavily abbreviated medicine names
-
-## 6. visual_tags
-
-Multiple tags may be used:
-
-- handwritten
-- printed
-- mixed_printed_handwritten
-- bangla
-- english
-- mixed_language
-- blur
-- skew
-- perspective
-- shadow
-- stamp_overlap
-- signature_overlap
-- fold
-- wrinkle
-- occlusion
-- crossed_out
-- low_resolution
-- table_like_layout
+```text
+handwritten
+printed
+mixed_printed_handwritten
+bangla
+english
+mixed_language
+blur
+skew
+perspective
+shadow
+stamp_overlap
+signature_overlap
+fold
+wrinkle
+occlusion
+crossed_out
+low_resolution
+table_like_layout
+```

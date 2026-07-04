@@ -1,97 +1,73 @@
-# MedRxOCR Competition Execution Pack
+# MedRxOCR 处方 OCR 数据集
 
-## 项目定位
+本项目整理了一套基于公开处方数据的 OCR 评测基准，并提供 PaddleOCR-VL 的评测脚本、数据转换脚本和训练清单生成脚本。
 
-**MedRxOCR: Multilingual Medical Prescription Structured Recognition with PaddleOCR-VL**
+项目重点不是写一份很长的说明，而是把数据来源、处理方式、评测口径和结果说清楚。
 
-这不是普通 OCR 项目，而是面向真实医疗处方的 **OCR + KIE + 药品行解析 + 药品字段标准化** 衍生模型项目。
+## 已完成内容
 
-核心目标：
+- 整理 3 个公开数据源，许可证均为 CC BY 4.0。
+- 将原始标注转换为统一 JSONL 格式。
+- 固定训练集、验证集、评估集划分。
+- 生成数据统计和质量检查结果。
+- 提供 PaddleOCR-VL / PaddleOCR-VL-1.5 在 RxHandBD 词图评估集上的 zero-shot 基线。
+- 提供 SFT 训练清单和 LoRA/SFT 配置文件。
+- 发布一个初始检查点，便于后续继续训练和复现实验。
 
-1. 构建可复现的医疗处方识别评估协议。
-2. 提供 PaddleOCR-VL / PaddleOCR-VL-1.5 zero-shot baseline，并发布 lightweight initial LoRA/SFT derivative checkpoint。
-3. 输出结构化 JSON，而不是只输出纯文本。
-4. 提供数据来源登记、标注规范、质控脚本、评估脚本和本地 Streamlit demo shell。
-5. 合规使用公开许可数据，不伪造真实临床处方。
+## 数据说明
 
-## 最重要的策略
+大文件不放在 GitHub 仓库里。原始数据、处理后的 JSONL、质量检查结果放在 AI Studio 数据包：
 
-官方评分里，模型微调只有 10 分；评估集、训练集、任务复杂度、文档开源合计 90 分。
-因此本项目优先把“数据集与评测基准”做扎实，再做模型微调。
+https://aistudio.baidu.com/dataset/detail/384020/intro
 
-## 目录结构
+初始检查点放在：
 
-```text
-MedRxOCR_competition_execution_pack/
-  README.md
-  docs/
-    data_source_registry.csv
-    data_acquisition_plan.md
-    scoring_mapping.md
-    annotation_guideline.md
-    dataset_card.md
-    model_card.md
-    submission_checklist.md
-    github_progress_post.md
-    submission_email_template.md
-    risk_control.md
-  schemas/
-    medrxocr_schema.json
-  scripts/
-    prepare_mendeley_bilingual.py
-    prepare_rxhandbd.py
-    prepare_bangladesh_yolo.py
-    build_sft_manifest.py
-    evaluate_rxocr.py
-    quality_audit.py
-    dataset_stats.py
-    create_submission_splits.py
-    run_paddleocrvl_word_eval.py
-  configs/
-    paddleocr_vl_lora_rx.yaml
-  demo/
-    app.py
-  examples/
-    sample_annotation.json
-    sample_prediction.json
-```
+https://aistudio.baidu.com/dataset/detail/384021/intro
 
-Current public materials:
+GitHub 只保留代码、配置、示例和文档。
 
-- GitHub: https://github.com/kanh888ok/medrxocr-paddleocr-vl
-- AI Studio Dataset: https://aistudio.baidu.com/dataset/detail/384020/intro
-- AI Studio Model Weights: https://aistudio.baidu.com/dataset/detail/384021/intro
-- Technical Report: https://github.com/kanh888ok/medrxocr-paddleocr-vl/blob/main/docs/technical_report.md
+## 数据来源
 
-Data availability note:
+| 数据源 | 用途 | 数量说明 |
+|---|---|---:|
+| Mendeley bilingual prescription | 整页处方 OCR | 997 条可用唯一标注 |
+| Bangladesh 200 prescription YOLO | 药品区域检测 | 200 张处方图 |
+| RxHandBD | 手写药品词识别 | 4463 训练 / 1115 评估 |
 
-Large raw, interim, and processed data files are not tracked in GitHub. They are
-released through the AI Studio dataset package. After downloading the AI Studio
-dataset, place or copy the processed JSONL files under `data/processed/` before
-running evaluation or SFT manifest scripts.
+注意：Mendeley bilingual 原始包有 1000 张图片，但 CSV 清洗后只有 997 条唯一可用标注。因此本文档按 997 条报告，不写成 1000 条完整标注。
 
-Quality reports and processed split files are included in the AI Studio dataset
-package, not tracked directly in GitHub.
+## 处理后的划分
 
-Current label scope note:
+| 划分 | 数量 |
+|---|---:|
+| 训练集 | 4801 |
+| 验证集 | 607 |
+| 评估集 | 1367 |
 
-The repository provides a unified schema and protocol for structured
-prescription extraction; current released labels mainly cover full-page OCR
-text, medicine-region detection, and word-level prescription OCR.
+## 基线结果
 
-## 推荐执行顺序
+评测对象是 RxHandBD 的 1115 张手写词图，不是整页处方结构化抽取。
 
-### Step 1. 下载数据
+| 模型 | 图像数 | 错误数 | Exact Match | Micro CER |
+|---|---:|---:|---:|---:|
+| PaddleOCR-VL | 1115 | 0 | 0.2386 | 0.4255 |
+| PaddleOCR-VL-1.5 | 1115 | 0 | 0.2197 | 0.4736 |
 
-按 `docs/data_acquisition_plan.md` 里的 P0 数据源下载：
+这些结果是 zero-shot 基线，不是微调后指标。
 
-1. Mendeley 1000 张双语处方。
-2. Mendeley 200 张 Bangladesh 处方 + YOLO 药品框。
-3. RxHandBD 5578 个处方手写词图。
+## 目录重点
 
-注意：Mendeley bilingual 源数据包含 1000 张图片，但 CSV 清洗后只有 997 条唯一可用标注；不要把它报告为 1000 条完整结构化标注。
+- `docs/technical_report.md`：数据、质量检查和基线结果。
+- `docs/dataset_card.md`：数据来源和划分。
+- `docs/model_card.md`：模型用途、限制和指标口径。
+- `schemas/medrxocr_schema.json`：统一标注格式。
+- `scripts/`：数据转换、质量检查、评测和训练清单生成脚本。
+- `configs/`：LoRA/SFT 配置。
+- `demo/`：本地 Streamlit 示例。
 
-### Step 2. 转换为统一 schema
+## 基本流程
+
+下载数据后，将文件放到 `data/raw/`，再按下面顺序处理：
 
 ```bash
 python scripts/prepare_mendeley_bilingual.py --csv data/raw/mendeley_bilingual/annotations.csv --image-root data/raw/mendeley_bilingual/images --output data/interim/mendeley_bilingual.jsonl
@@ -99,34 +75,20 @@ python scripts/prepare_mendeley_bilingual.py --csv data/raw/mendeley_bilingual/a
 python scripts/prepare_rxhandbd.py --labels data/raw/rxhandbd/train_labels.csv --image-root data/raw/rxhandbd/train --split train --output data/interim/rxhandbd_train.jsonl
 
 python scripts/prepare_rxhandbd.py --labels data/raw/rxhandbd/test_labels.csv --image-root data/raw/rxhandbd/test --split eval --output data/interim/rxhandbd_eval.jsonl
-```
 
-### Step 3. 质控
+python scripts/prepare_bangladesh_yolo.py --image-root data/raw/bd200/images --label-root data/raw/bd200/labels --output data/interim/bd200_regions.jsonl
 
-```bash
-python scripts/quality_audit.py --annotations data/interim/mendeley_bilingual.jsonl --root .
-python scripts/dataset_stats.py --annotations data/interim/mendeley_bilingual.jsonl --output outputs/dataset_stats.json
-```
-
-### Step 4. 构建 SFT 文件
-
-```bash
 python scripts/create_submission_splits.py --mendeley data/interim/mendeley_bilingual.jsonl --rxhandbd-train data/interim/rxhandbd_train.jsonl --rxhandbd-eval data/interim/rxhandbd_eval.jsonl --bd200 data/interim/bd200_regions.jsonl --output-dir data/processed
+```
 
+生成训练清单：
+
+```bash
 python scripts/build_sft_manifest.py --input data/processed/medrxocr_train.jsonl --output data/processed/train_rx_sft.jsonl
-python scripts/build_sft_manifest.py --input data/processed/medrxocr_val.jsonl --output data/processed/val_rx_sft.jsonl
-python scripts/build_sft_manifest.py --input data/processed/medrxocr_eval.jsonl --output data/processed/eval_rx_sft.jsonl
 ```
 
-### Step 5. 跑 baseline / 使用发布的 lightweight checkpoint
+## 当前不足
 
-先跑 PaddleOCR-VL zero-shot baseline，再使用发布的 lightweight initial LoRA/SFT
-derivative checkpoint 或配置文件进行后续实验。配置文件在：
-
-```text
-configs/paddleocr_vl_lora_rx.yaml
-```
-
-### Step 6. 提交
-
-按 `docs/submission_checklist.md` 和 `docs/submission_email_template.md` 准备材料。
+- 目前训练集、验证集、评估集主要来自公开数据。
+- 还需要补充自行收集并人工质检的高价值处方数据。
+- 初始检查点已发布，但还需要补充完整微调实验和微调后指标。

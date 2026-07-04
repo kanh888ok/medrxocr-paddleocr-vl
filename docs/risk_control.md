@@ -1,43 +1,42 @@
-# Risk Control
+# 风险说明
 
-## Main Risks
+## 1. 数据主要来自公开数据
 
-### 1. Evaluation set seen as only internet-downloaded public data
+处理方式：
 
-Mitigation:
-- Re-annotate and normalize into MedRxOCR schema.
-- Add difficulty stratification.
-- Add quality-audit report.
-- Add multi-task evaluation, not just plain OCR.
-- Use public data as legal source but contribute new benchmark protocol.
+- 保留清楚的数据来源和许可证。
+- 不把公开数据说成自采数据。
+- 统一转换格式，固定评估口径。
+- 后续补充自采数据、人工标注和质检记录。
 
-### 2. Synthetic-data disqualification
+## 2. 不能使用虚假数据
 
-Mitigation:
-- No synthetic clinical prescriptions are included in the current released
-  dataset package.
-- If synthetic augmentation is added in future work, it must be explicitly
-  labeled and excluded from the core evaluation set.
+处理方式：
 
-### 3. Medical privacy risk
+- 当前数据不包含合成处方。
+- 缺失标注不补造。
+- 如以后做数据增强，需要单独标记，不能混入核心评估集。
 
-Mitigation:
-- Use de-identified public datasets.
-- Run manual and automatic PII check.
-- Do not release unredacted raw prescriptions.
+## 3. 医疗隐私
 
-### 4. Weak originality
+处理方式：
 
-Mitigation:
-- Emphasize the unified schema and protocol for structured prescription
-  extraction.
-- Keep lexicon-constrained decoding as a planned extension.
-- Add medicine-region detection and word-level recognition subtasks.
-- Provide reproducible scripts and schema.
+- 只使用公开且已脱敏的数据。
+- 样本中保留 `pii_redacted` 标记。
+- 不公开未脱敏处方。
 
-### 5. Weak model score
+## 4. 原创性不足
 
-Mitigation:
-- Use zero-shot baseline first.
-- Release a lightweight initial LoRA/SFT derivative checkpoint.
-- Focus scoring narrative on full benchmark contribution and reproducibility.
+处理方式：
+
+- 明确项目贡献是数据整理、统一格式、固定划分和可复现评测。
+- 不夸大成完整临床系统。
+- 后续通过自采数据和结构化字段标注提高价值。
+
+## 5. 模型指标不足
+
+处理方式：
+
+- 先报告 PaddleOCR-VL zero-shot 基线。
+- 初始检查点单独说明，不写成微调后结果。
+- 后续补充正式 LoRA/SFT 训练和评估。
