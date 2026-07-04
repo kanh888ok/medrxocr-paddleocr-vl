@@ -1,0 +1,55 @@
+{
+  "experiment": "realshot_preprocess_pilot",
+  "model": "PaddleOCR-VL-1.5",
+  "subset": "realshot_eval_18",
+  "timeout_sec_for_pilot": 90,
+  "baseline_reference": {
+    "output_dir": "outputs/paddleocrvl_v15_realshot_eval18_gpu_timeout",
+    "timeout_sec": 120
+  },
+  "samples": [
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0003",
+      "variant": "original",
+      "status": "completed",
+      "cer": 0.9007936507936508,
+      "elapsed_sec": 24.756765365600586
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0003",
+      "variant": "resize_long_1280",
+      "status": "timeout",
+      "cer": null,
+      "elapsed_sec": 90.0223777294159
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0003",
+      "variant": "gray_autocontrast_sharp_1280",
+      "status": "timeout",
+      "cer": null,
+      "elapsed_sec": 90.0213553905487
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0012",
+      "variant": "original",
+      "status": "timeout",
+      "cer": null,
+      "elapsed_sec": 120.04596972465515
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0012",
+      "variant": "resize_long_1280",
+      "status": "timeout",
+      "cer": null,
+      "elapsed_sec": 90.0257797241211
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0012",
+      "variant": "gray_autocontrast_sharp_1280",
+      "status": "timeout",
+      "cer": null,
+      "elapsed_sec": 90.01743769645691
+    }
+  ],
+  "conclusion": "Simple resize and gray/autocontrast/sharpen preprocessing did not improve the pilot samples and should not be reported as an optimization result."
+}

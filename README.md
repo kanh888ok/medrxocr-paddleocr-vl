@@ -74,7 +74,9 @@ GitHub 只保留代码、配置、示例和文档。
 - `docs/data_statistics_report.md`：数据统计和质检补充。
 - `docs/realshot_eval.md`：实拍评估子集说明。
 - `docs/realshot_baseline.md`：实拍评估基线和超时样本说明。
+- `docs/realshot_preprocess_experiment.md`：实拍图像预处理小试记录。
 - `docs/realshot_manual_qc.md`：实拍图片人工质检结果。
+- `docs/lora_sft_readiness.md`：LoRA/SFT 启动条件检查。
 - `docs/dataset_card.md`：数据来源和划分。
 - `docs/model_card.md`：模型用途、限制和指标口径。
 - `schemas/medrxocr_schema.json`：统一标注格式。

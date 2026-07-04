@@ -61,6 +61,8 @@
 
 - PaddleOCR-VL / PaddleOCR-VL-1.5 zero-shot 基线。
 - PaddleOCR-VL-1.5 在 18 张实拍 eval 子集上的零样本基线。
+- 实拍图像预处理小试，记录简单预处理未改善结果。
+- LoRA/SFT 启动条件检查。
 - SFT 训练清单。
 - LoRA/SFT 配置。
 - 初始检查点。

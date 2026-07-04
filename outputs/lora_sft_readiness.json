@@ -1,0 +1,54 @@
+{
+  "runtime_modules": {
+    "paddle": true,
+    "paddleocr": true
+  },
+  "training_modules": {
+    "erniekit": false,
+    "paddlenlp": false,
+    "paddlemix": false,
+    "visualdl": false
+  },
+  "paddle": {
+    "available": true,
+    "version": "3.3.1",
+    "compiled_with_cuda": true,
+    "device": "gpu:0"
+  },
+  "required_files": {
+    "data/processed/medrxocr_train.jsonl": {
+      "exists": false,
+      "size": null
+    },
+    "data/processed/medrxocr_val.jsonl": {
+      "exists": false,
+      "size": null
+    },
+    "data/processed/train_rx_erniekit_sft.jsonl": {
+      "exists": false,
+      "size": null
+    },
+    "data/processed/val_rx_erniekit_sft.jsonl": {
+      "exists": false,
+      "size": null
+    },
+    "configs/erniekit_paddleocr_vl_lora_medrxocr.yaml": {
+      "exists": true,
+      "size": 1329
+    }
+  },
+  "can_start_lora_sft": false,
+  "missing_training_modules": [
+    "erniekit",
+    "paddlenlp",
+    "paddlemix",
+    "visualdl"
+  ],
+  "missing_files": [
+    "data/processed/medrxocr_train.jsonl",
+    "data/processed/medrxocr_val.jsonl",
+    "data/processed/train_rx_erniekit_sft.jsonl",
+    "data/processed/val_rx_erniekit_sft.jsonl"
+  ],
+  "note": "Inference evaluation can run in this environment, but LoRA/SFT needs training dependencies and processed manifests."
+}
