@@ -55,9 +55,14 @@ GitHub 只保留代码、配置、示例和文档。
 
 这些结果是 zero-shot 基线，不是微调后指标。
 
+## 实拍评估补充
+
+已制作第一版实拍评估子集：20 张手机实拍图已完成原图匹配，其中 18 张对应固定 eval 集，可用于严格实拍评估；另外 2 张对应 train 集，只作为采集示例。说明见 `docs/realshot_eval.md`。
+
 ## 目录重点
 
 - `docs/technical_report.md`：数据、质量检查和基线结果。
+- `docs/realshot_eval.md`：实拍评估子集说明。
 - `docs/dataset_card.md`：数据来源和划分。
 - `docs/model_card.md`：模型用途、限制和指标口径。
 - `schemas/medrxocr_schema.json`：统一标注格式。
