@@ -17,6 +17,12 @@
 docs/realshot_20_mapping.csv
 ```
 
+人工质检表见：
+
+```text
+docs/realshot_manual_qc.csv
+```
+
 本地生成文件：
 
 ```text
