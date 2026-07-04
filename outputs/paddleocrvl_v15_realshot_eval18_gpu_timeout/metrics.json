@@ -1,0 +1,14 @@
+{
+  "model": "PaddleOCR-VL-1.5",
+  "pipeline_version": "v1.5",
+  "source_id": "realshot_mendeley_bilingual_1000",
+  "n_images": 18,
+  "completed_images": 11,
+  "timeout_images": 7,
+  "error_images": 7,
+  "mean_cer_completed": 0.9542257077344981,
+  "micro_cer_completed": 0.9124442642886097,
+  "mean_elapsed_sec_completed": 27.972727060317993,
+  "timeout_sec": 120,
+  "note": "Timeout records are excluded from CER averages and should be reported separately."
+}

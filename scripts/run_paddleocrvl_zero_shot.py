@@ -15,6 +15,7 @@ python scripts/run_paddleocrvl_zero_shot.py \
 import argparse
 import json
 import os
+import sys
 import time
 from pathlib import Path
 
@@ -45,6 +46,26 @@ def result_text(item):
     return str(item)
 
 
+def configure_windows_cuda_dlls():
+    if os.name != "nt":
+        return
+    site_packages = Path(sys.prefix) / "Lib" / "site-packages"
+    candidates = [
+        site_packages / "nvidia" / "cu13" / "bin" / "x86_64",
+        site_packages / "nvidia" / "cu13" / "lib" / "x64",
+        site_packages / "nvidia" / "cudnn" / "bin",
+    ]
+    existing = [str(path) for path in candidates if path.exists()]
+    if not existing:
+        return
+    os.environ["PATH"] = os.pathsep.join(existing + [os.environ.get("PATH", "")])
+    for path in existing:
+        try:
+            os.add_dll_directory(path)
+        except (AttributeError, OSError):
+            pass
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--root", default=".")
@@ -52,8 +73,10 @@ def main():
     p.add_argument("--output-dir", default="outputs/paddleocrvl_v15_pilot")
     p.add_argument("--source-id", default="mendeley_bilingual_1000")
     p.add_argument("--limit", type=int, default=5)
+    p.add_argument("--offset", type=int, default=0)
     p.add_argument("--pipeline-version", default="v1.5")
     p.add_argument("--cache-root", default=None)
+    p.add_argument("--model-source", default="modelscope")
     args = p.parse_args()
 
     if args.cache_root:
@@ -61,6 +84,10 @@ def main():
         os.environ.setdefault("PADDLE_PDX_CACHE_HOME", str(cache_root / "paddlex_cache"))
         os.environ.setdefault("HF_HOME", str(cache_root / "hf_cache"))
         os.environ.setdefault("MODELSCOPE_CACHE", str(cache_root / "modelscope_cache"))
+    os.environ.setdefault("HF_HUB_DISABLE_XET", "1")
+    os.environ.setdefault("PADDLE_PDX_MODEL_SOURCE", args.model_source)
+    os.environ.setdefault("PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK", "True")
+    configure_windows_cuda_dlls()
 
     from paddleocr import PaddleOCRVL
 
@@ -71,13 +98,18 @@ def main():
     metrics_path = out_dir / "metrics.json"
 
     rows = []
+    matched = 0
     with Path(args.input).open("r", encoding="utf-8") as f:
         for line in f:
             if not line.strip():
                 continue
             row = json.loads(line)
             if row.get("metadata", {}).get("source_id") == args.source_id:
+                if matched < args.offset:
+                    matched += 1
+                    continue
                 rows.append(row)
+                matched += 1
             if args.limit and len(rows) >= args.limit:
                 break
 
@@ -112,6 +144,7 @@ def main():
                 "error": error,
             }
             g.write(json.dumps(rec, ensure_ascii=False) + "\n")
+            g.flush()
             records.append(rec)
             print(json.dumps({k: rec[k] for k in ["image_id", "cer", "elapsed_sec", "error"]}, ensure_ascii=False), flush=True)
 
@@ -124,7 +157,8 @@ def main():
         "micro_cer": total_dist / total_chars if total_chars else None,
         "mean_elapsed_sec": sum(r["elapsed_sec"] for r in records) / len(records) if records else None,
         "errors": sum(1 for r in records if r["error"]),
-        "note": "Pilot subset only; do not report as full evaluation.",
+        "model_source": args.model_source,
+        "note": "Report together with split name and image count; real-shot eval uses photographed replacements of public eval images.",
     }
     metrics_path.write_text(json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8")
     print("METRICS " + json.dumps(metrics, ensure_ascii=False), flush=True)

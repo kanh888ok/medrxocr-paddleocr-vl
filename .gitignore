@@ -16,6 +16,10 @@ outputs/*
 !outputs/paddleocrvl_v15_rxhandbd_word_eval/
 !outputs/paddleocrvl_v15_rxhandbd_word_eval/*.json
 !outputs/paddleocrvl_v15_rxhandbd_word_eval/*.jsonl
+!outputs/paddleocrvl_v15_realshot_eval18_gpu_timeout/
+outputs/paddleocrvl_v15_realshot_eval18_gpu_timeout/*
+!outputs/paddleocrvl_v15_realshot_eval18_gpu_timeout/*.json
+!outputs/paddleocrvl_v15_realshot_eval18_gpu_timeout/*.jsonl
 checkpoints/
 data/raw/*
 data/interim/*

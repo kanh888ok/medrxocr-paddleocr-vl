@@ -10,7 +10,8 @@
 - 将原始标注转换为统一 JSONL 格式。
 - 固定训练集、验证集、评估集划分。
 - 生成数据统计和质量检查结果。
-- 提供 PaddleOCR-VL / PaddleOCR-VL-1.5 在 RxHandBD 词图评估集上的 zero-shot 基线。
+- 提供 PaddleOCR-VL / PaddleOCR-VL-1.5 在 RxHandBD 词图评估集上的零样本基线。
+- 补充 PaddleOCR-VL-1.5 在 18 张实拍评估子集上的零样本基线。
 - 提供 SFT 训练清单和 LoRA/SFT 配置文件。
 - 发布一个初始检查点，便于后续继续训练和复现实验。
 
@@ -53,16 +54,26 @@ GitHub 只保留代码、配置、示例和文档。
 | PaddleOCR-VL | 1115 | 0 | 0.2386 | 0.4255 |
 | PaddleOCR-VL-1.5 | 1115 | 0 | 0.2197 | 0.4736 |
 
-这些结果是 zero-shot 基线，不是微调后指标。
+这些结果是零样本基线，不是微调后指标。
 
 ## 实拍评估补充
 
 已制作第一版实拍评估子集：20 张手机实拍图已完成原图匹配和人工质检，其中 18 张对应固定 eval 集，可用于严格实拍评估；另外 2 张对应 train 集，只作为采集示例。说明见 `docs/realshot_eval.md` 和 `docs/realshot_manual_qc.md`。
 
+已在 18 张严格 eval 实拍子集上补充 PaddleOCR-VL-1.5 零样本基线。测试使用 RTX 4070 Laptop GPU，单张超时阈值为 120 秒。
+
+| 模型 | 图像数 | 成功返回 | 超时 | Mean CER（成功样本） | Micro CER（成功样本） |
+|---|---:|---:|---:|---:|---:|
+| PaddleOCR-VL-1.5 | 18 | 11 | 7 | 0.9542 | 0.9124 |
+
+该结果说明模型可以运行，但实拍处方场景下效果仍弱，且部分样本推理超时。该指标是零样本基线，不是微调后结果。说明见 `docs/realshot_baseline.md`。
+
 ## 目录重点
 
 - `docs/technical_report.md`：数据、质量检查和基线结果。
+- `docs/data_statistics_report.md`：数据统计和质检补充。
 - `docs/realshot_eval.md`：实拍评估子集说明。
+- `docs/realshot_baseline.md`：实拍评估基线和超时样本说明。
 - `docs/realshot_manual_qc.md`：实拍图片人工质检结果。
 - `docs/dataset_card.md`：数据来源和划分。
 - `docs/model_card.md`：模型用途、限制和指标口径。
@@ -97,4 +108,4 @@ python scripts/build_sft_manifest.py --input data/processed/medrxocr_train.jsonl
 
 - 目前训练集、验证集、评估集主要来自公开数据。
 - 还需要补充自行收集并人工质检的高价值处方数据。
-- 初始检查点已发布，但还需要补充完整微调实验和微调后指标。
+- 已有零样本基线和初始检查点，但还需要补充正式 LoRA/SFT 训练记录和微调后指标。

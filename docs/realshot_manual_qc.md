@@ -37,4 +37,6 @@ docs/realshot_manual_qc.csv
 
 ## 说明
 
-本质检只确认图像可读性、原图匹配关系和评估资格，不等同于药品字段级人工标注质检。正式指标仍需要在 `data/eval/realshot_eval_18.jsonl` 上运行 OCR 评测后报告。
+本质检只确认图像可读性、原图匹配关系和评估资格，不等同于药品字段级人工标注质检。
+
+已在 `data/eval/realshot_eval_18.jsonl` 上补充 PaddleOCR-VL-1.5 零样本基线。结果见 `docs/realshot_baseline.md`。

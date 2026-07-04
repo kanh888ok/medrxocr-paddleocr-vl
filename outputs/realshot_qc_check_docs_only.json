@@ -1,0 +1,20 @@
+{
+  "mapping": "docs\\realshot_20_mapping.csv",
+  "qc": "docs\\realshot_manual_qc.csv",
+  "n_mapping_rows": 20,
+  "n_qc_rows": 20,
+  "split_counts": {
+    "eval": 18,
+    "train": 2
+  },
+  "qc_result_counts": {
+    "pass": 18,
+    "collection_sample_only": 2
+  },
+  "strict_eval_count": 18,
+  "collection_sample_count": 2,
+  "missing_image_count": 0,
+  "missing_image_examples": [],
+  "passed": true,
+  "errors": []
+}
