@@ -1,0 +1,21 @@
+real_index,realshot_file,original_image_id,fixed_split,clarity_check,match_check,evaluable_for_strict_eval,qc_result,notes
+1,realshot_01_0003.jpg,rx_mendeley_bilingual_1000_0003,eval,pass,pass,yes,pass,slight shadow and perspective; usable for real-shot eval
+2,realshot_02_0016.jpg,rx_mendeley_bilingual_1000_0016,train,pass,pass,no,collection_sample_only,usable image but original sample belongs to train split
+3,realshot_03_0012.jpg,rx_mendeley_bilingual_1000_0012,eval,pass,pass,yes,pass,low contrast but text area remains usable
+4,realshot_04_0019.jpg,rx_mendeley_bilingual_1000_0019,eval,pass,pass,yes,pass,blur and exposure variation; usable for robustness test
+5,realshot_05_0020.jpg,rx_mendeley_bilingual_1000_0020,eval,pass,pass,yes,pass,visible real-shot artifacts; usable
+6,realshot_06_0026.jpg,rx_mendeley_bilingual_1000_0026,eval,pass,pass,yes,pass,perspective and mild blur; usable
+7,realshot_07_0025.jpg,rx_mendeley_bilingual_1000_0025,eval,pass,pass,yes,pass,slight shadow; usable
+8,realshot_08_0033.jpg,rx_mendeley_bilingual_1000_0033,eval,pass,pass,yes,pass,clear enough; usable
+9,realshot_09_0035.jpg,rx_mendeley_bilingual_1000_0035,eval,pass,pass,yes,pass,clear enough; usable
+10,realshot_10_0050.jpg,rx_mendeley_bilingual_1000_0050,eval,pass,pass,yes,pass,clear enough; usable
+11,realshot_11_0266.jpg,rx_mendeley_bilingual_1000_0266,eval,pass,pass,yes,pass,slight color cast; usable
+12,realshot_12_0269.jpg,rx_mendeley_bilingual_1000_0269,eval,pass,pass,yes,pass,clear handwritten text; usable
+13,realshot_13_0270.jpg,rx_mendeley_bilingual_1000_0270,eval,pass,pass,yes,pass,clear handwritten text; usable
+14,realshot_14_0272.jpg,rx_mendeley_bilingual_1000_0272,eval,pass,pass,yes,pass,low contrast and shadow; usable
+15,realshot_15_0281.jpg,rx_mendeley_bilingual_1000_0281,eval,pass,pass,yes,pass,clear enough; usable
+16,realshot_16_0297.jpg,rx_mendeley_bilingual_1000_0297,train,pass,pass,no,collection_sample_only,usable image but original sample belongs to train split
+17,realshot_17_0289.jpg,rx_mendeley_bilingual_1000_0289,eval,pass,pass,yes,pass,perspective and partial page margin; usable
+18,realshot_18_0309.jpg,rx_mendeley_bilingual_1000_0309,eval,pass,pass,yes,pass,clear enough; usable
+19,realshot_19_0291.jpg,rx_mendeley_bilingual_1000_0291,eval,pass,pass,yes,pass,slight blur and exposure variation; usable
+20,realshot_20_0312.jpg,rx_mendeley_bilingual_1000_0312,eval,pass,pass,yes,pass,clear enough; usable
