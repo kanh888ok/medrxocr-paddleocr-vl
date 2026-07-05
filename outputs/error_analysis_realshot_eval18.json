@@ -1,0 +1,180 @@
+{
+  "summary": {
+    "n_records": 18,
+    "n_scored": 11,
+    "errors": 7,
+    "exact_match_rate": 0.0,
+    "mean_cer": 0.9542257077344981,
+    "micro_cer": 0.9124442642886097,
+    "digit_record_count": 10,
+    "digit_exact_rate": 0.0
+  },
+  "latency": {
+    "mean_sec": 63.772245632277595,
+    "p50_sec": 45.461533308029175,
+    "p95_sec": 120.03164148330688,
+    "p99_sec": 120.04596972465515,
+    "max_sec": 120.04596972465515,
+    "slow_threshold_sec": 60.0,
+    "slow_count": 7
+  },
+  "timeouts": {
+    "count": 7,
+    "image_ids": [
+      "realshot_rx_mendeley_bilingual_1000_0012",
+      "realshot_rx_mendeley_bilingual_1000_0026",
+      "realshot_rx_mendeley_bilingual_1000_0033",
+      "realshot_rx_mendeley_bilingual_1000_0269",
+      "realshot_rx_mendeley_bilingual_1000_0272",
+      "realshot_rx_mendeley_bilingual_1000_0281",
+      "realshot_rx_mendeley_bilingual_1000_0312"
+    ]
+  },
+  "char_errors": {
+    "matches": 1015,
+    "substitutions": 1662,
+    "insertions": 367,
+    "deletions": 4724,
+    "edit_distance": 6753
+  },
+  "length_bins": {
+    "very_long_17_plus": {
+      "n_records": 11,
+      "n_scored": 11,
+      "errors": 0,
+      "exact_match_rate": 0.0,
+      "mean_cer": 0.9542257077344981,
+      "micro_cer": 0.9124442642886097,
+      "digit_record_count": 10,
+      "digit_exact_rate": 0.0
+    }
+  },
+  "digit": {
+    "n_records": 10,
+    "digit_exact_rate": 0.0
+  },
+  "worst_cer_examples": [
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0020",
+      "cer": 1.5555555555555556,
+      "gold_text": "Nebah sual should be taken as directed. নেবাহ সুয়াল নির্দেশনা অনুযায়ী নিতে হবে।",
+      "prediction_text": "A tayp swl ualk < 150 A Ehl pD swl 30k < 1200 A Aeh m swl 200 - 1200 A Heeufo low 5ml 200 < 100 Rebal Dual 2w JpD 500 Brald 0.5y by Desire 2ml 100 ml"
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0289",
+      "cer": 1.256910569105691,
+      "gold_text": "Rephaston 10 mg tablet should be taken once in the morning and once at night for one month. Ferix-V capsule should be taken once in the morning for one month after food. Kalcoral D...",
+      "prediction_text": "<table><tr><td>Fry</td><td>Tabler Rephaston 10mg</td></tr><tr><td>Caesipian</td><td>10.1 J</td></tr><tr><td>Neckpah</td><td>Cap. Ferix-V</td></tr><tr><td>12.5</td><td>1.0</td></tr>..."
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0309",
+      "cer": 0.9808917197452229,
+      "gold_text": "Diet Sips of water then liquid then normal diet Morning and Evening. T Cef Cef 3 Triocim Exixef Denvar Cephoral Orcef 200 400 mg One capsule morning and night. Filmet Flamyd Metryl...",
+      "prediction_text": "Dr.Signature Medical Office KCH Gazipu"
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0025",
+      "cer": 0.9308510638297872,
+      "gold_text": "Doro Condic tablet half in the morning and half at night should be taken continuously. Sulphox Bel 80 syrup two teaspoons should be taken five times daily and continued. Ala tablet...",
+      "prediction_text": "① -10. Daser 2.2020-09-01-00 -Au -Au-Au-Au ② My friend said © A. R. Rivega (2007) — (2007) © — a. Frunt 2024—2024 ② — G · P(100%) 5 2.50"
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0003",
+      "cer": 0.9007936507936508,
+      "gold_text": "Onium tablet should be taken two times in the morning- two times in the afternoon and two times at night if there is pain in the lower stomach. Metryour tablet should be taken once...",
+      "prediction_text": " $ 10^{2018} $ 2. Cap. Block T way  $ 0+1>—A\\text{that} $  $ x_{1}  $ — 2023年10月1日 No. Table. Onium 2+2+2 △  $ C_{n} \\times (b \\textcircled{2} \\times 2 \\textcircled{a} t $"
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0019",
+      "cer": 0.875968992248062,
+      "gold_text": "Ambisome 30mg capsule should be taken once in the morning for one hundred twenty days. Amphotericin capsule should be taken once in the morning. অ্যাম্বিসোম ৩০মি.গ্রা ক্যাপসুল সকাল...",
+      "prediction_text": "2y; Ambisome Song-120 [8y; Amphosucen] Dr.Soulkeeth 5117 (DMO) 15-5-21 Math"
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0270",
+      "cer": 0.8603773584905661,
+      "gold_text": "HT Hair Care shampoo should be applied on the scalp twice a week. Teen Derm gel should be used to wash the face morning and night. Netis 5 mg tablet should be taken 1 tablet at nig...",
+      "prediction_text": "- HT HAIR CARE SHAMPOO - TEEN DERM GEL - TAO NETIS (50g) - TAO ZITHROX (250mg) - ZONYRA CREAM 0.0005% - ZONYRA CREAM 0.0005% - ZONYRA CREAM 0.0005% unl"
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0035",
+      "cer": 0.8163265306122449,
+      "gold_text": "Norinum 5 mg tablet should be taken once at night for 20 days. Montaur 10 mg tablet should be taken once at night for 20 days. Menthol steam inhalation should be done twice daily. ...",
+      "prediction_text": "Rec. alternale italia H.Nigraine Valsaka + ve Flume + ve + w.deer Cleaning guts Valeurs. Avoid cold. Tab. Noniun (5mg) 0 to 2 - 20 h. To.Mortair (Low)  $ 0+\\delta+0-20\\delta $ Ment..."
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0291",
+      "cer": 0.8133086876155268,
+      "gold_text": "Limbix tablet should be taken once at night for one month. Indever 10 mg tablet should be taken once in the morning and once at night for one month. Organical-Dx tablet should be t...",
+      "prediction_text": "Rt  $$ G_{A D} $$   $ x_{1} = 1, x_{2} = 2 $  $ H_{2}O $ 110/90 mm of Hg Tab. Limbi otop1 ___ 2 Tab. In never 10 way 1-to-t1 ___ 3 Long J Jared Jundice Odema Abdominal Exam- Tab. O..."
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0050",
+      "cer": 0.804635761589404,
+      "gold_text": "Nosustin 5 mg tablet should be taken once in the morning, once at noon, and once at night for twenty-one days, then continue in the same way after seven days for three months. নোসা...",
+      "prediction_text": "menomethomagia R Tib. Norethin (5w) 20hn 2+2) 9 finn 41h 1010 6 wn w10n   a→2(v/D) c→kym And then o taking anti- peritive drug igubarly p/v-remix .CBC1 RBS broad,lack  $ A \\cdot dV..."
+    }
+  ],
+  "slow_examples": [
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0012",
+      "elapsed_sec": 120.04596972465515,
+      "error": "timeout_after_120s",
+      "cer": null
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0033",
+      "elapsed_sec": 120.03164148330688,
+      "error": "timeout_after_120s",
+      "cer": null
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0026",
+      "elapsed_sec": 120.02939367294312,
+      "error": "timeout_after_120s",
+      "cer": null
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0281",
+      "elapsed_sec": 120.02670454978943,
+      "error": "timeout_after_120s",
+      "cer": null
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0312",
+      "elapsed_sec": 120.02631545066833,
+      "error": "timeout_after_120s",
+      "cer": null
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0269",
+      "elapsed_sec": 120.02033114433289,
+      "error": "timeout_after_120s",
+      "cer": null
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0272",
+      "elapsed_sec": 120.02006769180298,
+      "error": "timeout_after_120s",
+      "cer": null
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0266",
+      "elapsed_sec": 56.11662554740906,
+      "error": null,
+      "cer": 0.700862895493768
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0035",
+      "elapsed_sec": 45.764347314834595,
+      "error": null,
+      "cer": 0.8163265306122449
+    },
+    {
+      "image_id": "realshot_rx_mendeley_bilingual_1000_0050",
+      "elapsed_sec": 45.158719301223755,
+      "error": null,
+      "cer": 0.804635761589404
+    }
+  ]
+}

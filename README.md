@@ -17,6 +17,7 @@
 - 完成 PaddleOCR-VL-1.5 在 realshot_eval_18 上的零样本基线。
 - 完成 RTX 4070 上的 LoRA/SFT 训练、合并和评估链路，并补充 500 张公开词图的微调前后对比。
 - 补充本地 Streamlit Demo，用于展示图片输入、结构化 JSON 输出和当前评估结果。
+- 补充评估指标模块、错误分析脚本、单元测试和轻量 CI。
 
 ## 数据来源
 
@@ -89,6 +90,17 @@ streamlit run demo\app.py
 
 说明见 `docs/demo.md`。
 
+## 错误分析和测试
+
+已补充错误分析脚本和基础单元测试：
+
+```powershell
+python -m unittest discover -s tests
+python scripts\analyze_word_eval.py --predictions <predictions.jsonl> --output-json outputs\error_analysis.json
+```
+
+当前 LoRA step512 的 500 张词图分析：平均推理耗时 1.31s，P95 为 1.97s，无超过 10s 的慢样本。realshot_eval_18 仍有 7/18 超时，是后续重点。
+
 ## 重要文件
 
 - `docs/technical_report.md`：数据、质检和基线结果。
@@ -99,6 +111,9 @@ streamlit run demo\app.py
 - `docs/lora_sft_smoke_win4070.md`：本机 LoRA/SFT 烟测记录。
 - `docs/lora_word_eval100.md`：词图 LoRA 微调评估记录，含 100/300/400/500 张结果。
 - `docs/demo.md`：本地 Demo 说明。
+- `docs/engineering_improvements.md`：工程化、错误分析和测试说明。
+- `docs/error_analysis_lora_eval500.md`：LoRA 500 张错误分析。
+- `docs/error_analysis_realshot_eval18.md`：实拍子集超时与错误分析。
 - `scripts/`：数据转换、质检、评估和训练脚本。
 - `configs/`：训练配置。
 

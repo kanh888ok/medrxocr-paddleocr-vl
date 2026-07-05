@@ -4,32 +4,26 @@
 from __future__ import annotations
 
 import argparse
-import json
+import sys
 from pathlib import Path
-from typing import Any
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+from medrxocr.data.loader import load_jsonl, write_json
+from medrxocr.evaluation.metrics import word_ocr_summary
 
 
-def load_jsonl(path: Path) -> list[dict[str, Any]]:
-    rows: list[dict[str, Any]] = []
-    with path.open("r", encoding="utf-8") as f:
-        for line in f:
-            if line.strip():
-                rows.append(json.loads(line))
-    return rows
-
-
-def summarize(rows: list[dict[str, Any]], n: int) -> dict[str, Any]:
+def summarize(rows: list[dict], n: int) -> dict:
     part = rows[:n]
     if not part:
         raise ValueError(f"empty prediction slice for n={n}")
-    total_dist = sum(int(row["edit_distance"]) for row in part)
-    total_chars = sum(int(row["gold_chars"]) for row in part)
+    summary = word_ocr_summary(part)
     return {
-        "n_completed": len(part),
-        "errors": sum(1 for row in part if row.get("error")),
-        "exact_match_rate": sum(1 for row in part if row.get("exact_match")) / len(part),
-        "mean_cer": sum(float(row["cer"]) for row in part) / len(part),
-        "micro_cer": total_dist / total_chars if total_chars else None,
+        "n_completed": summary["n_scored"],
+        "errors": summary["errors"],
+        "exact_match_rate": summary["exact_match_rate"],
+        "mean_cer": summary["mean_cer"],
+        "micro_cer": summary["micro_cer"],
     }
 
 
@@ -41,8 +35,8 @@ def main() -> None:
     parser.add_argument("--cutoffs", nargs="+", type=int, default=[100, 300, 400, 500])
     args = parser.parse_args()
 
-    baseline = load_jsonl(Path(args.baseline))
-    lora = load_jsonl(Path(args.lora))
+    baseline = load_jsonl(args.baseline)
+    lora = load_jsonl(args.lora)
     rows = []
     for n in args.cutoffs:
         if n > len(baseline) or n > len(lora):
@@ -75,10 +69,8 @@ def main() -> None:
         ],
     }
 
-    output = Path(args.output)
-    output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps(result, ensure_ascii=False, indent=2))
+    write_json(args.output, result)
+    print(Path(args.output).read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

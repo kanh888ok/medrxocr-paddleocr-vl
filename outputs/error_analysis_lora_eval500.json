@@ -1,0 +1,192 @@
+{
+  "summary": {
+    "n_records": 500,
+    "n_scored": 500,
+    "errors": 0,
+    "exact_match_rate": 0.296,
+    "mean_cer": 0.40586800421800423,
+    "micro_cer": 0.39544513457556935,
+    "digit_record_count": 34,
+    "digit_exact_rate": 0.35294117647058826
+  },
+  "latency": {
+    "mean_sec": 1.3138611235618591,
+    "p50_sec": 1.4097410440444946,
+    "p95_sec": 1.9672069549560547,
+    "p99_sec": 2.1374545097351074,
+    "max_sec": 2.2393054962158203,
+    "slow_threshold_sec": 10.0,
+    "slow_count": 0
+  },
+  "timeouts": {
+    "count": 0,
+    "image_ids": []
+  },
+  "char_errors": {
+    "matches": 2318,
+    "substitutions": 844,
+    "insertions": 274,
+    "deletions": 219,
+    "edit_distance": 1337
+  },
+  "length_bins": {
+    "long_9_16": {
+      "n_records": 60,
+      "n_scored": 60,
+      "errors": 0,
+      "exact_match_rate": 0.1,
+      "mean_cer": 0.42185638435638434,
+      "micro_cer": 0.4330708661417323,
+      "digit_record_count": 27,
+      "digit_exact_rate": 0.3333333333333333
+    },
+    "medium_5_8": {
+      "n_records": 398,
+      "n_scored": 398,
+      "errors": 0,
+      "exact_match_rate": 0.30402010050251255,
+      "mean_cer": 0.37803003110792055,
+      "micro_cer": 0.3705426356589147,
+      "digit_record_count": 7,
+      "digit_exact_rate": 0.42857142857142855
+    },
+    "short_0_4": {
+      "n_records": 42,
+      "n_scored": 42,
+      "errors": 0,
+      "exact_match_rate": 0.5,
+      "mean_cer": 0.6468253968253969,
+      "micro_cer": 0.6385542168674698,
+      "digit_record_count": 0,
+      "digit_exact_rate": null
+    }
+  },
+  "digit": {
+    "n_records": 34,
+    "digit_exact_rate": 0.35294117647058826
+  },
+  "worst_cer_examples": [
+    {
+      "image_id": "rxhandbd_eval_P0424",
+      "cer": 7.75,
+      "gold_text": "Atoz",
+      "prediction_text": "A to 2.000000000000000000000000000"
+    },
+    {
+      "image_id": "rxhandbd_eval_P0173",
+      "cer": 3.6666666666666665,
+      "gold_text": "Dinovo",
+      "prediction_text": "NEXT MUGLYPH(cmap:df00)O"
+    },
+    {
+      "image_id": "rxhandbd_eval_P0231",
+      "cer": 3.0,
+      "gold_text": "Atoz",
+      "prediction_text": "Ato2 prominency"
+    },
+    {
+      "image_id": "rxhandbd_eval_P0021",
+      "cer": 2.75,
+      "gold_text": "Napa",
+      "prediction_text": "Galatiornhlia"
+    },
+    {
+      "image_id": "rxhandbd_eval_P0267",
+      "cer": 2.6,
+      "gold_text": "Texit",
+      "prediction_text": "$\\frac{1}{2}$"
+    },
+    {
+      "image_id": "rxhandbd_eval_P0045",
+      "cer": 2.3333333333333335,
+      "gold_text": "???",
+      "prediction_text": "Doxycap"
+    },
+    {
+      "image_id": "rxhandbd_eval_P0365",
+      "cer": 2.3333333333333335,
+      "gold_text": "Apeclo",
+      "prediction_text": "Vodafone Solutions"
+    },
+    {
+      "image_id": "rxhandbd_eval_P0060",
+      "cer": 2.1666666666666665,
+      "gold_text": "Maxpro",
+      "prediction_text": "VISCO TATO 600"
+    },
+    {
+      "image_id": "rxhandbd_eval_P0158",
+      "cer": 2.142857142857143,
+      "gold_text": "Rifagut",
+      "prediction_text": "Bexitbol F Bexitop"
+    },
+    {
+      "image_id": "rxhandbd_eval_P0065",
+      "cer": 2.0,
+      "gold_text": "Sergel",
+      "prediction_text": "200 N-MAX SA"
+    }
+  ],
+  "slow_examples": [
+    {
+      "image_id": "rxhandbd_eval_P0489",
+      "elapsed_sec": 2.2393054962158203,
+      "error": null,
+      "cer": 0.14285714285714285
+    },
+    {
+      "image_id": "rxhandbd_eval_P0464",
+      "elapsed_sec": 2.171579122543335,
+      "error": null,
+      "cer": 0.0
+    },
+    {
+      "image_id": "rxhandbd_eval_P0495",
+      "elapsed_sec": 2.160252094268799,
+      "error": null,
+      "cer": 0.0
+    },
+    {
+      "image_id": "rxhandbd_eval_P0477",
+      "elapsed_sec": 2.1383895874023438,
+      "error": null,
+      "cer": 0.0
+    },
+    {
+      "image_id": "rxhandbd_eval_P0467",
+      "elapsed_sec": 2.1375482082366943,
+      "error": null,
+      "cer": 0.5
+    },
+    {
+      "image_id": "rxhandbd_eval_P0475",
+      "elapsed_sec": 2.1374545097351074,
+      "error": null,
+      "cer": 0.125
+    },
+    {
+      "image_id": "rxhandbd_eval_P0476",
+      "elapsed_sec": 2.119270086288452,
+      "error": null,
+      "cer": 0.0
+    },
+    {
+      "image_id": "rxhandbd_eval_P0469",
+      "elapsed_sec": 2.1192574501037598,
+      "error": null,
+      "cer": 0.0
+    },
+    {
+      "image_id": "rxhandbd_eval_P0493",
+      "elapsed_sec": 2.1099600791931152,
+      "error": null,
+      "cer": 0.125
+    },
+    {
+      "image_id": "rxhandbd_eval_P0479",
+      "elapsed_sec": 2.108680486679077,
+      "error": null,
+      "cer": 0.0
+    }
+  ]
+}
