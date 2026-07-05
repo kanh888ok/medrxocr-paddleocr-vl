@@ -1,149 +1,99 @@
 # MedRxOCR 处方 OCR 数据集
 
-本项目整理公开处方数据，建立一个基于 PaddleOCR-VL 的处方 OCR 评测基准。
+这个仓库整理了几份公开处方数据，用来做 PaddleOCR-VL 的处方 OCR 评测和小规模 LoRA/SFT 实验。
 
-仓库只放代码、配置、说明和小型结果文件。原始图片、处理后的大 JSONL、模型权重和检查点放在 AI Studio 数据包中。
+代码、配置和小结果放在 GitHub。原始图片、大 JSONL、模型权重和检查点放在 AI Studio：
 
 - 数据包：https://aistudio.baidu.com/dataset/detail/384020/intro
 - 初始检查点：https://aistudio.baidu.com/dataset/detail/384021/intro
 
-## 已完成
+## 数据
 
-- 整理 3 个公开数据源，许可证均为 CC BY 4.0。
-- 生成统一 JSONL、固定 train/val/eval 划分。
-- 完成数据统计和质量检查。
-- 补充 PaddleOCR-VL / PaddleOCR-VL-1.5 零样本基线。
-- 补充 20 张手机实拍图片人工质检，其中 18 张可计入严格 eval。
-- 完成 PaddleOCR-VL-1.5 在 realshot_eval_18 上的零样本基线。
-- 完成 RTX 4070 上的 LoRA/SFT 训练、合并和评估链路，并补充 1115 张公开词图的微调前后对比。
-- 补充 realshot_eval_18 上的微调前后对比，并加入 warm-worker 超时重试脚本，避免单张图片卡住整轮评估。
-- 补充本地 Streamlit Demo，用于展示图片输入、结构化 JSON 输出和当前评估结果。
-- 补充评估指标模块、错误分析脚本、单元测试和轻量 CI。
-
-## 数据来源
-
-| 数据源 | 用途 | 数量说明 |
+| 数据源 | 用途 | 数量 |
 |---|---|---:|
 | Mendeley bilingual prescription | 整页处方 OCR | 997 条可用标注 |
 | Bangladesh 200 prescription YOLO | 药品区域检测 | 200 张处方图 |
 | RxHandBD | 手写药品词识别 | 4463 训练 / 1115 评估 |
 
-Mendeley 原始包有 1000 张图片，但 CSV 清洗后只有 997 条唯一可用标注，所以按 997 条报告。
+Mendeley 原包有 1000 张图，但 CSV 清洗后只有 997 条唯一可用标注。固定划分后共有 train 4801、val 607、eval 1367。
 
-## 数据划分
+另外补了 20 张手机实拍图，其中 18 张对应固定 eval，可用于 `realshot_eval_18`；另外 2 张只作为采集示例。
 
-| 划分 | 数量 |
-|---|---:|
-| train | 4801 |
-| val | 607 |
-| eval | 1367 |
+## 基线
 
-## 零样本基线
-
-RxHandBD 词图评估集：
+RxHandBD 词图：
 
 | 模型 | 图像数 | Exact Match | Micro CER |
 |---|---:|---:|---:|
 | PaddleOCR-VL | 1115 | 0.2386 | 0.4255 |
 | PaddleOCR-VL-1.5 | 1115 | 0.2197 | 0.4736 |
 
-realshot_eval_18 手机实拍子集：
+`realshot_eval_18`：
 
 | 模型 | 图像数 | 成功返回 | 超时 | Mean CER | Micro CER |
 |---|---:|---:|---:|---:|---:|
 | PaddleOCR-VL-1.5 | 18 | 11 | 7 | 0.9542 | 0.9124 |
 | PaddleOCR-VL v1 本地模型 | 18 | 18 | 0 | 0.9297 | 0.8792 |
 
-这些是零样本基线，不是微调后指标。
+这里是零样本结果，不是微调结果。
 
-## LoRA/SFT 小规模微调
+## LoRA/SFT
 
-已在本机 RTX 4070 上完成公开 RxHandBD 词图 LoRA/SFT 训练。当前推荐记录的是 `step512` 检查点：训练使用 3979 张公开 RxHandBD 训练词图，评估使用固定 RxHandBD eval。
+训练只用了公开 RxHandBD 词图，没有使用真实线下处方。
 
 | 项目 | 数值 |
 |---|---:|
+| 检查点 | step512 |
 | LoRA rank | 8 |
-| 可训练参数 | 1,032,192 |
-| 训练步数 | 512 step |
-| 训练集 | 3979 张公开 RxHandBD 词图 |
-| 评估集 | 固定 eval 1115 张 |
+| 训练样本 | 3979 |
+| 评估样本 | 1115 |
 | 推理设置 | `max_new_tokens=32` |
 | train loss | 2.8878 |
-| GPU 峰值保留显存 | 约 5.76 GB |
 
-完整 1115 张词图评估结果：
+RxHandBD 1115 张词图：
 
 | 模型 | Exact Match | Mean CER | Micro CER |
 |---|---:|---:|---:|
 | PaddleOCR-VL 基线 | 0.2386 | 0.4327 | 0.4255 |
 | LoRA step512 | 0.2682 | 0.3831 | 0.3783 |
 
-realshot_eval_18 实拍子集结果：
+`realshot_eval_18`：
 
 | 模型 | 图像数 | 成功返回 | 超时 | Mean CER | Micro CER |
 |---|---:|---:|---:|---:|---:|
 | PaddleOCR-VL v1 本地模型 | 18 | 18 | 0 | 0.9297 | 0.8792 |
 | LoRA step512 | 18 | 18 | 0 | 0.8729 | 0.8679 |
 
-结论：`step512` 在完整 1115 张公开词图和 18 张实拍子集上均超过同口径基线。`step1024` 在前 100 张上更高，但在后续样本上生成速度不稳定，因此暂不作为推荐检查点。
-
-早期 2 step 烟测说明见 `docs/lora_sft_smoke_win4070.md`。
+简单看，`step512` 比基线好一些。realshot 的提升不大，但至少同一批 18 张图上方向是正的。`step1024` 前 100 张更高，但后面推理不稳定，暂时不作为推荐结果。
 
 ## Demo
 
-本地 Demo 可用于展示项目流程和结构化输出格式：
+Demo 只是展示图片输入、OCR 文本和 JSON 输出格式，字段提取还不完整。
 
 ```powershell
 streamlit run demo\app.py
 ```
 
-说明见 `docs/demo.md`。
-
-## 错误分析和测试
-
-已补充错误分析脚本和基础单元测试：
+## 复查和测试
 
 ```powershell
 python -m unittest discover -s tests
 python scripts\analyze_word_eval.py --predictions <predictions.jsonl> --output-json outputs\error_analysis.json
 ```
 
-当前 LoRA step512 的 1115 张词图评估已完成，0 个错误。realshot_eval_18 已改用 warm-worker 方式评估：模型常驻，单张图片单独计时，卡住后重启 worker 并重试，最终基线和 LoRA 均完成 18/18。
+实拍评估用 warm-worker 脚本跑：模型常驻，单张图片单独计时，卡住后重启 worker 再试，避免一张图拖住整轮评估。
 
-## 重要文件
+## 主要文件
 
-- `docs/technical_report.md`：数据、质检和基线结果。
-- `docs/realshot_eval.md`：实拍评估子集说明。
-- `docs/realshot_manual_qc.md`：实拍图片人工质检表。
-- `docs/realshot_baseline.md`：实拍子集零样本基线。
-- `docs/lora_sft_readiness.md`：LoRA/SFT 当前状态。
-- `docs/lora_sft_smoke_win4070.md`：本机 LoRA/SFT 烟测记录。
-- `docs/lora_word_eval100.md`：词图 LoRA 微调评估记录，含 100/300/400/500 张结果。
-- `docs/demo.md`：本地 Demo 说明。
-- `docs/engineering_improvements.md`：工程化、错误分析和测试说明。
-- `docs/error_analysis_lora_eval500.md`：LoRA 500 张错误分析。
-- `docs/error_analysis_realshot_eval18.md`：实拍子集超时与错误分析。
-- `scripts/run_paddleocrvl_worker_timeout_eval.py`：带 warm-worker 和重试的实拍评估脚本。
-- `outputs/lora_eval1115_realshot_summary.json`：1115 张词图和 realshot_eval_18 的关键指标摘要。
-- `scripts/`：数据转换、质检、评估和训练脚本。
-- `configs/`：训练配置。
+- `docs/technical_report.md`：数据、质检和指标。
+- `docs/realshot_manual_qc.md`：20 张实拍图人工质检。
+- `docs/realshot_baseline.md`：`realshot_eval_18` 结果。
+- `demo/app.py`：本地 Demo。
+- `outputs/lora_eval1115_realshot_summary.json`：当前关键指标摘要。
 
-## 复现提示
+## 还没做
 
-训练前需要先准备公开数据、`data/processed` 清单、PaddleOCR-VL 权重和 ERNIEKit 环境。
-
-Windows 本机烟测可参考：
-
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts\apply_erniekit_windows_compat.ps1
-powershell -ExecutionPolicy Bypass -File scripts\run_lora_sft_smoke_win4070.ps1
-```
-
-官方更推荐 Linux/Docker CUDA 环境。Windows 结果用于说明本机链路已经跑通。
-
-## 当前不足
-
-- 训练集、评估集主要来自公开数据。
-- 真实线下处方数据暂未补充，后续可以用合规公开渠道继续扩展。
-- 实拍子集目前只有 18 张严格 eval 图片，且每张只有 1 个实拍版本。
-- 数据增强实验、LoRA rank 16/32、多阶段训练、药品词典后处理还未系统完成。
+- 真实线下处方数据暂未补充。
+- 实拍子集只有 18 张，每张只有 1 个实拍版本。
+- 结构化字段人工标注还不完整。
+- 数据增强、LoRA rank 16/32、多阶段训练、药品词典后处理还没系统做。
