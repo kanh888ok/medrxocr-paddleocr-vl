@@ -1,0 +1,9 @@
+Demo Clinic
+Prescription Sample
+Patient: [REDACTED]
+
+Tab. Amlodipine 5 mg once daily for seven days
+Tab. Metformin 500 mg twice daily for two weeks
+Cap. Omeprazole 20 mg once daily for five days
+
+Doctor: [REDACTED]

@@ -1,18 +1,27 @@
 # Demo 说明
 
-本项目提供一个轻量 Streamlit Demo，用于展示处方 OCR 项目的输入、结构化输出格式和当前评估结果。
+这个 Demo 是演示原型，不是默认加载模型的在线 OCR 服务。它自带一个脱敏样例，别人 clone 仓库后可以直接运行，查看图片预览、OCR 文本、结构化 JSON 和当前评估结果。
 
 运行方式：
 
 ```powershell
-pip install -r requirements.txt
+pip install -r requirements-demo.txt
 streamlit run demo\app.py
 ```
 
-Demo 页面包含三部分：
+页面包含三部分：
 
-- 上传处方图片。
-- 粘贴 OCR 文本并生成统一 JSON 结构。
-- 查看 PaddleOCR-VL baseline 与 LoRA step512 的评估对比。
+- 查看 PaddleOCR-VL baseline 与 LoRA 的评估对比。
+- 查看内置脱敏样例，或上传图片预览。
+- 粘贴 OCR 文本，并生成统一 JSON 结构。
+- 可选启用本地 OCR 推理。
 
-当前 Demo 不内置模型权重，也不把原始图片上传到 GitHub。真实推理需要先按 README 准备 PaddleOCR-VL 环境和本地模型文件。
+默认情况下 Demo 不会加载 PaddleOCR-VL，也不会调用 LoRA 模型。这样没有 GPU 的机器也能打开查看。
+
+如需在页面内对上传图片做真实 OCR，需要：
+
+- 本机已安装 PaddleOCR-VL 推理环境。
+- 已准备 PaddleOCR-VL 或 LoRA 合并后的模型目录。
+- 在页面里勾选“启用本地 OCR”，填写模型目录后再运行。
+
+批量评估和正式指标仍建议使用 `scripts/run_paddleocrvl_*.py`。

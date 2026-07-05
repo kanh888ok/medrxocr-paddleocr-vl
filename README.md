@@ -73,9 +73,10 @@ rank4、rank16、重增强和轻增强的对比记录见 `docs/lora_strategy_exp
 
 ## Demo
 
-Demo 只是展示图片输入、OCR 文本和 JSON 输出格式，字段提取还不完整。
+Demo 默认使用内置脱敏样例，别人 clone 后可以直接运行，查看图片预览、OCR 文本、JSON 输出和当前指标。页面里的本地 OCR 推理是可选项，需要自己准备 PaddleOCR-VL 环境和模型目录。
 
 ```powershell
+pip install -r requirements-demo.txt
 streamlit run demo\app.py
 ```
 

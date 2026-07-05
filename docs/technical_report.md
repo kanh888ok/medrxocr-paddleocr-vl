@@ -111,7 +111,7 @@ realshot_eval_18 同口径对比：
 
 ## Demo
 
-已补充 `demo/app.py`。该 Demo 可以上传处方图片、粘贴 OCR 文本、生成统一 JSON 结构，并展示当前 baseline 与 LoRA 的评估对比。
+已补充 `demo/app.py`。该 Demo 是演示原型：自带一个脱敏样例，可以预览图片、粘贴 OCR 文本、生成统一 JSON 结构，并展示当前 baseline 与 LoRA 的评估对比。页面内的本地 OCR 推理是可选项；正式指标仍使用评估脚本运行。
 
 ## 错误分析和推理稳定性
 

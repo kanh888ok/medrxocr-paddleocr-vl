@@ -60,5 +60,6 @@ python scripts\build_sft_manifest.py --input data\processed\medrxocr_val.jsonl -
 ## 7. 运行 demo
 
 ```powershell
+pip install -r requirements-demo.txt
 streamlit run demo\app.py
 ```

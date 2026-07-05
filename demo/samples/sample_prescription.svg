@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="620" viewBox="0 0 900 620">
+  <rect width="900" height="620" fill="#f8fafc"/>
+  <rect x="72" y="48" width="756" height="524" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="110" y="108" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#0f172a">Demo Clinic</text>
+  <text x="110" y="148" font-family="Arial, sans-serif" font-size="18" fill="#475569">Prescription Sample</text>
+  <line x1="110" y1="178" x2="790" y2="178" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="110" y="224" font-family="Arial, sans-serif" font-size="22" fill="#111827">Patient: [REDACTED]</text>
+  <text x="110" y="280" font-family="Arial, sans-serif" font-size="24" fill="#111827">Tab. Amlodipine 5 mg once daily for seven days</text>
+  <text x="110" y="330" font-family="Arial, sans-serif" font-size="24" fill="#111827">Tab. Metformin 500 mg twice daily for two weeks</text>
+  <text x="110" y="380" font-family="Arial, sans-serif" font-size="24" fill="#111827">Cap. Omeprazole 20 mg once daily for five days</text>
+  <line x1="110" y1="430" x2="790" y2="430" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="110" y="486" font-family="Arial, sans-serif" font-size="22" fill="#111827">Doctor: [REDACTED]</text>
+  <text x="110" y="530" font-family="Arial, sans-serif" font-size="16" fill="#64748b">Synthetic demo image. Not a real prescription.</text>
+</svg>
