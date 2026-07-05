@@ -54,11 +54,18 @@ def main() -> None:
     parser.add_argument("--task", choices=["ocr", "word_ocr"], default="ocr")
     parser.add_argument("--variants", nargs="*", default=["blur", "bright", "rotate", "perspective"])
     parser.add_argument("--limit", type=int, default=None)
+    parser.add_argument(
+        "--augmentation-limit",
+        type=int,
+        default=None,
+        help="Augment only the first N selected source records. Originals still use the full selected set.",
+    )
     parser.add_argument("--include-original", action="store_true")
     args = parser.parse_args()
 
     root = Path(args.root).resolve()
     rows = filter_records(load_jsonl(root / args.input), args.source_id, args.task_type, args.limit)
+    augment_rows = rows[: args.augmentation_limit] if args.augmentation_limit else rows
     variants = resolve_variants(args.variants)
     output_image_dir = root / args.image_output_dir
 
@@ -68,7 +75,7 @@ def main() -> None:
         manifest_rows.extend(rows)
         counts["original"] = len(rows)
 
-    for row in rows:
+    for row in augment_rows:
         src_path = root / str(row["image_path"]).replace("\\", "/")
         stem = Path(row["image_path"]).stem
         suffix = Path(row["image_path"]).suffix or ".jpg"
@@ -87,6 +94,7 @@ def main() -> None:
         "task_type": args.task_type,
         "task_prompt": args.task,
         "source_records": len(rows),
+        "augmented_source_records": len(augment_rows),
         "manifest_records": len(manifest_rows),
         "variants": dict(counts),
         "note": "Generated images are ignored by Git. Rebuild them before running the augmented LoRA config.",

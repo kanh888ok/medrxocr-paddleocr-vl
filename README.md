@@ -43,12 +43,12 @@ RxHandBD 词图：
 
 | 项目 | 数值 |
 |---|---:|
-| 检查点 | step512 |
-| LoRA rank | 8 |
-| 训练样本 | 3979 |
+| 基础检查点 | rank8 step512 |
+| 轻增强检查点 | aug-light rank8 step512 |
+| 基础训练样本 | 3979 |
+| 轻增强训练样本 | 3979 原图 + 1800 增强图 |
 | 评估样本 | 1115 |
 | 推理设置 | `max_new_tokens=32` |
-| train loss | 2.8878 |
 
 RxHandBD 1115 张词图：
 
@@ -56,6 +56,7 @@ RxHandBD 1115 张词图：
 |---|---:|---:|---:|
 | PaddleOCR-VL 基线 | 0.2386 | 0.4327 | 0.4255 |
 | LoRA step512 | 0.2682 | 0.3831 | 0.3783 |
+| LoRA aug-light step512 | 0.2825 | 0.3754 | 0.3702 |
 
 `realshot_eval_18`：
 
@@ -64,9 +65,11 @@ RxHandBD 1115 张词图：
 | PaddleOCR-VL v1 本地模型 | 18 | 18 | 0 | 0.9297 | 0.8792 |
 | LoRA step512 | 18 | 18 | 0 | 0.8729 | 0.8679 |
 
-简单看，`step512` 比基线好一些。realshot 的提升不大，但至少同一批 18 张图上方向是正的。`step1024` 前 100 张更高，但后面推理不稳定，暂时不作为推荐结果。
+简单看，`aug-light step512` 在公开词图上最好。它是在 600 张训练图上加了模糊、亮度和旋转扰动后训练出来的。
 
-下一轮实验入口已经补上，主要是 rank4/rank16、拍照扰动增强和难样本重点训练。说明见 `docs/lora_strategy_experiments.md`。这些还没写进主结果表，等完整跑完后再补指标。
+实拍子集上仍然保留 `LoRA step512` 作为推荐结果。`aug-light` 的 max64 版本 18 张都跑完了，但 Micro CER 是 0.9421；max128 版本有 2 张超时，所以不采用。
+
+rank4、rank16、重增强和轻增强的对比记录见 `docs/lora_strategy_experiments.md`。
 
 ## Demo
 
@@ -90,14 +93,15 @@ python scripts\analyze_word_eval.py --predictions <predictions.jsonl> --output-j
 - `docs/technical_report.md`：数据、质检和指标。
 - `docs/realshot_manual_qc.md`：20 张实拍图人工质检。
 - `docs/realshot_baseline.md`：`realshot_eval_18` 结果。
-- `docs/lora_strategy_experiments.md`：下一轮 LoRA 对比实验。
+- `docs/lora_strategy_experiments.md`：LoRA rank 和增强对比。
 - `demo/app.py`：本地 Demo。
 - `outputs/lora_eval1115_realshot_summary.json`：当前关键指标摘要。
+- `outputs/lora_strategy_experiment_summary.json`：rank 和增强实验摘要。
 
 ## 还没做
 
 - 真实线下处方数据暂未补充。
 - 实拍子集只有 18 张，每张只有 1 个实拍版本。
 - 结构化字段人工标注还不完整。
-- rank 对比、数据增强和难样本重点训练已经有入口，但完整训练指标还没跑完。
+- 难样本重点训练还没完整跑。
 - 药品词典后处理还没系统做。

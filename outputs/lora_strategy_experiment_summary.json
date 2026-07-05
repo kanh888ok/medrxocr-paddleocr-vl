@@ -1,0 +1,146 @@
+{
+  "task": "RxHandBD word OCR LoRA strategy comparison",
+  "data_policy": "Public RxHandBD train/eval only. No private offline prescription data was used.",
+  "baseline": {
+    "rxhandbd_eval1115": {
+      "model": "PaddleOCR-VL v1",
+      "n_images": 1115,
+      "exact_match": 0.23856502242152466,
+      "mean_cer": 0.4326877133827806,
+      "micro_cer": 0.4255290102389078
+    },
+    "realshot_eval18": {
+      "model": "PaddleOCR-VL v1 local warm-worker",
+      "n_images": 18,
+      "completed_images": 18,
+      "timeout_images": 0,
+      "mean_cer": 0.9296539142149444,
+      "micro_cer": 0.8791645947289906
+    }
+  },
+  "reference_lora_step512": {
+    "rxhandbd_eval1115": {
+      "model": "MedRxOCR-LoRA-full-lr2e5-step512-max32",
+      "n_images": 1115,
+      "exact_match": 0.2681614349775785,
+      "mean_cer": 0.3830963281860143,
+      "micro_cer": 0.37829351535836175
+    },
+    "realshot_eval18": {
+      "model": "MedRxOCR-LoRA-step512-realshot-max128",
+      "n_images": 18,
+      "completed_images": 18,
+      "timeout_images": 0,
+      "mean_cer": 0.8728731675022136,
+      "micro_cer": 0.8678695744831996
+    }
+  },
+  "experiments": [
+    {
+      "name": "rank4_step512",
+      "status": "stopped_after_probe",
+      "probe": {
+        "n_images": 4,
+        "elapsed_sec_range": [48.06782627105713, 62.0035502910614]
+      },
+      "decision": "not_adopted",
+      "reason": "Probe inference was too slow for the fixed eval."
+    },
+    {
+      "name": "rank16_step512",
+      "status": "probe_only",
+      "probe": {
+        "n_images": 20,
+        "exact_match": 0.25,
+        "mean_cer": 0.2100595238095238,
+        "micro_cer": 0.2
+      },
+      "decision": "not_adopted",
+      "reason": "The same 20-image slice was slightly worse than the existing step512 result."
+    },
+    {
+      "name": "aug_rank8_step512",
+      "status": "probe_only",
+      "augmentation": {
+        "source_records": 3979,
+        "manifest_records": 19895,
+        "variants": {
+          "original": 3979,
+          "blur": 3979,
+          "bright": 3979,
+          "rotate": 3979,
+          "perspective": 3979
+        }
+      },
+      "probe": {
+        "n_images": 100,
+        "exact_match": 0.15,
+        "mean_cer": 0.7424166666666666,
+        "micro_cer": 0.7085346215780999
+      },
+      "decision": "not_adopted",
+      "reason": "Full-strength augmentation was slightly worse than the existing 100-image step512 slice."
+    },
+    {
+      "name": "aug_light_rank8_step512",
+      "status": "completed_public_eval",
+      "augmentation": {
+        "source_records": 3979,
+        "augmented_source_records": 600,
+        "manifest_records": 5779,
+        "variants": {
+          "original": 3979,
+          "blur": 600,
+          "bright": 600,
+          "rotate": 600
+        }
+      },
+      "rxhandbd_eval1115": {
+        "n_images": 1115,
+        "exact_match": 0.2825112107623318,
+        "mean_cer": 0.3753668553668554,
+        "micro_cer": 0.3702389078498293,
+        "mean_elapsed_sec": 2.66984490022531
+      },
+      "decision": "adopt_for_public_word_eval",
+      "reason": "It improved exact match and CER against both baseline and the previous step512 checkpoint."
+    },
+    {
+      "name": "aug_light_rank8_realshot_max64",
+      "status": "completed_realshot_eval18",
+      "realshot_eval18": {
+        "n_images": 18,
+        "completed_images": 18,
+        "timeout_images": 0,
+        "mean_cer": 0.9293052260725013,
+        "micro_cer": 0.9421041415074235,
+        "mean_elapsed_sec": 69.30598779519399
+      },
+      "decision": "not_adopted_for_realshot",
+      "reason": "It finished without timeout but was worse than the previous step512 realshot result."
+    },
+    {
+      "name": "aug_light_rank8_realshot_max128",
+      "status": "completed_with_timeouts",
+      "realshot_eval18": {
+        "n_images": 18,
+        "completed_images": 16,
+        "timeout_images": 2,
+        "mean_cer_completed": 0.9145708403535042,
+        "micro_cer_completed": 0.9103945844838336,
+        "mean_elapsed_sec_completed": 70.1077298372984
+      },
+      "decision": "not_adopted_for_realshot",
+      "reason": "It had two timeouts and was still worse than the previous step512 realshot result."
+    }
+  ],
+  "recommendation": {
+    "rxhandbd_eval1115": "Use aug_light_rank8_step512 as the public word-crop result.",
+    "realshot_eval18": "Keep the previous LoRA step512 result as the realshot result."
+  },
+  "remaining_work": [
+    "Run hard_focus_rank8 if more time is available.",
+    "Try dictionary post-processing as a separate ablation.",
+    "Do not claim realshot improvement from aug-light; current numbers do not support it."
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "input": "data/processed/medrxocr_train.jsonl",
+  "output": "data/processed/train_rx_erniekit_sft_word_aug_camera.jsonl",
+  "image_output_dir": "data/interim/rxhandbd_camera_aug",
+  "source_id": "rxhandbd_5578",
+  "task_type": "word_ocr",
+  "task_prompt": "ocr",
+  "source_records": 3979,
+  "augmented_source_records": 3979,
+  "manifest_records": 19895,
+  "variants": {
+    "original": 3979,
+    "blur": 3979,
+    "bright": 3979,
+    "rotate": 3979,
+    "perspective": 3979
+  },
+  "note": "Generated images are ignored by Git. Rebuild them before running the augmented LoRA config."
+}

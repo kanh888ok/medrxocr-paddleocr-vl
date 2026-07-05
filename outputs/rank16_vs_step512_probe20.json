@@ -1,0 +1,36 @@
+{
+  "task": "RxHandBD word OCR",
+  "model_baseline": "PaddleOCR-VL-v1-local-max32",
+  "model_lora": "MedRxOCR-LoRA-rank16-step512-max32",
+  "eval_subset": "fixed leading slices from RxHandBD eval",
+  "max_new_tokens": 32,
+  "comparison": [
+    {
+      "n_images": 20,
+      "baseline": {
+        "n_completed": 20,
+        "errors": 0,
+        "exact_match_rate": 0.25,
+        "mean_cer": 0.19797619047619047,
+        "micro_cer": 0.19230769230769232
+      },
+      "lora": {
+        "n_completed": 20,
+        "errors": 0,
+        "exact_match_rate": 0.25,
+        "mean_cer": 0.2100595238095238,
+        "micro_cer": 0.2
+      },
+      "delta": {
+        "exact_match_rate": 0.0,
+        "mean_cer": 0.012083333333333335,
+        "micro_cer": 0.007692307692307693
+      }
+    }
+  ],
+  "notes": [
+    "Lower CER is better.",
+    "The rank16 probe was not adopted because it was slightly worse than the existing step512 result on this slice.",
+    "This is a public word-crop OCR evaluation, not full prescription structured extraction."
+  ]
+}

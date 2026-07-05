@@ -1,6 +1,6 @@
 param(
   [string]$Python = "C:\pocrgpu312\Scripts\python.exe",
-  [ValidateSet("rank4", "rank16", "aug_rank8", "hard_focus_rank8")]
+  [ValidateSet("rank4", "rank16", "aug_rank8", "aug_light_rank8", "hard_focus_rank8")]
   [string]$Experiment = "rank4",
   [string]$RunName = ""
 )
@@ -14,6 +14,15 @@ try {
 
   if ($Experiment -eq "aug_rank8") {
     & $Python scripts\build_augmented_word_sft_manifest.py --include-original
+  }
+  if ($Experiment -eq "aug_light_rank8") {
+    & $Python scripts\build_augmented_word_sft_manifest.py `
+      --output data\processed\train_rx_erniekit_sft_word_aug_light.jsonl `
+      --image-output-dir data\interim\rxhandbd_camera_aug_light `
+      --summary-output outputs\lora_augmented_word_light_manifest_summary.json `
+      --variants blur bright rotate `
+      --augmentation-limit 600 `
+      --include-original
   }
   if ($Experiment -eq "hard_focus_rank8") {
     & $Python scripts\build_hard_word_sft_manifest.py --limit 512

@@ -15,6 +15,15 @@
       "mean_cer": 0.3830963281860143,
       "micro_cer": 0.37829351535836175,
       "errors": 0
+    },
+    "lora_aug_light_rank8_step512": {
+      "model": "MedRxOCR-LoRA-aug-light-rank8-step512-max32",
+      "n_images": 1115,
+      "exact_match": 0.2825112107623318,
+      "mean_cer": 0.3753668553668554,
+      "micro_cer": 0.3702389078498293,
+      "errors": 0,
+      "recommended_for": "public RxHandBD word eval"
     }
   },
   "realshot_eval18": {
@@ -35,11 +44,32 @@
       "mean_cer": 0.8728731675022136,
       "micro_cer": 0.8678695744831996,
       "mean_elapsed_sec": 27.074231518639458
+    },
+    "lora_aug_light_rank8_max64": {
+      "model": "MedRxOCR-LoRA-aug-light-rank8-step512-realshot-max64",
+      "n_images": 18,
+      "completed_images": 18,
+      "timeout_images": 0,
+      "mean_cer": 0.9293052260725013,
+      "micro_cer": 0.9421041415074235,
+      "mean_elapsed_sec": 69.30598779519399,
+      "recommended": false
+    },
+    "lora_aug_light_rank8_max128": {
+      "model": "MedRxOCR-LoRA-aug-light-rank8-step512-realshot-max128",
+      "n_images": 18,
+      "completed_images": 16,
+      "timeout_images": 2,
+      "mean_cer": 0.9145708403535042,
+      "micro_cer": 0.9103945844838336,
+      "mean_elapsed_sec": 70.1077298372984,
+      "recommended": false
     }
   },
   "notes": [
     "LoRA training uses public RxHandBD word images only.",
     "realshot_eval18 uses photographed replacements of public eval images without new labels.",
+    "aug-light improves the public word-crop eval but does not improve realshot_eval18.",
     "Detailed prediction JSONL files stay local or in data packages because they are large."
   ]
 }

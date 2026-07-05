@@ -56,6 +56,13 @@ def main() -> None:
             "output_dir": quoted("./outputs/medrxocr_lora_aug_rank8_win4070/checkpoint_run"),
             "logging_dir": quoted("./outputs/medrxocr_lora_aug_rank8_win4070/checkpoint_run/visualdl_logs"),
         },
+        "aug_light_rank8": {
+            "lora_rank": 8,
+            "train_dataset_path": quoted("./data/processed/train_rx_erniekit_sft_word_aug_light.jsonl"),
+            "num_samples_each_epoch": 5779,
+            "output_dir": quoted("./outputs/medrxocr_lora_aug_light_rank8_win4070/checkpoint_run"),
+            "logging_dir": quoted("./outputs/medrxocr_lora_aug_light_rank8_win4070/checkpoint_run/visualdl_logs"),
+        },
         "hard_focus_rank8": {
             "lora_rank": 8,
             "train_dataset_path": quoted("./data/processed/train_rx_erniekit_sft_word_hard512.jsonl"),

@@ -1,44 +1,71 @@
-# LoRA 后续实验
+# LoRA 对比实验
 
-现在主结果是 `rank=8, step512`。这份文件只记录下一轮该怎么跑，不把没跑完的实验写成结果。
+这轮只用公开 RxHandBD 训练图，没有加入真实线下处方。
 
-## 要比较什么
+当前结论很直接：
 
-| 实验 | 入口 | 目的 |
-|---|---|---|
-| rank4 | `configs/experiments/erniekit_paddleocr_vl_lora_word_rank4_win4070.yaml` | 看更小 rank 是否够用 |
-| rank16 | `configs/experiments/erniekit_paddleocr_vl_lora_word_rank16_win4070.yaml` | 看更大 rank 是否继续提升 |
-| aug_rank8 | `scripts/build_augmented_word_sft_manifest.py` + `configs/experiments/erniekit_paddleocr_vl_lora_word_aug_rank8_win4070.yaml` | 用模糊、亮度、旋转、透视模拟手机拍摄 |
-| hard_focus_rank8 | `scripts/build_hard_word_sft_manifest.py` + `configs/experiments/erniekit_paddleocr_vl_lora_word_hard_focus_rank8_win4070.yaml` | 从训练集里挑长词、带数字、较难样本做重点训练 |
+- 公开 1115 张词图：`aug-light rank8 step512` 最好。
+- 实拍 18 张：原来的 `rank8 step512` 更稳，继续作为实拍子集推荐结果。
 
-## 运行方式
+## 已跑结果
 
-先生成配置：
+| 实验 | 口径 | 结果 | 是否采用 |
+|---|---|---|---|
+| rank4 step512 | 先看前 4 张 | 单张约 48-62 秒，速度太慢 | 不采用 |
+| rank16 step512 | 前 20 张 | Micro CER 0.2000，略差于同口径 step512 的 0.1923 | 不采用 |
+| aug-rank8 step512 | 前 100 张 | Micro CER 0.7085，略差于同口径 step512 的 0.7037 | 不采用 |
+| aug-light rank8 step512 | 固定 eval 1115 张 | Exact 0.2825，Mean CER 0.3754，Micro CER 0.3702 | 公开词图采用 |
+| aug-light realshot max64 | 实拍 18 张 | 18/18 完成，Micro CER 0.9421 | 不采用 |
+| aug-light realshot max128 | 实拍 18 张 | 16/18 完成，2 张超时，Micro CER 0.9104 | 不采用 |
+
+对比主结果：
+
+| 模型 | 数据 | Exact Match | Mean CER | Micro CER |
+|---|---|---:|---:|---:|
+| PaddleOCR-VL 基线 | RxHandBD eval 1115 | 0.2386 | 0.4327 | 0.4255 |
+| LoRA rank8 step512 | RxHandBD eval 1115 | 0.2682 | 0.3831 | 0.3783 |
+| LoRA aug-light rank8 step512 | RxHandBD eval 1115 | 0.2825 | 0.3754 | 0.3702 |
+
+实拍子集：
+
+| 模型 | 图像数 | 成功返回 | 超时 | Mean CER | Micro CER |
+|---|---:|---:|---:|---:|---:|
+| PaddleOCR-VL v1 本地模型 | 18 | 18 | 0 | 0.9297 | 0.8792 |
+| LoRA rank8 step512 | 18 | 18 | 0 | 0.8729 | 0.8679 |
+| LoRA aug-light rank8 max64 | 18 | 18 | 0 | 0.9293 | 0.9421 |
+| LoRA aug-light rank8 max128 | 18 | 16 | 2 | 0.9146 | 0.9104 |
+
+## aug-light 怎么做
+
+`aug-light` 只对训练集中 600 张图做扰动，每张生成 3 个版本：
+
+- blur：轻微模糊。
+- bright：亮度/对比度变化。
+- rotate：小角度旋转。
+
+原始 3979 张训练图仍保留，所以训练清单是 5779 条。增强图放在 `data/interim`，不进 Git。
+
+生成命令：
 
 ```powershell
-python scripts\make_lora_experiment_configs.py
+python scripts\build_augmented_word_sft_manifest.py `
+  --output data\processed\train_rx_erniekit_sft_word_aug_light.jsonl `
+  --image-output-dir data\interim\rxhandbd_camera_aug_light `
+  --summary-output outputs\lora_augmented_word_light_manifest_summary.json `
+  --variants blur bright rotate `
+  --augmentation-limit 600 `
+  --include-original
 ```
 
-单个实验：
+训练配置：
 
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts\run_lora_strategy_matrix_win4070.ps1 -Experiment rank4
-powershell -ExecutionPolicy Bypass -File scripts\run_lora_strategy_matrix_win4070.ps1 -Experiment rank16
-powershell -ExecutionPolicy Bypass -File scripts\run_lora_strategy_matrix_win4070.ps1 -Experiment aug_rank8
-powershell -ExecutionPolicy Bypass -File scripts\run_lora_strategy_matrix_win4070.ps1 -Experiment hard_focus_rank8
+```text
+configs/experiments/erniekit_paddleocr_vl_lora_word_aug_light_rank8_win4070.yaml
 ```
 
-`aug_rank8` 会先生成增强图片和 SFT 清单；增强图片放在 `data/interim`，不进 Git。
+## 还没继续的方向
 
-`hard_focus_rank8` 只从训练集选样本，不会拿 eval 结果回灌训练。后面如果有训练集预测文件，可以用 `--predictions` 按训练集 CER 挑难样本。
-
-如果本地已经有合并后的 `step512` 检查点，可以把 hard-focus 配置里的 `model_name_or_path` 改成该检查点路径，再作为二阶段继续训练。不改路径时，它只是难样本重点训练。
-
-## 评估口径
-
-训练完成后仍用同一套 eval：
-
-- RxHandBD 1115 张固定 eval。
-- `realshot_eval_18` 手机实拍子集。
-
-只有完整跑完并确认没有超时后，才把新指标写进 README 和报告。
+- `hard_focus_rank8` 还没完整训练和评估。
+- 药品词典后处理还没做系统对比。
+- realshot 上目前没有比 `rank8 step512` 更好的微调版本。
+- rank16/重增强说明“试过但没更好”，不建议继续优先投时间。
