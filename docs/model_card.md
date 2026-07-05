@@ -8,10 +8,10 @@
 ## 当前状态
 
 - 已完成 RxHandBD 词图评估集的 zero-shot 基线。
-- 已发布一个初始检查点：`https://aistudio.baidu.com/dataset/detail/384021/intro`。
+- 已发布初始检查点：`https://aistudio.baidu.com/dataset/detail/384021/intro`。
 - 已提供 SFT 清单生成脚本和 LoRA/SFT 配置。
 - 已完成 1115 张公开词图的 LoRA/SFT 微调后指标。
-- 已完成 realshot_eval_18 的微调前后对比。
+- 已完成 `realshot_eval_18` 的微调前后对比。
 
 ## 基线结果
 
@@ -30,15 +30,16 @@
 |---|---:|---:|---:|
 | PaddleOCR-VL 基线 | 0.2386 | 0.4327 | 0.4255 |
 | LoRA step512 | 0.2682 | 0.3831 | 0.3783 |
+| LoRA aug-light step512 | 0.2825 | 0.3754 | 0.3702 |
 
-realshot_eval_18 实拍子集：
+`realshot_eval_18` 实拍子集：
 
 | 模型 | 成功返回 | 超时 | Mean CER | Micro CER |
 |---|---:|---:|---:|---:|
 | PaddleOCR-VL v1 本地模型 | 18 | 0 | 0.9297 | 0.8792 |
 | LoRA step512 | 18 | 0 | 0.8729 | 0.8679 |
 
-该结果只说明公开词图 OCR 和小规模实拍子集上有正向提升，不能替代完整处方结构化评估。
+公开词图推荐使用 `aug-light step512` 结果；实拍子集仍使用 `LoRA step512` 结果。该结果只说明公开词图 OCR 和小规模实拍子集上有提升，不能替代完整处方结构化评估。
 
 ## 适用场景
 

@@ -6,7 +6,7 @@
 
 `https://aistudio.baidu.com/dataset/detail/384021/intro`
 
-它用于继续训练和复现实验，不作为正式微调结果报告。正式指标需要在固定评估集上重新评测后再写入文档。
+它用于继续训练和复现实验，不作为正式微调结果报告。正式指标见 `outputs/lora_eval1115_realshot_summary.json` 和 `docs/technical_report.md`。
 
 ## 生成训练清单
 
@@ -38,6 +38,4 @@ configs/erniekit_paddleocr_vl_lora_medrxocr.yaml
 
 ## 结果口径
 
-当前表格中的指标是 PaddleOCR-VL / PaddleOCR-VL-1.5 的 zero-shot 词图识别基线。
-
-初始检查点需要单独说明，不能写成“微调后指标已完成”。
+zero-shot 基线和 LoRA/SFT 微调结果分开报告。公开词图推荐 `aug-light step512`；实拍子集推荐 `LoRA step512`。
