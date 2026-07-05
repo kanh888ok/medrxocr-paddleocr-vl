@@ -1,0 +1,45 @@
+{
+  "rxhandbd_eval1115": {
+    "baseline": {
+      "model": "PaddleOCR-VL v1",
+      "n_images": 1115,
+      "exact_match": 0.23856502242152466,
+      "mean_cer": 0.4326877133827806,
+      "micro_cer": 0.4255290102389078,
+      "errors": 0
+    },
+    "lora_step512": {
+      "model": "MedRxOCR-LoRA-full-lr2e5-step512-max32",
+      "n_images": 1115,
+      "exact_match": 0.2681614349775785,
+      "mean_cer": 0.3830963281860143,
+      "micro_cer": 0.37829351535836175,
+      "errors": 0
+    }
+  },
+  "realshot_eval18": {
+    "baseline": {
+      "model": "PaddleOCR-VL v1 local warm-worker",
+      "n_images": 18,
+      "completed_images": 18,
+      "timeout_images": 0,
+      "mean_cer": 0.9296539142149444,
+      "micro_cer": 0.8791645947289906,
+      "mean_elapsed_sec": 22.520605431662666
+    },
+    "lora_step512": {
+      "model": "MedRxOCR-LoRA-step512-realshot-max128",
+      "n_images": 18,
+      "completed_images": 18,
+      "timeout_images": 0,
+      "mean_cer": 0.8728731675022136,
+      "micro_cer": 0.8678695744831996,
+      "mean_elapsed_sec": 27.074231518639458
+    }
+  },
+  "notes": [
+    "LoRA training uses public RxHandBD word images only.",
+    "realshot_eval18 uses photographed replacements of public eval images without new labels.",
+    "Detailed prediction JSONL files stay local or in data packages because they are large."
+  ]
+}

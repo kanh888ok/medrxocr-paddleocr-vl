@@ -15,7 +15,7 @@
 | LoRA rank | 8 |
 | 训练数据 | RxHandBD 公开训练词图 3979 张 |
 | 推荐检查点 | step512 |
-| 评估数据 | 固定 eval 前 500 张词图 |
+| 评估数据 | 固定 eval 1115 张词图 |
 | 推理设置 | `max_new_tokens=32` |
 | 设备 | RTX 4070 |
 
@@ -45,11 +45,23 @@
 
 `step512` 在 100、300、400、500 张固定公开词图切片上都超过基线，因此当前推荐使用 `step512` 作为小规模微调结果。
 
+## 1115 张完整结果
+
+| 模型 | Exact Match | Mean CER | Micro CER |
+|---|---:|---:|---:|
+| PaddleOCR-VL 基线 | 0.2386 | 0.4327 | 0.4255 |
+| LoRA step512 | 0.2682 | 0.3831 | 0.3783 |
+
+## realshot_eval_18 结果
+
+| 模型 | 成功返回 | 超时 | Mean CER | Micro CER |
+|---|---:|---:|---:|---:|
+| PaddleOCR-VL v1 本地模型 | 18 | 0 | 0.9297 | 0.8792 |
+| LoRA step512 | 18 | 0 | 0.8729 | 0.8679 |
+
 ## 说明
 
 - 这是公开词图任务的结果，不等同于完整处方结构化抽取结果。
-- 完整 1115 张 eval 还没有跑完。
-- realshot_eval_18 的微调前后对比还没有跑。
 - `step1024` 暂不作为推荐结果，因为后续样本推理速度不稳定。
 
 ## 结果文件
@@ -57,4 +69,5 @@
 - `outputs/paddleocrvl_v1_local_rxhandbd_word_eval300_max32/metrics.json`
 - `outputs/paddleocrvl_lora_word_full_lr2e5_step512_rxhandbd_eval300_max32/metrics.json`
 - `outputs/lora_word_eval500_comparison.json`
+- `outputs/lora_eval1115_realshot_summary.json`
 - `outputs/paddleocrvl_lora_word_full_lr2e5_step1024_rxhandbd_eval100_max32/metrics.json`

@@ -15,7 +15,8 @@
 - 补充 PaddleOCR-VL / PaddleOCR-VL-1.5 零样本基线。
 - 补充 20 张手机实拍图片人工质检，其中 18 张可计入严格 eval。
 - 完成 PaddleOCR-VL-1.5 在 realshot_eval_18 上的零样本基线。
-- 完成 RTX 4070 上的 LoRA/SFT 训练、合并和评估链路，并补充 500 张公开词图的微调前后对比。
+- 完成 RTX 4070 上的 LoRA/SFT 训练、合并和评估链路，并补充 1115 张公开词图的微调前后对比。
+- 补充 realshot_eval_18 上的微调前后对比，并加入 warm-worker 超时重试脚本，避免单张图片卡住整轮评估。
 - 补充本地 Streamlit Demo，用于展示图片输入、结构化 JSON 输出和当前评估结果。
 - 补充评估指标模块、错误分析脚本、单元测试和轻量 CI。
 
@@ -51,12 +52,13 @@ realshot_eval_18 手机实拍子集：
 | 模型 | 图像数 | 成功返回 | 超时 | Mean CER | Micro CER |
 |---|---:|---:|---:|---:|---:|
 | PaddleOCR-VL-1.5 | 18 | 11 | 7 | 0.9542 | 0.9124 |
+| PaddleOCR-VL v1 本地模型 | 18 | 18 | 0 | 0.9297 | 0.8792 |
 
 这些是零样本基线，不是微调后指标。
 
 ## LoRA/SFT 小规模微调
 
-已在本机 RTX 4070 上完成公开 RxHandBD 词图 LoRA/SFT 训练。当前推荐记录的是 `step512` 检查点：训练使用 3979 张公开 RxHandBD 训练词图，评估使用固定 eval 前 500 张词图。
+已在本机 RTX 4070 上完成公开 RxHandBD 词图 LoRA/SFT 训练。当前推荐记录的是 `step512` 检查点：训练使用 3979 张公开 RxHandBD 训练词图，评估使用固定 RxHandBD eval。
 
 | 项目 | 数值 |
 |---|---:|
@@ -64,19 +66,26 @@ realshot_eval_18 手机实拍子集：
 | 可训练参数 | 1,032,192 |
 | 训练步数 | 512 step |
 | 训练集 | 3979 张公开 RxHandBD 词图 |
-| 评估集 | 固定 eval 前 500 张 |
+| 评估集 | 固定 eval 1115 张 |
 | 推理设置 | `max_new_tokens=32` |
 | train loss | 2.8878 |
 | GPU 峰值保留显存 | 约 5.76 GB |
 
-500 张词图评估结果：
+完整 1115 张词图评估结果：
 
 | 模型 | Exact Match | Mean CER | Micro CER |
 |---|---:|---:|---:|
-| PaddleOCR-VL 基线 | 0.2520 | 0.4373 | 0.4271 |
-| LoRA step512 | 0.2960 | 0.4059 | 0.3954 |
+| PaddleOCR-VL 基线 | 0.2386 | 0.4327 | 0.4255 |
+| LoRA step512 | 0.2682 | 0.3831 | 0.3783 |
 
-结论：在固定 500 张公开词图上，`step512` 的三项指标均超过同口径基线。`step1024` 在前 100 张上更高，但在后续样本上生成速度不稳定，因此暂不作为推荐检查点。完整 eval 和 realshot_eval_18 的微调前后对比仍需继续跑。
+realshot_eval_18 实拍子集结果：
+
+| 模型 | 图像数 | 成功返回 | 超时 | Mean CER | Micro CER |
+|---|---:|---:|---:|---:|---:|
+| PaddleOCR-VL v1 本地模型 | 18 | 18 | 0 | 0.9297 | 0.8792 |
+| LoRA step512 | 18 | 18 | 0 | 0.8729 | 0.8679 |
+
+结论：`step512` 在完整 1115 张公开词图和 18 张实拍子集上均超过同口径基线。`step1024` 在前 100 张上更高，但在后续样本上生成速度不稳定，因此暂不作为推荐检查点。
 
 早期 2 step 烟测说明见 `docs/lora_sft_smoke_win4070.md`。
 
@@ -99,7 +108,7 @@ python -m unittest discover -s tests
 python scripts\analyze_word_eval.py --predictions <predictions.jsonl> --output-json outputs\error_analysis.json
 ```
 
-当前 LoRA step512 的 500 张词图分析：平均推理耗时 1.31s，P95 为 1.97s，无超过 10s 的慢样本。realshot_eval_18 仍有 7/18 超时，是后续重点。
+当前 LoRA step512 的 1115 张词图评估已完成，0 个错误。realshot_eval_18 已改用 warm-worker 方式评估：模型常驻，单张图片单独计时，卡住后重启 worker 并重试，最终基线和 LoRA 均完成 18/18。
 
 ## 重要文件
 
@@ -114,6 +123,8 @@ python scripts\analyze_word_eval.py --predictions <predictions.jsonl> --output-j
 - `docs/engineering_improvements.md`：工程化、错误分析和测试说明。
 - `docs/error_analysis_lora_eval500.md`：LoRA 500 张错误分析。
 - `docs/error_analysis_realshot_eval18.md`：实拍子集超时与错误分析。
+- `scripts/run_paddleocrvl_worker_timeout_eval.py`：带 warm-worker 和重试的实拍评估脚本。
+- `outputs/lora_eval1115_realshot_summary.json`：1115 张词图和 realshot_eval_18 的关键指标摘要。
 - `scripts/`：数据转换、质检、评估和训练脚本。
 - `configs/`：训练配置。
 
@@ -134,6 +145,5 @@ powershell -ExecutionPolicy Bypass -File scripts\run_lora_sft_smoke_win4070.ps1
 
 - 训练集、评估集主要来自公开数据。
 - 真实线下处方数据暂未补充，后续可以用合规公开渠道继续扩展。
-- 已有 500 张公开词图的微调前后对比，完整 eval 仍未跑完。
-- realshot_eval_18 上的微调前后对比仍未完成。
 - 实拍子集目前只有 18 张严格 eval 图片，且每张只有 1 个实拍版本。
+- 数据增强实验、LoRA rank 16/32、多阶段训练、药品词典后处理还未系统完成。

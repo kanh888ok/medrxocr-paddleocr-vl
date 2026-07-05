@@ -44,6 +44,10 @@ def main():
     p.add_argument("--output-dir", default="outputs/paddleocrvl_v15_realshot_eval18_gpu_timeout")
     p.add_argument("--source-id", default="realshot_mendeley_bilingual_1000")
     p.add_argument("--pipeline-version", default="v1.5")
+    p.add_argument("--vl-rec-model-dir", default=None)
+    p.add_argument("--model-label", default=None)
+    p.add_argument("--max-new-tokens", type=int, default=None)
+    p.add_argument("--disable-layout", action="store_true")
     p.add_argument("--cache-root", default="C:\\pocr_cache_ms")
     p.add_argument("--model-source", default="modelscope")
     p.add_argument("--timeout-sec", type=int, default=120)
@@ -95,6 +99,14 @@ def main():
                 "--model-source",
                 args.model_source,
             ]
+            if args.vl_rec_model_dir:
+                cmd.extend(["--vl-rec-model-dir", args.vl_rec_model_dir])
+            if args.model_label:
+                cmd.extend(["--model-label", args.model_label])
+            if args.max_new_tokens:
+                cmd.extend(["--max-new-tokens", str(args.max_new_tokens)])
+            if args.disable_layout:
+                cmd.append("--disable-layout")
             stdout_path = one_dir / "subprocess.out.log"
             stderr_path = one_dir / "subprocess.err.log"
             try:
@@ -114,6 +126,8 @@ def main():
                         "cer": None,
                         "elapsed_sec": time.time() - start,
                         "error": "no_prediction_written",
+                        "max_new_tokens": args.max_new_tokens,
+                        "disable_layout": args.disable_layout,
                     }
             except subprocess.TimeoutExpired:
                 rec = {
@@ -124,6 +138,8 @@ def main():
                     "cer": None,
                     "elapsed_sec": time.time() - start,
                     "error": f"timeout_after_{args.timeout_sec}s",
+                    "max_new_tokens": args.max_new_tokens,
+                    "disable_layout": args.disable_layout,
                 }
 
             if rec.get("cer") is None and not rec.get("error"):
@@ -161,8 +177,11 @@ def main():
 
     completed = [r for r in records if r.get("cer") is not None and not r.get("error")]
     metrics = {
-        "model": "PaddleOCR-VL-1.5",
+        "model": args.model_label or "PaddleOCR-VL-1.5",
         "pipeline_version": args.pipeline_version,
+        "vl_rec_model_dir": args.vl_rec_model_dir,
+        "max_new_tokens": args.max_new_tokens,
+        "disable_layout": args.disable_layout,
         "source_id": args.source_id,
         "n_images": len(records),
         "completed_images": len(completed),

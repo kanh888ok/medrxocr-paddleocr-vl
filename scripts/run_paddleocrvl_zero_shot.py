@@ -75,6 +75,10 @@ def main():
     p.add_argument("--limit", type=int, default=5)
     p.add_argument("--offset", type=int, default=0)
     p.add_argument("--pipeline-version", default="v1.5")
+    p.add_argument("--vl-rec-model-dir", default=None)
+    p.add_argument("--model-label", default=None)
+    p.add_argument("--max-new-tokens", type=int, default=None)
+    p.add_argument("--disable-layout", action="store_true")
     p.add_argument("--cache-root", default=None)
     p.add_argument("--model-source", default="modelscope")
     args = p.parse_args()
@@ -113,7 +117,12 @@ def main():
             if args.limit and len(rows) >= args.limit:
                 break
 
-    pipe = PaddleOCRVL(pipeline_version=args.pipeline_version)
+    pipe_kwargs = {"pipeline_version": args.pipeline_version}
+    if args.vl_rec_model_dir:
+        pipe_kwargs["vl_rec_model_dir"] = args.vl_rec_model_dir
+    if args.disable_layout:
+        pipe_kwargs["use_layout_detection"] = False
+    pipe = PaddleOCRVL(**pipe_kwargs)
     records = []
     total_dist = 0
     total_chars = 0
@@ -126,7 +135,10 @@ def main():
             error = None
             pred_text = ""
             try:
-                items = list(pipe.predict(str(image_path)))
+                predict_kwargs = {}
+                if args.max_new_tokens:
+                    predict_kwargs["max_new_tokens"] = args.max_new_tokens
+                items = list(pipe.predict(str(image_path), **predict_kwargs))
                 pred_text = result_text(items[0]) if items else ""
             except Exception as exc:
                 error = repr(exc)
@@ -142,6 +154,8 @@ def main():
                 "cer": dist / denom,
                 "elapsed_sec": elapsed,
                 "error": error,
+                "max_new_tokens": args.max_new_tokens,
+                "disable_layout": args.disable_layout,
             }
             g.write(json.dumps(rec, ensure_ascii=False) + "\n")
             g.flush()
@@ -149,8 +163,12 @@ def main():
             print(json.dumps({k: rec[k] for k in ["image_id", "cer", "elapsed_sec", "error"]}, ensure_ascii=False), flush=True)
 
     metrics = {
-        "model": "PaddleOCR-VL-1.5" if args.pipeline_version == "v1.5" else f"PaddleOCR-VL {args.pipeline_version}",
+        "model": args.model_label
+        or ("PaddleOCR-VL-1.5" if args.pipeline_version == "v1.5" else f"PaddleOCR-VL {args.pipeline_version}"),
         "pipeline_version": args.pipeline_version,
+        "vl_rec_model_dir": args.vl_rec_model_dir,
+        "max_new_tokens": args.max_new_tokens,
+        "disable_layout": args.disable_layout,
         "source_id": args.source_id,
         "n_images": len(records),
         "mean_cer": sum(r["cer"] for r in records) / len(records) if records else None,
