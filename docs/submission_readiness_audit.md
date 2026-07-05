@@ -4,7 +4,7 @@
 
 项目已补齐公开数据整理、数据质检、零样本基线、实拍评估子集、实拍人工质检，以及 LoRA/SFT 训练、合并和评估链路。
 
-当前可以写成：`step512` LoRA 在固定 300 张公开 RxHandBD 词图上超过同口径 PaddleOCR-VL 基线。
+当前可以写成：`step512` LoRA 在固定 500 张公开 RxHandBD 词图上超过同口径 PaddleOCR-VL 基线。
 
 仍不能写成：已经在完整处方场景或实拍处方场景上稳定提升。完整 eval 和 realshot_eval_18 的微调前后对比还需要继续跑。
 
@@ -17,16 +17,17 @@
 - 20 张手机实拍图人工质检，其中 18 张可计入严格 eval。
 - realshot_eval_18 的 PaddleOCR-VL-1.5 零样本基线。
 - LoRA/SFT 训练、合并、推理和评估脚本。
-- 300 张公开词图微调前后对比。
+- 500 张公开词图微调前后对比。
+- 本地 Streamlit Demo。
 
 ## LoRA/SFT 结果
 
-固定 eval 前 300 张词图，推理设置 `max_new_tokens=32`：
+固定 eval 前 500 张词图，推理设置 `max_new_tokens=32`：
 
 | 模型 | Exact Match | Mean CER | Micro CER |
 |---|---:|---:|---:|
-| PaddleOCR-VL 基线 | 0.1733 | 0.5357 | 0.5214 |
-| LoRA step512 | 0.2067 | 0.5186 | 0.5012 |
+| PaddleOCR-VL 基线 | 0.2520 | 0.4373 | 0.4271 |
+| LoRA step512 | 0.2960 | 0.4059 | 0.3954 |
 
 `step1024` 前 100 张指标更高，但后续样本推理速度不稳定，暂不作为推荐检查点。
 

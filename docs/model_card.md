@@ -10,7 +10,7 @@
 - 已完成 RxHandBD 词图评估集的 zero-shot 基线。
 - 已发布一个初始检查点：`https://aistudio.baidu.com/dataset/detail/384021/intro`。
 - 已提供 SFT 清单生成脚本和 LoRA/SFT 配置。
-- 已完成 300 张公开词图的 LoRA/SFT 微调后指标；完整 1115 张 eval 和 realshot_eval_18 仍未完成。
+- 已完成 500 张公开词图的 LoRA/SFT 微调后指标；完整 1115 张 eval 和 realshot_eval_18 仍未完成。
 
 ## 基线结果
 
@@ -20,6 +20,17 @@
 | PaddleOCR-VL-1.5 | RxHandBD 词图评估集 | 1115 | 0 | 0.2197 | 0.4736 |
 
 这些结果是 zero-shot 词图识别结果，不是 LoRA/SFT 微调结果，也不是整页处方结构化抽取结果。
+
+## LoRA/SFT 结果
+
+固定 eval 前 500 张公开 RxHandBD 词图：
+
+| 模型 | Exact Match | Mean CER | Micro CER |
+|---|---:|---:|---:|
+| PaddleOCR-VL 基线 | 0.2520 | 0.4373 | 0.4271 |
+| LoRA step512 | 0.2960 | 0.4059 | 0.3954 |
+
+该结果只说明公开词图 OCR 上有正向提升，不能替代完整处方结构化评估。
 
 ## 适用场景
 

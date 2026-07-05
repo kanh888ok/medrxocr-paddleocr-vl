@@ -7,16 +7,17 @@
 - 20 张手机实拍图人工质检，其中 18 张可作为严格实拍 eval。
 - realshot_eval_18 零样本基线。
 - LoRA/SFT 训练、合并和推理评估脚本。
-- 公开 RxHandBD 词图 300 张微调前后对比。
+- 公开 RxHandBD 词图 500 张微调前后对比。
+- 本地 Streamlit Demo。
 
 ## 当前 LoRA 结论
 
-固定 eval 前 300 张词图，推理设置 `max_new_tokens=32`：
+固定 eval 前 500 张词图，推理设置 `max_new_tokens=32`：
 
 | 模型 | Exact Match | Mean CER | Micro CER |
 |---|---:|---:|---:|
-| PaddleOCR-VL 基线 | 0.1733 | 0.5357 | 0.5214 |
-| LoRA step512 | 0.2067 | 0.5186 | 0.5012 |
+| PaddleOCR-VL 基线 | 0.2520 | 0.4373 | 0.4271 |
+| LoRA step512 | 0.2960 | 0.4059 | 0.3954 |
 
 可写成：公开词图小规模微调已有正向结果。
 

@@ -15,7 +15,7 @@
 | LoRA rank | 8 |
 | 训练数据 | RxHandBD 公开训练词图 3979 张 |
 | 推荐检查点 | step512 |
-| 评估数据 | 固定 eval 前 300 张词图 |
+| 评估数据 | 固定 eval 前 500 张词图 |
 | 推理设置 | `max_new_tokens=32` |
 | 设备 | RTX 4070 |
 
@@ -36,7 +36,14 @@
 | PaddleOCR-VL 基线 | 0.1733 | 0.5357 | 0.5214 |
 | LoRA step512 | 0.2067 | 0.5186 | 0.5012 |
 
-`step512` 在 300 张固定公开词图上三项指标均超过基线，因此当前推荐使用 `step512` 作为小规模微调结果。
+## 500 张结果
+
+| 模型 | Exact Match | Mean CER | Micro CER |
+|---|---:|---:|---:|
+| PaddleOCR-VL 基线 | 0.2520 | 0.4373 | 0.4271 |
+| LoRA step512 | 0.2960 | 0.4059 | 0.3954 |
+
+`step512` 在 100、300、400、500 张固定公开词图切片上都超过基线，因此当前推荐使用 `step512` 作为小规模微调结果。
 
 ## 说明
 
@@ -49,4 +56,5 @@
 
 - `outputs/paddleocrvl_v1_local_rxhandbd_word_eval300_max32/metrics.json`
 - `outputs/paddleocrvl_lora_word_full_lr2e5_step512_rxhandbd_eval300_max32/metrics.json`
+- `outputs/lora_word_eval500_comparison.json`
 - `outputs/paddleocrvl_lora_word_full_lr2e5_step1024_rxhandbd_eval100_max32/metrics.json`
