@@ -1,34 +1,51 @@
-# LoRA/SFT 启动检查
+# LoRA/SFT 状态
 
 ## 当前结论
 
-当前本机环境可以运行 PaddleOCR-VL 推理评估，但还不能直接启动 LoRA/SFT 训练。
+LoRA/SFT 已完成本机训练链路验证：PaddleOCR-VL 可以在 RTX 4070 上训练 LoRA、保存适配器、合并为推理模型，并跑出微调后评估指标。
 
-主要原因：
+当前推荐结果是 `step512`。它在固定 300 张公开 RxHandBD 词图上超过同口径 PaddleOCR-VL 基线。
 
-- `erniekit`、`paddlenlp`、`paddlemix`、`visualdl` 等训练依赖未安装。
-- `data/processed` 中缺少训练集、验证集和 ERNIEKit SFT 清单。
+## 已完成
 
-因此现在不能把项目写成“已经完成微调训练”。比较稳妥的说法是：项目已提供训练清单生成脚本和 LoRA/SFT 配置，当前仍需补充正式训练环境、训练日志和微调后指标。
-
-## 检查命令
-
-```powershell
-python scripts\check_training_env.py --output outputs\lora_sft_readiness.json
-```
-
-## 需要补齐
-
-| 项目 | 当前状态 |
+| 项目 | 状态 |
 |---|---|
-| PaddlePaddle GPU 推理环境 | 已具备 |
-| PaddleOCR 推理环境 | 已具备 |
-| ERNIEKit / PaddleNLP / PaddleMIX | 未安装 |
-| `medrxocr_train.jsonl` | 本地未恢复 |
-| `medrxocr_val.jsonl` | 本地未恢复 |
-| ERNIEKit SFT train/val 清单 | 本地未生成 |
-| LoRA/SFT 配置 | 已提供 |
+| ERNIEKit/PaddleOCR-VL 训练环境 | 已跑通 |
+| SFT 清单生成 | 已完成 |
+| LoRA 训练配置 | 已完成 |
+| LoRA 检查点保存 | 已完成 |
+| LoRA 合并为推理模型 | 已完成 |
+| 300 张词图微调后指标 | 已完成 |
 
-## 下一步
+## 训练设置
 
-如果要继续做微调，需要先恢复 AI Studio 数据包中的 `data/processed`，再安装训练依赖，随后先跑 20-100 条样本的小规模 smoke training。只有训练能正常保存 checkpoint 后，才适合跑完整小规模 LoRA/SFT 并报告微调后指标。
+| 项目 | 数值 |
+|---|---:|
+| 基础模型 | PaddleOCR-VL |
+| 数据 | RxHandBD 公开词图 |
+| 训练样本 | 3979 |
+| LoRA rank | 8 |
+| 可训练参数 | 1,032,192 |
+| 推荐检查点 | step512 |
+| 推理设置 | `max_new_tokens=32` |
+
+## 评估结果
+
+固定 eval 前 300 张词图：
+
+| 模型 | Exact Match | Mean CER | Micro CER |
+|---|---:|---:|---:|
+| PaddleOCR-VL 基线 | 0.1733 | 0.5357 | 0.5214 |
+| LoRA step512 | 0.2067 | 0.5186 | 0.5012 |
+
+补充观察：
+
+- `step1024` 在前 100 张上达到 Exact 0.2100、Mean CER 0.7280、Micro CER 0.6957。
+- `step1024` 在后续样本上推理速度不稳定，因此暂不作为推荐检查点。
+
+## 仍需完成
+
+- 完整 1115 张 eval 的微调前后对比。
+- realshot_eval_18 的微调前后对比。
+- 按错误类型、图像质量和难度拆分分析。
+- 若后续有合规公开渠道，可继续补充高价值真实场景数据。

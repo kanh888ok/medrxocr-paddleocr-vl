@@ -123,6 +123,8 @@ def build_pipeline(args: argparse.Namespace) -> Any:
     from paddleocr import PaddleOCRVL
 
     kwargs: dict[str, Any] = {"pipeline_version": args.pipeline_version}
+    if args.vl_rec_model_dir:
+        kwargs["vl_rec_model_dir"] = args.vl_rec_model_dir
     if args.disable_layout:
         kwargs["use_layout_detection"] = False
     if args.cache_root:
@@ -142,7 +144,10 @@ def main() -> None:
     parser.add_argument("--task-type", default="word_ocr")
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--pipeline-version", default="v1.5")
+    parser.add_argument("--vl-rec-model-dir", default=None)
+    parser.add_argument("--model-label", default=None)
     parser.add_argument("--cache-root", default=None)
+    parser.add_argument("--max-new-tokens", type=int, default=None)
     parser.add_argument("--disable-layout", action="store_true")
     parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
@@ -168,7 +173,10 @@ def main() -> None:
             error = None
             pred_text = ""
             try:
-                items = list(pipe.predict(str(image_path)))
+                predict_kwargs: dict[str, Any] = {}
+                if args.max_new_tokens:
+                    predict_kwargs["max_new_tokens"] = args.max_new_tokens
+                items = list(pipe.predict(str(image_path), **predict_kwargs))
                 pred_text = result_text(items[0]) if items else ""
             except Exception as exc:  # keep full-run accounting honest
                 error = repr(exc)
@@ -216,12 +224,15 @@ def main() -> None:
     total_dist = sum(int(r["edit_distance"]) for r in records)
     total_chars = sum(int(r["gold_chars"]) for r in records)
     metrics = {
-        "model": "PaddleOCR-VL-1.5" if args.pipeline_version == "v1.5" else f"PaddleOCR-VL {args.pipeline_version}",
+        "model": args.model_label
+        or ("PaddleOCR-VL-1.5" if args.pipeline_version == "v1.5" else f"PaddleOCR-VL {args.pipeline_version}"),
         "pipeline_version": args.pipeline_version,
+        "vl_rec_model_dir": args.vl_rec_model_dir,
         "source_id": args.source_id,
         "task_type": args.task_type,
         "subset": "full filtered eval subset" if not args.limit else f"first {args.limit} filtered eval records",
         "disable_layout": args.disable_layout,
+        "max_new_tokens": args.max_new_tokens,
         "n_expected": len(rows),
         "n_completed": len(records),
         "errors": sum(1 for r in records if r.get("error")),
@@ -230,7 +241,7 @@ def main() -> None:
         "micro_cer": total_dist / total_chars if total_chars else None,
         "mean_elapsed_sec": sum(float(r["elapsed_sec"]) for r in records) / len(records) if records else None,
         "total_elapsed_sec": sum(float(r["elapsed_sec"]) for r in records),
-        "note": "Zero-shot OCR on the filtered eval subset; not a LoRA/SFT result.",
+        "note": "OCR on the filtered eval subset. If vl_rec_model_dir is set, this is the exported or merged local model.",
     }
     metrics_path.write_text(json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8")
     print("METRICS " + json.dumps(metrics, ensure_ascii=False), flush=True)

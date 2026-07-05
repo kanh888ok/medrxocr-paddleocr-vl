@@ -29,3 +29,5 @@ data/eval/*
 !data/interim/.gitkeep
 !data/processed/.gitkeep
 !data/eval/.gitkeep
+work/
+output.txt

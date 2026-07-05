@@ -1,0 +1,96 @@
+### PaddleOCR-VL LoRA/SFT word-OCR run with the same OCR prompt used by inference.
+
+### data
+train_dataset_type: "erniekit"
+eval_dataset_type: "erniekit"
+train_dataset_path: "./data/processed/train_rx_erniekit_sft_word512_ocrprompt.jsonl"
+train_dataset_prob: "1.0"
+eval_dataset_path: "./data/processed/val_rx_erniekit_sft_word100_ocrprompt.jsonl"
+eval_dataset_prob: "1.0"
+max_seq_len: 2048
+num_samples_each_epoch: 512
+use_pic_id: False
+sft_shift_by_one: False
+sft_replace_ids: True
+sft_image_normalize: True
+sft_image_rescale: True
+image_dtype: "float32"
+
+### model
+model_name_or_path: ../work/PaddlePaddle/PaddleOCR-VL
+fine_tuning: LoRA
+lora: True
+lora_rank: 8
+multimodal: True
+use_flash_attention: False
+use_sparse_flash_attn: False
+
+### finetuning
+stage: OCR-VL-SFT
+seed: 23
+do_train: True
+do_eval: False
+distributed_dataloader: False
+dataloader_num_workers: 0
+batch_size: 1
+packing_size: 1
+packing: False
+padding: False
+num_train_epochs: 1
+max_steps: 100
+eval_batch_size: 1
+eval_iters: 20
+eval_steps: 50
+evaluation_strategy: "no"
+save_steps: 50
+save_total_limit: 2
+save_strategy: steps
+logging_steps: 10
+release_grads: True
+gradient_accumulation_steps: 1
+logging_dir: ./outputs/medrxocr_lora_word_ocrprompt_win4070/checkpoint_run_word_ocrprompt100/visualdl_logs
+output_dir: ./outputs/medrxocr_lora_word_ocrprompt_win4070/checkpoint_run_word_ocrprompt100
+disable_tqdm: True
+
+### train
+warmup_steps: 5
+learning_rate: 5.0e-5
+lr_scheduler_type: cosine
+min_lr: 5.0e-6
+layerwise_lr_decay_bound: 1.0
+from_scratch: 0
+
+### optimizer
+weight_decay: 0.01
+adam_epsilon: 1.0e-8
+adam_beta1: 0.9
+adam_beta2: 0.95
+
+### performance
+tensor_parallel_degree: 1
+pipeline_parallel_degree: 1
+sharding_parallel_degree: 1
+sharding: stage1
+sequence_parallel: False
+pipeline_parallel_config: enable_delay_scale_loss enable_release_grads disable_partial_send_recv
+recompute: True
+recompute_granularity: "full"
+recompute_use_reentrant: True
+compute_type: bf16
+fp16_opt_level: O2
+disable_ckpt_quant: True
+amp_custom_white_list:
+  - lookup_table
+  - lookup_table_v2
+  - matmul
+  - matmul_v2
+amp_custom_black_list:
+  - reduce_sum
+  - softmax_with_cross_entropy
+  - c_softmax_with_cross_entropy
+  - elementwise_div
+  - sin
+  - cos
+unified_checkpoint: True
+convert_from_hf: True
+save_to_hf: True

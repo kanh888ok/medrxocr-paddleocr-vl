@@ -1,0 +1,34 @@
+{
+  "name": "lora_public_small",
+  "train": {
+    "records": 512,
+    "groups": {
+      "mendeley_full_prescription": 180,
+      "rxhandbd_word_ocr": 332
+    },
+    "min_full_ocr_chars": 3,
+    "max_full_ocr_chars": 499,
+    "mean_full_ocr_chars": 118.94,
+    "max_image_area": 1273600
+  },
+  "val": {
+    "records": 100,
+    "groups": {
+      "mendeley_full_prescription": 30,
+      "rxhandbd_word_ocr": 70
+    },
+    "min_full_ocr_chars": 3,
+    "max_full_ocr_chars": 497,
+    "mean_full_ocr_chars": 98.36,
+    "max_image_area": 1228800
+  },
+  "source_note": "Public de-identified data only; no private offline prescriptions.",
+  "selection": "Deterministic by image_id within fixed train/val splits.",
+  "mendeley_max_chars": 500,
+  "mendeley_max_area": 1300000,
+  "mendeley_task": "ocr",
+  "outputs": {
+    "train": "data/processed/train_rx_erniekit_sft_public_small512.jsonl",
+    "val": "data/processed/val_rx_erniekit_sft_public_small100.jsonl"
+  }
+}

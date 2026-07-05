@@ -1,0 +1,29 @@
+{
+  "task": "RxHandBD word OCR",
+  "source_id": "rxhandbd_5578",
+  "eval_subset": "first 300 filtered eval records",
+  "pipeline_version": "v1",
+  "disable_layout": true,
+  "max_new_tokens": 32,
+  "baseline": {
+    "model": "PaddleOCR-VL-v1-local-max32",
+    "metrics_file": "outputs/paddleocrvl_v1_local_rxhandbd_word_eval300_max32/metrics.json",
+    "exact_match_rate": 0.17333333333333334,
+    "mean_cer": 0.5356687294187293,
+    "micro_cer": 0.5213839500240269
+  },
+  "recommended_lora": {
+    "model": "MedRxOCR-LoRA-full-lr2e5-step512-max32",
+    "checkpoint": "outputs/medrxocr_lora_word_full_ocrprompt_lr2e5_win4070/word_full_ocrprompt_lr2e5_512_v3_20260705/checkpoint-512",
+    "merged_model_dir": "outputs/medrxocr_lora_word_full_ocrprompt_lr2e5_win4070/word_full_lr2e5_step512_merged_hf",
+    "metrics_file": "outputs/paddleocrvl_lora_word_full_lr2e5_step512_rxhandbd_eval300_max32/metrics.json",
+    "exact_match_rate": 0.20666666666666667,
+    "mean_cer": 0.5185747770747771,
+    "micro_cer": 0.5012013455069678
+  },
+  "notes": [
+    "step512 is the recommended checkpoint for the current small public word-OCR report.",
+    "step1024 improved the first 100 records but showed unstable generation speed on later records, so it is not recommended yet.",
+    "This result uses public RxHandBD word crops only; it is not a full prescription structured extraction result."
+  ]
+}

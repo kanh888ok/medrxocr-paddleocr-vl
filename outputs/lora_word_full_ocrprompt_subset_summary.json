@@ -1,0 +1,33 @@
+{
+  "name": "lora_public_small",
+  "train": {
+    "records": 3979,
+    "groups": {
+      "rxhandbd_word_ocr": 3979
+    },
+    "min_full_ocr_chars": 2,
+    "max_full_ocr_chars": 17,
+    "mean_full_ocr_chars": 6.87,
+    "max_image_area": 262144
+  },
+  "val": {
+    "records": 100,
+    "groups": {
+      "rxhandbd_word_ocr": 100
+    },
+    "min_full_ocr_chars": 3,
+    "max_full_ocr_chars": 18,
+    "mean_full_ocr_chars": 8.06,
+    "max_image_area": 262144
+  },
+  "source_note": "Public de-identified data only; no private offline prescriptions.",
+  "selection": "Deterministic by image_id within fixed train/val splits.",
+  "mendeley_max_chars": 500,
+  "mendeley_max_area": 1300000,
+  "mendeley_task": "ocr",
+  "rxhandbd_task": "ocr",
+  "outputs": {
+    "train": "data\\processed\\train_rx_erniekit_sft_word_full_ocrprompt.jsonl",
+    "val": "data\\processed\\val_rx_erniekit_sft_word100_ocrprompt.jsonl"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "split": {
+    "val": 607
+  },
+  "source_id": {
+    "mendeley_bilingual_1000": 110,
+    "mendeley_bd_200_yolo": 13,
+    "rxhandbd_5578": 484
+  },
+  "difficulty": {
+    "hard": 100,
+    "medium": 507
+  },
+  "language": {
+    "en": 607,
+    "bn": 607
+  },
+  "visual_tags": {
+    "handwritten": 607,
+    "mixed_language": 123,
+    "printed": 13,
+    "cropped_word": 484
+  },
+  "task_type": {
+    "full_page": 110,
+    "medicine_region_detection": 13,
+    "word_ocr": 484
+  },
+  "n_records": 607,
+  "n_medication_lines": 0,
+  "n_regions": 81,
+  "avg_full_ocr_text_len": 142.52553542009883,
+  "max_full_ocr_text_len": 2375
+}

@@ -10,7 +10,7 @@
 - 已完成 RxHandBD 词图评估集的 zero-shot 基线。
 - 已发布一个初始检查点：`https://aistudio.baidu.com/dataset/detail/384021/intro`。
 - 已提供 SFT 清单生成脚本和 LoRA/SFT 配置。
-- 还没有完成正式微调后的完整指标报告。
+- 已完成 300 张公开词图的 LoRA/SFT 微调后指标；完整 1115 张 eval 和 realshot_eval_18 仍未完成。
 
 ## 基线结果
 

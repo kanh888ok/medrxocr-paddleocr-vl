@@ -1,0 +1,22 @@
+### Merge the word-OCR LoRA adapter into the PaddleOCR-VL base model.
+
+### model
+model_name_or_path: ../work/PaddlePaddle/PaddleOCR-VL
+fine_tuning: LoRA
+lora: True
+
+### export
+copy_tokenizer: True
+max_shard_size: 5
+hf_hub_id: null
+output_dir: ./outputs/medrxocr_lora_word_win4070/word100_20260705
+
+### performance
+tensor_parallel_degree: 1
+pipeline_parallel_degree: 1
+sharding_parallel_degree: 1
+sharding: stage1
+pipeline_parallel_config: disable_partial_send_recv enable_clear_every_step_cache
+sequence_parallel: False
+compute_type: bf16
+fp16_opt_level: O2

@@ -1,0 +1,47 @@
+{
+  "runtime_modules": {
+    "paddle": true,
+    "paddleocr": true
+  },
+  "training_modules": {
+    "erniekit": true,
+    "paddlenlp": false,
+    "paddlemix": false,
+    "visualdl": true
+  },
+  "paddle": {
+    "available": true,
+    "version": "3.3.1",
+    "compiled_with_cuda": true,
+    "device": "gpu:0"
+  },
+  "required_files": {
+    "data/processed/medrxocr_train.jsonl": {
+      "exists": true,
+      "size": 4553353
+    },
+    "data/processed/medrxocr_val.jsonl": {
+      "exists": true,
+      "size": 602586
+    },
+    "data/processed/train_rx_erniekit_sft.jsonl": {
+      "exists": true,
+      "size": 2510121
+    },
+    "data/processed/val_rx_erniekit_sft.jsonl": {
+      "exists": true,
+      "size": 353708
+    },
+    "configs/erniekit_paddleocr_vl_lora_medrxocr.yaml": {
+      "exists": true,
+      "size": 1329
+    }
+  },
+  "can_start_lora_sft": false,
+  "missing_training_modules": [
+    "paddlenlp",
+    "paddlemix"
+  ],
+  "missing_files": [],
+  "note": "Inference evaluation can run in this environment, but LoRA/SFT needs training dependencies and processed manifests."
+}

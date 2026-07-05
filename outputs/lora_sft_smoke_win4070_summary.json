@@ -1,0 +1,31 @@
+{
+  "status": "completed",
+  "run_type": "lora_sft_smoke",
+  "base_model": "PaddleOCR-VL",
+  "hardware": "RTX 4070",
+  "dataset_note": "public RxHandBD short samples only",
+  "train_records": 20,
+  "val_records": 5,
+  "max_steps": 2,
+  "lora_rank": 8,
+  "trainable_parameters": 1032192,
+  "step_losses": [
+    {
+      "global_step": 1,
+      "loss": 3.4623918533325195
+    },
+    {
+      "global_step": 2,
+      "loss": 0.29713326692581177
+    }
+  ],
+  "train_loss": 1.8797625601291656,
+  "train_runtime_seconds": 1.6032,
+  "train_steps_per_second": 1.2475,
+  "max_reserved_gpu_memory_gb": 4.183897,
+  "checkpoint_dir": "outputs/medrxocr_lora_smoke_win4070/checkpoint_run_short_nopad_maskfix_savefix",
+  "adapter_file": "outputs/medrxocr_lora_smoke_win4070/checkpoint_run_short_nopad_maskfix_savefix/peft_model-00001-of-00001.safetensors",
+  "formal_eval_metric_ready": false,
+  "note": "This is a smoke training run, not a formal fine-tuned model benchmark."
+}
+

@@ -1,40 +1,37 @@
-# 后续补充计划
+# 后续补全计划
 
-## 已有材料
+## 已补齐
 
-- GitHub: `https://github.com/kanh888ok/medrxocr-paddleocr-vl`
-- AI Studio 数据包: `https://aistudio.baidu.com/dataset/detail/384020/intro`
-- 初始检查点: `https://aistudio.baidu.com/dataset/detail/384021/intro`
-- 技术报告: `docs/technical_report.md`
+- 公开数据整理、固定划分和质量检查。
+- PaddleOCR-VL / PaddleOCR-VL-1.5 零样本基线。
+- 20 张手机实拍图人工质检，其中 18 张可作为严格实拍 eval。
+- realshot_eval_18 零样本基线。
+- LoRA/SFT 训练、合并和推理评估脚本。
+- 公开 RxHandBD 词图 300 张微调前后对比。
 
-## 已完成
+## 当前 LoRA 结论
 
-- 公开数据下载和校验。
-- 数据转换为统一 JSONL。
-- 固定训练集、验证集、评估集。
-- 生成 SFT 训练清单。
-- 生成质量检查和数据统计。
-- 完成 RxHandBD 词图评估集 zero-shot 基线。
-- 完成 20 张实拍图片人工质检，其中 18 张可计入严格 eval。
-- 完成 PaddleOCR-VL-1.5 在 18 张实拍 eval 子集上的零样本基线。
-- 完成实拍预处理小试，简单缩放和灰度增强没有带来收益。
-- 完成 LoRA/SFT 启动条件检查，当前缺少训练依赖和本地 `data/processed` 清单。
-- 发布初始检查点。
+固定 eval 前 300 张词图，推理设置 `max_new_tokens=32`：
 
-## 当前基线
+| 模型 | Exact Match | Mean CER | Micro CER |
+|---|---:|---:|---:|
+| PaddleOCR-VL 基线 | 0.1733 | 0.5357 | 0.5214 |
+| LoRA step512 | 0.2067 | 0.5186 | 0.5012 |
 
-| 模型 | 图像数 | 错误数 | Exact Match | Micro CER |
-|---|---:|---:|---:|---:|
-| PaddleOCR-VL | 1115 | 0 | 0.2386 | 0.4255 |
-| PaddleOCR-VL-1.5 | 1115 | 0 | 0.2197 | 0.4736 |
+可写成：公开词图小规模微调已有正向结果。
 
-这些指标只说明未微调模型在词图评估集上的表现。
+不要写成：完整处方 OCR 或实拍处方场景已经稳定提升。
 
-## 下一步
+## 下一步优先级
 
-- 补充真实线下处方数据。
-- 补充结构化字段人工标注和字段级质检结果。
-- 恢复 AI Studio 数据包中的 `data/processed` 并安装训练依赖。
-- 先跑 20-100 条样本的 LoRA/SFT smoke training。
-- 在固定评估集上报告微调后指标。
-- 增加错误分析。
+1. 跑完整 1115 张 eval 的 `step512` 微调前后对比。
+2. 跑 realshot_eval_18 的 `step512` 微调前后对比。
+3. 做错误分析：按难度、图片质量、药名长度和字符类型拆分。
+4. 补充结构化字段人工标注说明。
+5. 若能找到合规公开来源，再补充真实场景数据。
+
+## 仍不做的事
+
+- 不补造虚假处方。
+- 不把公开词图结果夸大成完整处方结构化能力。
+- 不把未完成的 realshot 微调结果写成已完成。
