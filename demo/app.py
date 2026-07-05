@@ -6,7 +6,9 @@ import streamlit as st
 
 
 ROOT = Path(__file__).resolve().parents[1]
-METRICS_PATH = ROOT / "outputs" / "lora_word_eval500_comparison.json"
+METRICS_PATH = ROOT / "outputs" / "lora_eval1115_realshot_summary.json"
+STRENGTH_RE = re.compile(r"\b\d+(?:\.\d+)?\s*(?:mg|g|mcg|μg|ug|ml|iu|%)\b", re.IGNORECASE)
+DURATION_RE = re.compile(r"\bfor\s+([\w-]+)\s+(day|days|week|weeks)\b", re.IGNORECASE)
 
 
 def load_metrics():
@@ -26,6 +28,27 @@ def split_drug_lines(text):
     return drug_lines
 
 
+def extract_strength(line):
+    match = STRENGTH_RE.search(line)
+    return match.group(0) if match else None
+
+
+def extract_frequency(line):
+    low = line.lower()
+    if "morning noon night" in low or "tid" in low:
+        return "three_times_daily"
+    if "twice" in low or "bid" in low:
+        return "twice_daily"
+    if "once" in low or "qd" in low:
+        return "once_daily"
+    return None
+
+
+def extract_duration(line):
+    match = DURATION_RE.search(line)
+    return match.group(0) if match else None
+
+
 def build_structured_output(text):
     medications = []
     for line in split_drug_lines(text):
@@ -35,11 +58,11 @@ def build_structured_output(text):
             {
                 "drug_name_raw": name or line,
                 "drug_name_normalized": name.lower() if name else None,
-                "strength": None,
+                "strength": extract_strength(line),
                 "dose": None,
-                "frequency": None,
+                "frequency": extract_frequency(line),
                 "route": None,
-                "duration": None,
+                "duration": extract_duration(line),
                 "instruction": line,
             }
         )
@@ -60,21 +83,26 @@ st.title("MedRxOCR 处方 OCR Demo")
 
 metrics = load_metrics()
 if metrics:
-    current = metrics["comparison"][-1]
+    word_eval = metrics["rxhandbd_eval1115"]["lora_step512"]
+    realshot = metrics["realshot_eval18"]["lora_step512"]
     cols = st.columns(3)
-    cols[0].metric("评估样本", current["n_images"])
-    cols[1].metric("LoRA Exact", f"{current['lora']['exact_match_rate']:.4f}")
-    cols[2].metric("LoRA Micro CER", f"{current['lora']['micro_cer']:.4f}")
+    cols[0].metric("词图评估样本", word_eval["n_images"])
+    cols[1].metric("词图 LoRA Exact", f"{word_eval['exact_match']:.4f}")
+    cols[2].metric("实拍 LoRA Micro CER", f"{realshot['micro_cer']:.4f}")
     st.dataframe(
         [
             {
-                "样本数": row["n_images"],
-                "Baseline Exact": row["baseline"]["exact_match_rate"],
-                "LoRA Exact": row["lora"]["exact_match_rate"],
-                "Baseline Micro CER": row["baseline"]["micro_cer"],
-                "LoRA Micro CER": row["lora"]["micro_cer"],
-            }
-            for row in metrics["comparison"]
+                "数据": "RxHandBD 词图",
+                "样本数": metrics["rxhandbd_eval1115"]["baseline"]["n_images"],
+                "Baseline Micro CER": metrics["rxhandbd_eval1115"]["baseline"]["micro_cer"],
+                "LoRA Micro CER": word_eval["micro_cer"],
+            },
+            {
+                "数据": "realshot_eval_18",
+                "样本数": metrics["realshot_eval18"]["baseline"]["n_images"],
+                "Baseline Micro CER": metrics["realshot_eval18"]["baseline"]["micro_cer"],
+                "LoRA Micro CER": realshot["micro_cer"],
+            },
         ],
         use_container_width=True,
     )
@@ -94,4 +122,5 @@ with right:
     )
     text = st.text_area("OCR 文本", value=sample_text, height=180)
     result = build_structured_output(text)
+    st.caption("字段提取是规则原型：strength、frequency、duration 只做简单识别，dose、route 等字段仍需人工标注或后续模型支持。")
     st.json(result)

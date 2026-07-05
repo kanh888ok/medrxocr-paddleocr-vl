@@ -27,24 +27,8 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from medrxocr.data.loader import filter_records, load_jsonl
-from medrxocr.evaluation.evaluator import WordOcrEvaluator
+from medrxocr.evaluation.metrics import char_error_breakdown, exact_match, text_cer, word_ocr_summary
 from medrxocr.utils.text import normalize_text
-
-
-def norm_text(text: str | None) -> str:
-    return normalize_text(text)
-
-
-def edit_distance(a: str, b: str) -> tuple[int, int]:
-    a = norm_text(a)
-    b = norm_text(b)
-    prev = list(range(len(b) + 1))
-    for i, ca in enumerate(a, 1):
-        cur = [i]
-        for j, cb in enumerate(b, 1):
-            cur.append(min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (ca != cb)))
-        prev = cur
-    return prev[-1], max(len(b), 1)
 
 
 def flatten_strings(obj: Any) -> list[str]:
@@ -162,7 +146,6 @@ def main() -> None:
         token_limits = [args.max_new_tokens]
 
     pipe = build_pipeline(args)
-    evaluator = WordOcrEvaluator()
     mode = "a" if args.resume else "w"
     with pred_path.open(mode, encoding="utf-8") as out:
         for idx, row in enumerate(pending, 1):
@@ -207,19 +190,20 @@ def main() -> None:
             except Exception as exc:  # keep full-run accounting honest
                 error = repr(exc)
             elapsed = time.time() - start
-            eval_result = evaluator.evaluate_pair(pred_text, gold)
+            normalized_gold = normalize_text(gold)
+            breakdown = char_error_breakdown(pred_text, gold)
             rec = {
                 "image_id": row["image_id"],
                 "image_path": row["image_path"],
                 "gold_text": gold,
                 "prediction": {"full_ocr_text": pred_text},
-                "normalized_gold": eval_result["normalized_gold"],
-                "normalized_prediction": eval_result["normalized_prediction"],
-                "exact_match": eval_result["exact_match"],
-                "edit_distance": eval_result["edit_distance"],
-                "gold_chars": eval_result["gold_chars"],
-                "cer": eval_result["cer"],
-                "error_breakdown": eval_result["error_breakdown"],
+                "normalized_gold": normalized_gold,
+                "normalized_prediction": normalize_text(pred_text),
+                "exact_match": exact_match(pred_text, gold),
+                "edit_distance": breakdown["edit_distance"],
+                "gold_chars": max(len(normalized_gold), 1),
+                "cer": text_cer(pred_text, gold),
+                "error_breakdown": breakdown,
                 "elapsed_sec": elapsed,
                 "slow_warning": elapsed >= args.warn_seconds,
                 "used_max_new_tokens": used_max_new_tokens,
@@ -251,7 +235,7 @@ def main() -> None:
                 records.append(json.loads(line))
     records = [row for row in records if row.get("image_id") in {r["image_id"] for r in rows}]
 
-    summary = evaluator.summarize(records)
+    summary = word_ocr_summary(records)
     metrics = {
         "model": args.model_label
         or ("PaddleOCR-VL-1.5" if args.pipeline_version == "v1.5" else f"PaddleOCR-VL {args.pipeline_version}"),

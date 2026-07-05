@@ -12,14 +12,15 @@ def normalize_text(text: str | None) -> str:
 
 
 def length_bin(text: str | None) -> str:
+    """Bucket word labels using the observed RxHandBD eval length range."""
     n = len(normalize_text(text))
-    if n <= 4:
-        return "short_0_4"
+    if n <= 5:
+        return "short_0_5"
     if n <= 8:
-        return "medium_5_8"
-    if n <= 16:
-        return "long_9_16"
-    return "very_long_17_plus"
+        return "common_6_8"
+    if n <= 12:
+        return "long_9_12"
+    return "very_long_13_plus"
 
 
 def has_digit(text: str | None) -> bool:
