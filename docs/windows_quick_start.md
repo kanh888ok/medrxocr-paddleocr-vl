@@ -1,5 +1,33 @@
 # Windows 快速开始
 
+这里分三种情况：只看 Demo、只复查已有结果、重新处理数据。没有 GPU 也可以先跑 Demo 和单元测试；完整 PaddleOCR-VL 推理需要本地模型和 CUDA 环境。
+
+## 0. 只看 Demo 和已有结果
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install -r requirements-demo.txt
+streamlit run demo\app.py
+```
+
+Demo 自带脱敏样例，不需要下载原始数据。已有指标可直接查看：
+
+```text
+outputs/lora_eval1115_realshot_summary.json
+outputs/lora_strategy_experiment_summary.json
+docs/technical_report.md
+docs/lora_strategy_experiments.md
+```
+
+轻量代码检查：
+
+```powershell
+python -m pip install -r requirements.txt
+python -m unittest discover -s tests
+```
+
 ## 1. 准备环境
 
 ```powershell
@@ -63,3 +91,20 @@ python scripts\build_sft_manifest.py --input data\processed\medrxocr_val.jsonl -
 pip install -r requirements-demo.txt
 streamlit run demo\app.py
 ```
+
+## 8. 复查已有评估
+
+已有评估结果保存在 `outputs/` 和 `docs/`。如果本地已经准备好 PaddleOCR-VL 环境和模型目录，可以用下面脚本重新跑实拍子集：
+
+```powershell
+scripts\run_realshot_eval.ps1
+```
+
+公开词图评估脚本见：
+
+```text
+scripts/run_paddleocrvl_word_eval.py
+scripts/run_paddleocrvl_worker_timeout_eval.py
+```
+
+这些脚本会读取本地数据和模型，不会从 GitHub 自动下载大文件。

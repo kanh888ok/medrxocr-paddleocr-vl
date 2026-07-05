@@ -94,9 +94,11 @@ python scripts\analyze_word_eval.py --predictions <predictions.jsonl> --output-j
 ## 主要文件
 
 - `docs/technical_report.md`：数据、质检和指标。
+- `docs/data_statistics_report.md`：数据来源、任务类型、难度分布和错误分析入口。
 - `docs/realshot_manual_qc.md`：20 张实拍图人工质检。
 - `docs/realshot_baseline.md`：`realshot_eval_18` 结果。
 - `docs/lora_strategy_experiments.md`：LoRA rank 和增强对比。
+- `docs/windows_quick_start.md`：Demo、测试和复查步骤。
 - `demo/app.py`：本地 Demo。
 - `outputs/lora_eval1115_realshot_summary.json`：当前关键指标摘要。
 - `outputs/lora_strategy_experiment_summary.json`：rank 和增强实验摘要。
