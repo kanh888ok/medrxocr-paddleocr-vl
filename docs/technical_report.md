@@ -20,7 +20,7 @@ MedRxOCR 是一个处方 OCR 评测项目。当前工作基于公开、已脱敏
 | Bangladesh prescription YOLO dataset | CC BY 4.0 | 药品区域检测 |
 | RxHandBD | CC BY 4.0 | 手写药品词识别 |
 
-GitHub 不存放大文件。原始图片、处理后的大 JSONL、模型权重和检查点放在 AI Studio 或本地数据目录。
+GitHub 不存放大文件。原始图片、处理后的大 JSONL、数据统计和初始检查点放在 AI Studio 或本地数据目录。当前 LoRA/SFT 指标和小结果以 GitHub 中的文档、脚本和 `outputs/` 为准。
 
 ## 数据划分
 

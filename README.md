@@ -2,10 +2,12 @@
 
 这个仓库整理了几份公开处方数据，用来做 PaddleOCR-VL 的处方 OCR 评测和小规模 LoRA/SFT 实验。
 
-代码、配置和小结果放在 GitHub。原始图片、大 JSONL、模型权重和检查点放在 AI Studio：
+代码、配置、评估脚本和当前指标放在 GitHub。原始图片、大 JSONL、数据统计和初始检查点放在 AI Studio：
 
 - 数据包：https://aistudio.baidu.com/dataset/detail/384020/intro
 - 初始检查点：https://aistudio.baidu.com/dataset/detail/384021/intro
+
+说明：384020 是数据包，不随 GitHub 自动更新；384021 是初始检查点，不是最终 LoRA 权重。最新代码、文档和评估结果以本仓库为准。
 
 ## 数据
 
