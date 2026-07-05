@@ -66,6 +66,8 @@ RxHandBD 1115 张词图：
 
 简单看，`step512` 比基线好一些。realshot 的提升不大，但至少同一批 18 张图上方向是正的。`step1024` 前 100 张更高，但后面推理不稳定，暂时不作为推荐结果。
 
+下一轮实验入口已经补上，主要是 rank4/rank16、拍照扰动增强和难样本重点训练。说明见 `docs/lora_strategy_experiments.md`。这些还没写进主结果表，等完整跑完后再补指标。
+
 ## Demo
 
 Demo 只是展示图片输入、OCR 文本和 JSON 输出格式，字段提取还不完整。
@@ -88,6 +90,7 @@ python scripts\analyze_word_eval.py --predictions <predictions.jsonl> --output-j
 - `docs/technical_report.md`：数据、质检和指标。
 - `docs/realshot_manual_qc.md`：20 张实拍图人工质检。
 - `docs/realshot_baseline.md`：`realshot_eval_18` 结果。
+- `docs/lora_strategy_experiments.md`：下一轮 LoRA 对比实验。
 - `demo/app.py`：本地 Demo。
 - `outputs/lora_eval1115_realshot_summary.json`：当前关键指标摘要。
 
@@ -96,4 +99,5 @@ python scripts\analyze_word_eval.py --predictions <predictions.jsonl> --output-j
 - 真实线下处方数据暂未补充。
 - 实拍子集只有 18 张，每张只有 1 个实拍版本。
 - 结构化字段人工标注还不完整。
-- 数据增强、LoRA rank 16/32、多阶段训练、药品词典后处理还没系统做。
+- rank 对比、数据增强和难样本重点训练已经有入口，但完整训练指标还没跑完。
+- 药品词典后处理还没系统做。
