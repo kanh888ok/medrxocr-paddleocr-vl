@@ -49,7 +49,7 @@ PaddleOCR-VL-1.5 可以在实拍子集上运行，但零样本效果较弱，且
 powershell -ExecutionPolicy Bypass -File scripts\run_realshot_eval_timeout.ps1
 ```
 
-同口径微调前后对比建议使用 warm-worker 脚本：
+同口径微调前后对比使用 warm-worker 脚本：
 
 ```powershell
 python scripts\run_paddleocrvl_worker_timeout_eval.py --root . --input data\eval\realshot_eval_18.jsonl --output-dir outputs\paddleocrvl_v1_local_realshot_eval18_layout_max128_worker_retry --source-id realshot_mendeley_bilingual_1000 --pipeline-version v1 --vl-rec-model-dir ..\work\PaddlePaddle\PaddleOCR-VL --model-label PaddleOCR-VL-v1-local-realshot-layout-max128-worker-retry --max-new-tokens 128 --timeout-sec 90 --load-timeout-sec 180 --retries 2

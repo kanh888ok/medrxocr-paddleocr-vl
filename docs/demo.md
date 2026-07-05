@@ -24,4 +24,4 @@ streamlit run demo\app.py
 - 已准备 PaddleOCR-VL 或 LoRA 合并后的模型目录。
 - 在页面里勾选“启用本地 OCR”，填写模型目录后再运行。
 
-批量评估和正式指标仍建议使用 `scripts/run_paddleocrvl_*.py`。
+批量评估和正式指标使用 `scripts/run_paddleocrvl_*.py`。

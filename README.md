@@ -69,7 +69,7 @@ RxHandBD 1115 张词图：
 
 简单看，`aug-light step512` 在公开词图上最好。它是在 600 张训练图上加了模糊、亮度和旋转扰动后训练出来的。
 
-实拍子集上仍然保留 `LoRA step512` 作为推荐结果。`aug-light` 的 max64 版本 18 张都跑完了，但 Micro CER 是 0.9421；max128 版本有 2 张超时，所以不采用。
+实拍子集上仍然保留 `LoRA step512` 作为当前结果。`aug-light` 的 max64 版本 18 张都跑完了，但 Micro CER 是 0.9421；max128 版本有 2 张超时，所以不作为实拍结果。
 
 rank4、rank16、重增强和轻增强的对比记录见 `docs/lora_strategy_experiments.md`。
 

@@ -4,7 +4,7 @@
 
 LoRA/SFT 训练链路已经跑通：本机 RTX 4070 可以完成训练、保存适配器、合并为推理模型，并跑出固定评估指标。
 
-公开 RxHandBD 词图推荐结果是 `aug-light rank8 step512`。实拍子集推荐结果仍是原 `rank8 step512`。
+公开 RxHandBD 词图当前结果是 `aug-light rank8 step512`。实拍子集当前结果仍是原 `rank8 step512`。
 
 ## 训练设置
 
@@ -34,7 +34,7 @@ LoRA/SFT 训练链路已经跑通：本机 RTX 4070 可以完成训练、保存�
 | PaddleOCR-VL v1 本地模型 | 18 | 0 | 0.9297 | 0.8792 |
 | LoRA step512 | 18 | 0 | 0.8729 | 0.8679 |
 
-`aug-light` 在公开词图上提升，但在 realshot 上没有提升，因此不作为实拍推荐结果。
+`aug-light` 在公开词图上提升，但在 realshot 上没有提升，因此不作为实拍结果。
 
 ## 还没做
 

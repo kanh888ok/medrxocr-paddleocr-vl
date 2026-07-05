@@ -91,7 +91,7 @@ RxHandBD 词图 eval 共 1115 张：
 
 `aug-light step512` 在公开词图上最好。它对 600 张训练图做了模糊、亮度和旋转扰动，共生成 1800 张增强图。
 
-实拍子集仍保留 `LoRA step512` 作为推荐结果。`aug-light` 在 realshot 上没有提升：max64 版本 18 张都完成，但 Micro CER 为 0.9421；max128 版本有 2 张超时。
+实拍子集仍保留 `LoRA step512` 作为当前结果。`aug-light` 在 realshot 上没有提升：max64 版本 18 张都完成，但 Micro CER 为 0.9421；max128 版本有 2 张超时。
 
 ## Demo
 

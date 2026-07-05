@@ -2,10 +2,10 @@
 
 这轮只用公开 RxHandBD 训练图，没有加入真实线下处方。
 
-当前结论很直接：
+当前结果：
 
 - 公开 1115 张词图：`aug-light rank8 step512` 最好。
-- 实拍 18 张：原来的 `rank8 step512` 更稳，继续作为实拍子集推荐结果。
+- 实拍 18 张：原来的 `rank8 step512` 更稳，继续作为实拍子集当前结果。
 
 ## 选择 LoRA 的原因
 
@@ -15,14 +15,14 @@ rank 选择从 8 开始。它的显存和速度比较稳，前 500 张和完整 
 
 ## 已跑结果
 
-| 实验 | 口径 | 结果 | 是否采用 |
+| 实验 | 口径 | 结果 | 处理 |
 |---|---|---|---|
-| rank4 step512 | 先看前 4 张 | 单张约 48-62 秒，速度太慢 | 不采用 |
-| rank16 step512 | 前 20 张 | Micro CER 0.2000，略差于同口径 step512 的 0.1923 | 不采用 |
-| aug-rank8 step512 | 前 100 张 | Micro CER 0.7085，略差于同口径 step512 的 0.7037 | 不采用 |
-| aug-light rank8 step512 | 固定 eval 1115 张 | Exact 0.2825，Mean CER 0.3754，Micro CER 0.3702 | 公开词图采用 |
-| aug-light realshot max64 | 实拍 18 张 | 18/18 完成，Micro CER 0.9421 | 不采用 |
-| aug-light realshot max128 | 实拍 18 张 | 16/18 完成，2 张超时，Micro CER 0.9104 | 不采用 |
+| rank4 step512 | 先看前 4 张 | 单张约 48-62 秒，速度太慢 | 停止 |
+| rank16 step512 | 前 20 张 | Micro CER 0.2000，略差于同口径 step512 的 0.1923 | 未扩大 |
+| aug-rank8 step512 | 前 100 张 | Micro CER 0.7085，略差于同口径 step512 的 0.7037 | 未扩大 |
+| aug-light rank8 step512 | 固定 eval 1115 张 | Exact 0.2825，Mean CER 0.3754，Micro CER 0.3702 | 作为公开词图结果 |
+| aug-light realshot max64 | 实拍 18 张 | 18/18 完成，Micro CER 0.9421 | 仅记录 |
+| aug-light realshot max128 | 实拍 18 张 | 16/18 完成，2 张超时，Micro CER 0.9104 | 仅记录 |
 
 ## 为什么保留 rank8
 
@@ -63,7 +63,7 @@ rank8 不是因为参数最少，而是因为它在速度、显存和指标之�
 | LoRA aug-light rank8 max64 | 18 | 18 | 0 | 0.9293 | 0.9421 |
 | LoRA aug-light rank8 max128 | 18 | 16 | 2 | 0.9146 | 0.9104 |
 
-公开词图和实拍子集分开采用结果。`aug-light` 在公开词图上提升明显，但到了 realshot 后没有继续提升，所以只写作公开词图推荐结果；实拍子集仍保留普通 `rank8 step512`。
+公开词图和实拍子集分开记录。`aug-light` 在公开词图上提升明显，但到了 realshot 后没有继续提升，所以只作为公开词图结果；实拍子集仍保留普通 `rank8 step512`。
 
 实拍 18 张上，普通 `rank8 step512` 相比本地基线的 Mean CER 降低 5.68 个百分点，Micro CER 降低 1.13 个百分点。这个提升比公开词图小，说明实拍图的拍摄干扰和整页文本更难，不能直接用公开词图结论替代实拍结论。
 
@@ -100,4 +100,4 @@ configs/experiments/erniekit_paddleocr_vl_lora_word_aug_light_rank8_win4070.yaml
 - `hard_focus_rank8` 还没完整训练和评估。
 - 药品词典后处理还没做系统对比。
 - realshot 上目前没有比 `rank8 step512` 更好的微调版本。
-- rank16/重增强说明“试过但没更好”，不建议继续优先投时间。
+- rank16/重增强已经做过小规模检查，当前没有继续扩大。
